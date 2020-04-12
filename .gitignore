@@ -1,6 +1,7 @@
 # Project based
 data/*
-
+paper/*
+!paper/paper_list.md
 # --- Python GIT Hub template ----
 # Byte-compiled / optimized / DLL files
 __pycache__/
