@@ -15,3 +15,8 @@ dependencies:
     - ffmpeg
     - setuptools
     - tqdm
+    - librosa
+    - audioread
+channels:
+    - conda-forge
+    - defaults
