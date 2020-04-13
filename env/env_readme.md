@@ -120,7 +120,11 @@ dependencies:
 conda install -c conda-forge librosa
 #### ffmpeg
 conda install -c conda-forge ffmpeg
+#### audioread
+audioread == 2.1.5 (more)
+conda install -c conda-forge audioread
 
+#### TODO experiment with conda channels
 
 
 ### Install the env
@@ -128,6 +132,12 @@ conda env create -f env2.yml
 
 ### install to jupyter
 python -m ipykernel install --user --name testTF2p1 --display-name "Py3.7 (TF1)"
+
+### install jupyter extention
+#### S1 install
+conda install -c conda-forge jupyter_contrib_nbextensions
+#### S2 Java CSS etc
+jupyter contrib nbextension install --user
 
 # env backup 
 
