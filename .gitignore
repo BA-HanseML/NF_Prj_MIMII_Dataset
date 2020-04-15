@@ -2,9 +2,10 @@
 data/*
 dataset/*
 !dataset/dataset_struct.md
-paper/*
-!paper/paper_list.md
-
+ref/*.pdf
+!ref/paper_list.md
+!ref/web_list.md
+!ref/github_list.md
 # --- Python GIT Hub template ----
 # Byte-compiled / optimized / DLL files
 __pycache__/
