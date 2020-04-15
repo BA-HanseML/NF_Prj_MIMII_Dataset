@@ -127,8 +127,14 @@ conda install -c conda-forge audioread
 #### TODO experiment with conda channels
 
 
+### export yml
+conda env export  > _full_export.yml
+conda env export --no-builds > _full_nb_export.yml
+
 ### Install the env
 conda env create -f env2.yml
+
+
 
 ### install to jupyter
 python -m ipykernel install --user --name testTF2p1 --display-name "Py3.7 (TF1)"

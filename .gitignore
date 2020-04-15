@@ -1,10 +1,9 @@
 # Project based
 data/*
 dataset/*
-!dataset_struct.md
+!dataset/dataset_struct.md
 paper/*
 !paper/paper_list.md
-env/windows_cuda_TF1p13_to_2p0/*
 
 # --- Python GIT Hub template ----
 # Byte-compiled / optimized / DLL files
