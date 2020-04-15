@@ -17,6 +17,7 @@ dependencies:
     - tqdm
     - librosa
     - audioread
+    - scipy
 channels:
     - conda-forge
     - defaults
