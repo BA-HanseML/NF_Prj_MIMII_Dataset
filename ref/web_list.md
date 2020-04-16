@@ -7,13 +7,18 @@
 Librosa Audio and Music Signal Analysis in Python | SciPy 2015 | Brian McFee
 https://www.youtube.com/watch?v=MhOdbtPhbLU
 
-Librosa
+Librosa:
 https://librosa.github.io/librosa/index.html
-
+examlpes:
+http://librosa.github.io/librosa_gallery/
 
 
 
 ### DSP (Digital signal processing)
+
+### Correlation Cross and Auto
+How to Measure a Time Delay Using Cross Correlation ...:
+https://www.google.com/search?client=firefox-b-d&q=cross+correlation+to+find+time+delay#kpvalbx=_uTyYXpjqEeejmwWY54D4CQ22
 
 ### TensorFlow
 Channel Jeff Heaton:
