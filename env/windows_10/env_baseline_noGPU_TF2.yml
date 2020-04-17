@@ -18,6 +18,7 @@ dependencies:
     - librosa
     - audioread
     - scipy
+    - pandas
 channels:
     - conda-forge
     - defaults
