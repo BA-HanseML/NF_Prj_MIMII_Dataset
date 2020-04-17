@@ -34,7 +34,8 @@ def PSD_to_Pandas(PSD_window='hamming',
                                 'machine': 'pump', 
                                 'ID': ['00']},
                   ChannelNr=0,
-                  FileCountlimit=None):
+                  FileCountlimit=None,
+                  verbose=True):
     
     # get file path
     nf, af = get_files(base_folder,
@@ -78,7 +79,8 @@ def PSD_to_Pandas(PSD_window='hamming',
     first_loop = True
     for i in df.index:
         file_path = df.iloc[i]['path']
-        #print(file_path)
+        if verbose:
+            print(file_path)
         audio_ch, sr = librosa.load(file_path, sr=None, mono=False)
         f, Pxx = sig.welch(audio_ch[ChannelNr],sr,
                            window=PSD_window,
