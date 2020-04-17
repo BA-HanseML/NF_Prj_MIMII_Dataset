@@ -10,6 +10,7 @@ dependencies:
     - Keras-Preprocessing
     - matplotlib
     - numpy
+    - scipy
     - PyYAML
     - scikit-learn
     - ffmpeg
@@ -17,6 +18,8 @@ dependencies:
     - tqdm
     - librosa
     - audioread
+    - scipy
 channels:
-    - conda-forge
     - defaults
+    - conda-forge
+    
