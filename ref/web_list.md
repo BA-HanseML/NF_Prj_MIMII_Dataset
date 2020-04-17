@@ -16,9 +16,13 @@ http://librosa.github.io/librosa_gallery/
 
 ### DSP (Digital signal processing)
 
-### Correlation Cross and Auto
+#### Correlation Cross and Auto
 How to Measure a Time Delay Using Cross Correlation ...:
 https://www.google.com/search?client=firefox-b-d&q=cross+correlation+to+find+time+delay#kpvalbx=_uTyYXpjqEeejmwWY54D4CQ22
+
+#### General signal processing
+Mike X Cohen
+https://www.youtube.com/channel/UCUR_LsXk7IYyueSnXcNextQ/playlists
 
 ### TensorFlow
 Channel Jeff Heaton:
