@@ -9,8 +9,9 @@ dependencies:
     - Keras-Applications
     - Keras-Preprocessing
     - matplotlib
+    - seaborn
     - numpy
-    - scipy
+    - pandas
     - PyYAML
     - scikit-learn
     - ffmpeg
