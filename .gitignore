@@ -5,6 +5,7 @@
 dataset/*
 !dataset/*/*.ipynb
 !dataset/dataset_struct.md
+*.pkl
 
 # --- reference --- 
 ref/*.pdf
@@ -141,3 +142,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
