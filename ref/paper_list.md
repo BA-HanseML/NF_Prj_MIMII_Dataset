@@ -31,4 +31,7 @@ https://www.researchgate.net/publication/332790475_Anomaly_Detection_Based_on_an
 ### CONVOLUTIONAL NEURAL NETWORKS WITH BINAURAL REPRESENTATIONS ANDBACKGROUND SUBTRACTION FOR ACOUSTIC SCENE CLASSIFICATION
 https://www.cs.tut.fi/sgn/arg/dcase2017/documents/challenge_technical_reports/DCASE2017_Han_207.pdf
 
+### ANALYZING SONG STRUCTURE WITH SPECTRAL CLUSTERING
+http://bmcfee.github.io/papers/ismir2014_spectral.pdf
+
 
