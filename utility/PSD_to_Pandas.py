@@ -16,10 +16,10 @@ def get_files(base_folder,SNR,machine,ID):
     for idx in ID:
         
         fn[idx] = sorted(glob.glob(os.path.abspath( "{base}/{SNR}/{machine}/id_{ID}/{n}/*.{ext}".format(
-        base=base_folder+'dataset',SNR=SNR,machine='pump',ID=idx, n='normal',ext='wav' ))))
+        base=base_folder+'dataset',SNR=SNR,machine=machine,ID=idx, n='normal',ext='wav' ))))
     
         fa[idx] = sorted(glob.glob(os.path.abspath( "{base}/{SNR}/{machine}/id_{ID}/{n}/*.{ext}".format(
-        base=base_folder+'dataset',SNR=SNR,machine='pump',ID=idx, n='abnormal',ext='wav' ))))
+        base=base_folder+'dataset',SNR=SNR,machine=machine,ID=idx, n='abnormal',ext='wav' ))))
     
     return fn, fa
     
@@ -36,7 +36,8 @@ def PSD_to_Pandas(PSD_window='hamming',
                   ChannelNr=0,
                   FileCountlimit=None,
                   verbose=True):
-    
+
+    #print(FileFindDict)
     # get file path
     nf, af = get_files(base_folder,
                        FileFindDict['SNR'],
@@ -77,6 +78,7 @@ def PSD_to_Pandas(PSD_window='hamming',
     
     # create the psd columns
     first_loop = True
+    #print(nf)
     for i in df.index:
         file_path = df.iloc[i]['path']
         if verbose:
@@ -88,8 +90,10 @@ def PSD_to_Pandas(PSD_window='hamming',
                            noverlap=False, 
                            nfft=PSD_nfft,
                            scaling=PSD_scaling)
-
+        
+        #print('a')
         if first_loop:
+            print('b')
             first_loop = False
             if freq_band[0] > 0:
                 idx_s = np.min(np.where(f>freq_band[0]))
@@ -101,8 +105,11 @@ def PSD_to_Pandas(PSD_window='hamming',
             else:
                 idx_e = len(f)
                 
-            # basic matrix    
-            ff = f[idx_s:idx_e]    
+            # basic matrix  
+
+            ff = f[idx_s:idx_e]
+            print('freq bins of PSD:')
+            print(ff)
             PSDmatrix = np.zeros([len(df.index),len(ff)])
             
        
