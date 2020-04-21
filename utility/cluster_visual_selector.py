@@ -22,5 +22,5 @@ def box_points(x,y, x_range=[], y_range=[]):
             np.logical_and(y>=y_range[0] , y<=y_range[1])).reshape(1,-1)
     if x_range and y_range: 
         pass
-
+    
     return np.intersect1d(y_cut, x_cut)

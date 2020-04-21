@@ -1,0 +1,64 @@
+print('load feature_extractor_mel_spectra')
+class feature_extractor_mel(feature_extractor):
+    def __init__(self, base_folder, name='mel_spectra'):
+        super().__init__(base_folder,name,
+                        xlabel = 'time',
+                        ylabel = 'freq',
+                        zlabel = 'log mel energy')
+        
+        # set type
+        self.para_dict['type'] = feature_extractor_type.MEL_SPECTRUM
+        
+        # default hyper
+        self.set_hyperparamter()
+
+    def set_hyperparamter(self,
+                              n_mels=64, 
+                              n_fft=1024,
+                              power=2.0,
+                              hop_length=512):
+            
+            self.para_dict['hyperpara']={ \
+            'n_mels': n_mels,
+            'n_fft': n_fft,
+            'power': power,
+            'hop_length': hop_length}
+            
+
+            
+            if os.path.isfile(self._full_wave_path()):
+                #print('recalc mel')
+                self.create_from_wav(self.para_dict['wave_filepath'], channel=self.para_dict['wave_channel'][0] )
+            
+            
+    def create_from_wav(self, filepath, channel=0):
+            
+            # calc librosa 
+            self.para_dict['wave_channel'] = [channel]
+            af = np.array(self._read_wav(filepath))[channel, :]
+            power=self.para_dict['hyperpara']['power']
+            
+            mel_spectrogram = librosa.feature.melspectrogram(y=af, \
+            sr=self.para_dict['wave_srate'],
+            n_fft=self.para_dict['hyperpara']['n_fft'],
+            hop_length=self.para_dict['hyperpara']['hop_length'],
+            n_mels=self.para_dict['hyperpara']['n_mels'],
+            power=power)
+            
+            log_mel_spectrogram = 20.0 / power * np.log10(mel_spectrogram + sys.float_info.epsilon)
+            
+            self.feature_data = log_mel_spectrogram
+            
+    def plot(self):
+            librosa.display.specshow(self.feature_data,
+            x_axis='time',
+            y_axis='mel',
+            sr=self.para_dict['wave_srate'])
+            plt.title('Mel Spectrum ' + self.para_dict['name'] + ' ' + str(self.para_dict['wave_srate']))
+            plt.colorbar(format='%+2.0f dB')
+     
+     
+             
+            
+            
+            
