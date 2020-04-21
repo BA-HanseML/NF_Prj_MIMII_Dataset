@@ -1,4 +1,8 @@
 print('load feature_extractor_mel_spectra')
+
+# TODO add window
+# TODO expose all parameter
+
 class feature_extractor_mel(feature_extractor):
     def __init__(self, base_folder, name='mel_spectra'):
         super().__init__(base_folder,name,
@@ -57,7 +61,8 @@ class feature_extractor_mel(feature_extractor):
             plt.title('Mel Spectrum ' + self.para_dict['name'] + ' ' + str(self.para_dict['wave_srate']))
             plt.colorbar(format='%+2.0f dB')
      
-     
+    def flat_feature(self):
+        pass
              
             
             
