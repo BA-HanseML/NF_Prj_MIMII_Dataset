@@ -38,8 +38,11 @@ class feature_extractor():
          'hyperpara':{}}
         self.base_folder= base_folder
         self.feature_data = None
+    
+    @property
+    def name(self):
+        return  self.para_dict['name']
         
-     
     def __str__(self):
          return '<'+str(self.para_dict['type']) + '>[' + \
                 str(self.para_dict['hyperpara']) + ']' + \
@@ -47,6 +50,10 @@ class feature_extractor():
      
     def set_hyperparamter(self):
          pass
+    
+    def set_hyperparamter_from_fe(self,fe):
+        self.para_dict['hyperpara'] = fe.para_dict['hyperpara']
+        pass
     
     def _full_wave_path(self,filepath=None):
         if filepath:
@@ -56,6 +63,7 @@ class feature_extractor():
         
         
     def _read_wav(self, filepath):
+        filepath = filepath.replace(os.path.abspath(self.base_folder),'')
         self.para_dict['wave_filepath'] = filepath
         af, sr = librosa.load(self._full_wave_path(filepath), sr=None, mono=False)
         self.para_dict['wave_srate'] = sr
