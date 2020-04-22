@@ -4,7 +4,7 @@ print('load audition_function_akkuplot')
 #TODO use diffrent color map 
 #TODO adjust line with based on amount of lines in the plot
 class audition_akku_plot():
-    def __init__(self, xlabel=x, ylabel='y'):
+    def __init__(self, xlabel='x', ylabel='y'):
         self.y=[]
         self.name=[]
         self.x=[]
