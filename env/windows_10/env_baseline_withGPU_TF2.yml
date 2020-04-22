@@ -11,6 +11,7 @@ dependencies:
     - matplotlib
     - seaborn
     - numpy
+    - scipy
     - pandas
     - PyYAML
     - scikit-learn
@@ -19,7 +20,7 @@ dependencies:
     - tqdm
     - librosa
     - audioread
-    - scipy
+    - pandas
 channels:
     - defaults
     - conda-forge
