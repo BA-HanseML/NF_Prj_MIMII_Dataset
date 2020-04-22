@@ -1,7 +1,13 @@
 # Project based
-data/*
+
+
+# --- dataset ---
 dataset/*
+!dataset/*/*.ipynb
 !dataset/dataset_struct.md
+*.pkl
+
+# --- reference --- 
 ref/*.pdf
 !ref/paper_list.md
 !ref/web_list.md
@@ -136,3 +142,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+

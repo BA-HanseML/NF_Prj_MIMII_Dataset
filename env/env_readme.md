@@ -1,3 +1,15 @@
+# cooperational guidline
+
+Main enviorment name = 
+Main enviorment jupyter dispaly name =
+GPU post fix
+
+dataset extention
+
+rules for utiltys
+
+
+
 # Baseline dependencys
 
 ## orginal list
