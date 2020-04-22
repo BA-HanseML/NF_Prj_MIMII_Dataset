@@ -57,11 +57,12 @@ class feature_extractor_mel(feature_extractor):
             librosa.display.specshow(self.feature_data,
             x_axis='time',
             y_axis='mel',
-            sr=self.para_dict['wave_srate'])
+            sr=self.para_dict['wave_srate']) #time_fmt ='ms' # time format not rubust
             plt.title('Mel Spectrum ' + self.para_dict['name'] + ' ' + str(self.para_dict['wave_srate']))
             plt.colorbar(format='%+2.0f dB')
      
     def flat_feature(self):
+        return self.feature_data.flatten()
         pass
              
             
