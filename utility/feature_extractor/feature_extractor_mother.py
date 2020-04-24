@@ -12,6 +12,7 @@ class feature_extractor_type(Enum):
     BASE = 0
     PSD = 1
     MEL_SPECTRUM = 2
+    WELECHPSD = 3
 
 
 # TODO load based on columns header
@@ -22,7 +23,10 @@ def feature_extractor_from_file(filepath, base_folder):
     if d['para_dict']['type'] == feature_extractor_type.MEL_SPECTRUM:
         fe = feature_extractor_mel(base_folder)
         fe.read_from_dict(d)
-        return fe
+    if d['para_dict']['type'] == feature_extractor_type.WELECHPSD:
+        fe = feature_extractor_welchPSD(base_folder)
+        fe.read_from_dict(d)
+    return fe
 
 class feature_extractor():
     def __init__(self,base_folder, name='base_feature', xlabel='x', ylabel='y',zlabel='z'):
@@ -34,6 +38,7 @@ class feature_extractor():
          'type': feature_extractor_type.BASE,
          'wave_filepath': '',
          'wave_srate': 0,
+         'wave_length': 0,
          'wave_channel': [0],
          'hyperpara':{}}
         self.base_folder= base_folder
@@ -67,6 +72,7 @@ class feature_extractor():
         self.para_dict['wave_filepath'] = filepath
         af, sr = librosa.load(self._full_wave_path(filepath), sr=None, mono=False)
         self.para_dict['wave_srate'] = sr
+        self.para_dict['wave_length'] = len(af[0])
         return af
         
     def create_from_wav(self, filepath, channel):

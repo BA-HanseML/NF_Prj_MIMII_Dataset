@@ -64,7 +64,9 @@ class feature_extractor_mel(feature_extractor):
     def flat_feature(self):
         return self.feature_data.flatten()
         pass
-             
-            
-            
-            
+    
+    def freq_axis(self):
+        return np.linspace(0,self.para_dict['wave_srate']/2, self.para_dict['hyperpara']['n_mels'])
+    
+    def time_axis(self):
+        return np.linspace(0,self.para_dict['wave_length']/self.para_dict['wave_srate'],len(self.feature_data[:,0]))
