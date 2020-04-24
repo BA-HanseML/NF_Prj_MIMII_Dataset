@@ -12,7 +12,7 @@ class feature_extractor_welchPSD(feature_extractor):
         
         # set type
         self.para_dict['type'] = feature_extractor_type.WELECHPSD
-        
+        self.para_dict['type_name'] = 'welchPSD'
         # default hyper
         self.set_hyperparamter()
 
@@ -28,7 +28,7 @@ class feature_extractor_welchPSD(feature_extractor):
             'nperseg': nperseg,
             'scaleing': scaleing}
             
-
+            self.para_dict['file_name_mainhyperparastr'] = str(nperseg)
             
             if os.path.isfile(self._full_wave_path()):
                 self.create_from_wav(self.para_dict['wave_filepath'], channel=self.para_dict['wave_channel'][0] )
