@@ -4,7 +4,7 @@ print('load feature_extractor_psd')
 # TODO: matrix over all channels
 
 class feature_extractor_welchPSD(feature_extractor):
-    def __init__(self, base_folder, name='mel_spectra'):
+    def __init__(self, base_folder, name='welch'):
         super().__init__(base_folder,name,
                         xlabel = 'freq',
                         ylabel = 'V**2',
@@ -41,7 +41,9 @@ class feature_extractor_welchPSD(feature_extractor):
         self.para_dict['data_channel_use_str'] = 'ch'+str(channel)
         
         self.para_dict['wave_channel'] = [channel]
+        
         af = np.array(self._read_wav(filepath))[channel, :]
+        
         f, Pxx = scipy.signal.welch(af,
                            fs=self.para_dict['wave_srate'],
                            window=self.para_dict['hyperpara']['window'],

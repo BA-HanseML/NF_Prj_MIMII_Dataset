@@ -17,7 +17,14 @@ class feature_extractor_type(Enum):
 
 # TODO load based on columns header
 
-    
+class feature_extractor_memory_wave_file():
+    def __init__(self):
+        self.filepath = ''
+        self.channel = None
+        self.srate = 0
+        self.length = 0
+
+
 def feature_extractor_from_dict(d, base_folder):
     #print(d)
     if d['para_dict']['type'] == feature_extractor_type.MEL_SPECTRUM:
@@ -73,13 +80,21 @@ class feature_extractor():
         else:
             return os.path.abspath(self.base_folder+self.para_dict['wave_filepath'])
         
-        
+
+    
     def _read_wav(self, filepath):
-        filepath = filepath.replace(os.path.abspath(self.base_folder),'')
-        self.para_dict['wave_filepath'] = filepath
-        af, sr = librosa.load(self._full_wave_path(filepath), sr=None, mono=False)
-        self.para_dict['wave_srate'] = sr
-        self.para_dict['wave_length'] = len(af[0])
+        if type(filepath) is str:
+            filepath = filepath.replace(os.path.abspath(self.base_folder),'')
+            self.para_dict['wave_filepath'] = filepath
+            af, sr = librosa.load(self._full_wave_path(filepath), sr=None, mono=False)
+            self.para_dict['wave_srate'] = sr
+            self.para_dict['wave_length'] = len(af[0])
+        else: # TODO make this more robust but 
+            self.para_dict['wave_filepath'] = filepath.filepath.replace(os.path.abspath(self.base_folder),'')
+            af  = filepath.channel
+            self.para_dict['wave_srate'] = filepath.srate
+            self.para_dict['wave_length'] = len(af)
+            
         return af
         
     def create_from_wav(self, filepath, channel):

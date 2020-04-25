@@ -36,7 +36,7 @@ class feature_extractor_mel(feature_extractor):
                 self.create_from_wav(self.para_dict['wave_filepath'], channel=self.para_dict['wave_channel'][0] )
             
             
-    def create_from_wav(self, filepath, channel=0):
+    def create_from_wav(self, filepath, channel=0, multichannel='concat'):
             
             # calc librosa 
             self.para_dict['data_channel_use_str'] = 'ch'+str(channel)

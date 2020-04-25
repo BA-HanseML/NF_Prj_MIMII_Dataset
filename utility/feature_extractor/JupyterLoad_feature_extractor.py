@@ -25,8 +25,12 @@ def package_file_folder(BASE_FOLDER,filename):
 fp = package_file_folder(BASE_FOLDER, 'feature_extractor_mother.py') 
 exec(open(fp).read())
 ## -
+fp = package_file_folder(BASE_FOLDER, 'memory_files.py') 
+exec(open(fp).read())
+## -
 fp = package_file_folder(BASE_FOLDER, 'feature_extractor_mel_spectra.py') 
 exec(open(fp).read())
 ## -
 fp = package_file_folder(BASE_FOLDER, 'feature_extractor_psd.py') 
 exec(open(fp).read())
+
