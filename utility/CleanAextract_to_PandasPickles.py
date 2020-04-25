@@ -89,7 +89,7 @@ def CleanAextract_to_PandasPickles(base_folder,
     #print(nf)
     real_base_folder = os.path.abspath(base_folder)
     target_folder_full = os.path.abspath(real_base_folder + target_folder)
-    
+    os.makedirs(target_folder_full, exist_ok=True)
     
     # file name prefix based on type and key hyperparameter
     target_file_prefix=''

@@ -29,7 +29,7 @@ class feature_extractor_mel(feature_extractor):
             'power': power,
             'hop_length': hop_length}
             
-            self.para_dict['file_name_mainhyperparastr'] = str(n_mels) 
+            self.para_dict['file_name_mainhyperparastr'] = 'nm'+str(n_mels) 
             
             if os.path.isfile(self._full_wave_path()):
                 #print('recalc mel')
@@ -39,7 +39,7 @@ class feature_extractor_mel(feature_extractor):
     def create_from_wav(self, filepath, channel=0):
             
             # calc librosa 
-            self.para_dict['file_name_mainhyperparastr'] = 'ch'+str(channel)
+            self.para_dict['data_channel_use_str'] = 'ch'+str(channel)
             
             self.para_dict['wave_channel'] = [channel]
             af = np.array(self._read_wav(filepath))[channel, :]
@@ -61,7 +61,7 @@ class feature_extractor_mel(feature_extractor):
             x_axis='time',
             y_axis='mel',
             sr=self.para_dict['wave_srate']) #time_fmt ='ms' # time format not rubust
-            plt.title('Mel Spectrum ' + self.para_dict['name'] + ' ' + str(self.para_dict['wave_srate']))
+            plt.title('Mel Spectrum ' + self.para_dict['wave_filepath'])
             plt.colorbar(format='%+2.0f dB')
      
     def flat_feature(self):
