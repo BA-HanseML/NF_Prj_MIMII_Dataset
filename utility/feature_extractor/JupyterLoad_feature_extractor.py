@@ -14,6 +14,7 @@ import os
 import pickle
 import sys
 import matplotlib.pyplot as plt
+import scipy
 
 def package_file_folder(BASE_FOLDER,filename):
     return os.path.os.path.abspath(BASE_FOLDER+'/utility/feature_extractor/' + filename)
@@ -25,4 +26,7 @@ fp = package_file_folder(BASE_FOLDER, 'feature_extractor_mother.py')
 exec(open(fp).read())
 ## -
 fp = package_file_folder(BASE_FOLDER, 'feature_extractor_mel_spectra.py') 
+exec(open(fp).read())
+## -
+fp = package_file_folder(BASE_FOLDER, 'feature_extractor_psd.py') 
 exec(open(fp).read())
