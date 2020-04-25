@@ -101,8 +101,9 @@ def CleanAextract_to_PandasPickles(base_folder,
     target_file_prefix =  target_file_prefix + \
                           FeatureExtractorObj.type_str + \
                           FeatureExtractorObj.name + '_' + \
-                          FeatureExtractorObj.file_name_mainhyperparastr
-    
+                          FeatureExtractorObj.file_name_mainhyperparastr + '_' + \
+                          FeatureExtractorObj.data_channel_use_str
+                          
     # create the base data frame
     df = BaseDataFrame(nf, af ,FileFindDict)
     
@@ -133,7 +134,7 @@ def CleanAextract_to_PandasPickles(base_folder,
         FEOloop.save_to_file(os.path.abspath(target_folder_full+'/' + file_name))
         df.at[i, target_file_prefix] = target_folder + '\\' + file_name # TODO the backslash ...
      
-    df.to_pickle(os.path.join(target_folder_full,'pandas_' + target_file_prefix))
+    df.to_pickle(os.path.join(target_folder_full,'FEpandas_' + target_file_prefix + '.pkl'))
     df['path'] = df['path'].apply(get_relpath)
     return df
     

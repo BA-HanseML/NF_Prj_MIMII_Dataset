@@ -28,7 +28,7 @@ class feature_extractor_welchPSD(feature_extractor):
             'nperseg': nperseg,
             'scaleing': scaleing}
             
-            self.para_dict['file_name_mainhyperparastr'] = str(nperseg)
+            self.para_dict['file_name_mainhyperparastr'] = 'seg'+str(nperseg)
             
             if os.path.isfile(self._full_wave_path()):
                 self.create_from_wav(self.para_dict['wave_filepath'], channel=self.para_dict['wave_channel'][0] )
@@ -38,6 +38,8 @@ class feature_extractor_welchPSD(feature_extractor):
         # channel= int single channel else list or str 'all'
         
         # TODO for the multichannel stuff... if int or list
+        self.para_dict['data_channel_use_str'] = 'ch'+str(channel)
+        
         self.para_dict['wave_channel'] = [channel]
         af = np.array(self._read_wav(filepath))[channel, :]
         f, Pxx = scipy.signal.welch(af,
@@ -47,11 +49,13 @@ class feature_extractor_welchPSD(feature_extractor):
                            noverlap=False, 
                            nfft=self.para_dict['hyperpara']['nfft'],
                            scaling=self.para_dict['hyperpara']['scaleing'])
+                           
         
         self.feature_data = {'f': f, 'Pxx': Pxx}
      
     def plot(self, loglog=True):
-        plt.plot(self.feature_data['f'],self.feature_data['Pxx'])
+        plt.plot(self.feature_data['f'],self.feature_data['Pxx'], 
+        label = self.para_dict['wave_filepath'])
         plt.xlabel(self.para_dict['xlabel'])
         plt.ylabel(self.para_dict['ylabel'])
         if loglog:

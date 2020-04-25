@@ -39,6 +39,8 @@ class feature_extractor_mel(feature_extractor):
     def create_from_wav(self, filepath, channel=0):
             
             # calc librosa 
+            self.para_dict['file_name_mainhyperparastr'] = 'ch'+str(channel)
+            
             self.para_dict['wave_channel'] = [channel]
             af = np.array(self._read_wav(filepath))[channel, :]
             power=self.para_dict['hyperpara']['power']

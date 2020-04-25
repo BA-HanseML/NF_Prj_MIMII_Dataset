@@ -40,6 +40,7 @@ class feature_extractor():
          'ylabel': ylabel,
          'zlabel': zlabel,
          'type_name': 'BASE',
+         'data_channel_use_str': '',
          'type': feature_extractor_type.BASE,
          'file_name_mainhyperparastr': '',
          'wave_filepath': '',
@@ -112,9 +113,13 @@ class feature_extractor():
         pass
         
     @property   
-    def file_name_mainhyperparastr(self):
+    def file_name_mainhyperparastr(self): # returns a string for filename that descripes the most importand hyper parmater like window length etc.
         return self.para_dict['file_name_mainhyperparastr'] 
     
     @property
-    def type_str(self):
+    def type_str(self): # returns a str for filename type of extractor MEL PSD etc.
         return self.para_dict['type_name'] 
+    
+    @property
+    def data_channel_use_str(self): # returns a sting for filename use of channels like how many and concat or stacked
+        return self.para_dict['data_channel_use_str']
