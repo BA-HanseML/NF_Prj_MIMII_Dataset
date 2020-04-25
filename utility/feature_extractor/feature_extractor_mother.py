@@ -12,17 +12,25 @@ class feature_extractor_type(Enum):
     BASE = 0
     PSD = 1
     MEL_SPECTRUM = 2
+    WELECHPSD = 3
 
 
 # TODO load based on columns header
 
-def feature_extractor_from_file(filepath, base_folder):
-    d = pickle.load( open( filepath, "rb" ))
+    
+def feature_extractor_from_dict(d, base_folder):
     #print(d)
     if d['para_dict']['type'] == feature_extractor_type.MEL_SPECTRUM:
         fe = feature_extractor_mel(base_folder)
         fe.read_from_dict(d)
-        return fe
+    if d['para_dict']['type'] == feature_extractor_type.WELECHPSD:
+        fe = feature_extractor_welchPSD(base_folder)
+        fe.read_from_dict(d)
+    return fe
+    
+def feature_extractor_from_file(filepath, base_folder):
+    d = pickle.load( open( filepath, "rb" ))
+    return feature_extractor_from_dict(d,base_folder)
 
 class feature_extractor():
     def __init__(self,base_folder, name='base_feature', xlabel='x', ylabel='y',zlabel='z'):
@@ -31,9 +39,12 @@ class feature_extractor():
          'xlabel': xlabel,
          'ylabel': ylabel,
          'zlabel': zlabel,
+         'type_name': 'BASE',
          'type': feature_extractor_type.BASE,
+         'file_name_mainhyperparastr': '',
          'wave_filepath': '',
          'wave_srate': 0,
+         'wave_length': 0,
          'wave_channel': [0],
          'hyperpara':{}}
         self.base_folder= base_folder
@@ -67,6 +78,7 @@ class feature_extractor():
         self.para_dict['wave_filepath'] = filepath
         af, sr = librosa.load(self._full_wave_path(filepath), sr=None, mono=False)
         self.para_dict['wave_srate'] = sr
+        self.para_dict['wave_length'] = len(af[0])
         return af
         
     def create_from_wav(self, filepath, channel):
@@ -77,10 +89,13 @@ class feature_extractor():
         self.para_dict = d['para_dict']
         self.feature_data = d['feature_data']
         pass
-        
+    
+    def get_dict(self):
+        return {'para_dict': self.para_dict,
+                'feature_data': self.feature_data}
+    
     def save_to_file(self, filepath):
-        pickle.dump({'para_dict': self.para_dict,
-                     'feature_data': self.feature_data},
+        pickle.dump(self.get_dict(),
                     open( filepath, "wb" ) )
         # TODO catch errors and ahndling
         pass
@@ -96,4 +111,10 @@ class feature_extractor():
     def flat_feature(self):
         pass
         
+    @property   
+    def file_name_mainhyperparastr(self):
+        return self.para_dict['file_name_mainhyperparastr'] 
     
+    @property
+    def type_str(self):
+        return self.para_dict['type_name'] 

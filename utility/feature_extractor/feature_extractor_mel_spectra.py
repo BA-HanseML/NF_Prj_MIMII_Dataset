@@ -12,6 +12,7 @@ class feature_extractor_mel(feature_extractor):
         
         # set type
         self.para_dict['type'] = feature_extractor_type.MEL_SPECTRUM
+        self.para_dict['type_name'] = 'MEL'
         
         # default hyper
         self.set_hyperparamter()
@@ -28,7 +29,7 @@ class feature_extractor_mel(feature_extractor):
             'power': power,
             'hop_length': hop_length}
             
-
+            self.para_dict['file_name_mainhyperparastr'] = str(n_mels) 
             
             if os.path.isfile(self._full_wave_path()):
                 #print('recalc mel')
@@ -64,7 +65,9 @@ class feature_extractor_mel(feature_extractor):
     def flat_feature(self):
         return self.feature_data.flatten()
         pass
-             
-            
-            
-            
+    
+    def freq_axis(self):
+        return np.linspace(0,self.para_dict['wave_srate']/2, self.para_dict['hyperpara']['n_mels'])
+    
+    def time_axis(self):
+        return np.linspace(0,self.para_dict['wave_length']/self.para_dict['wave_srate'],len(self.feature_data[:,0]))
