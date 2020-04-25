@@ -3,6 +3,7 @@
 
 # --- dataset ---
 dataset/*
+!dataset/*.ipynb
 !dataset/*/*.ipynb
 !dataset/dataset_struct.md
 *.pkl
