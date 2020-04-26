@@ -6,6 +6,7 @@ dataset/*
 !dataset/*/*.ipynb
 !dataset/dataset_struct.md
 *.pkl
+*.npy
 
 # --- reference --- 
 ref/*.pdf
