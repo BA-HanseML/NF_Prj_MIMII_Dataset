@@ -73,3 +73,14 @@ class feature_extractor_mel(feature_extractor):
     
     def time_axis(self):
         return np.linspace(0,self.para_dict['wave_length']/self.para_dict['wave_srate'],len(self.feature_data[:,0]))
+
+    def frame_pack_feature(self, frames):
+        vectorarray_size = len(self.feature_data[0, :]) - frames + 1
+        n_mels = self.feature_data.shape[0]
+
+        vectorarray = np.zeros((vectorarray_size, n_mels * frames), float)
+        for t in range(frames):
+            vectorarray[:, n_mels * t: n_mels * (t + 1)] = self.feature_data[:, t: t + vectorarray_size].T
+        
+        return vectorarray
+        
