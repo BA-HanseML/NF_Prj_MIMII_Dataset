@@ -92,7 +92,7 @@ class feature_extractor_welchPSD(feature_extractor):
             label = self.para_dict['wave_filepath'])
         else:
             for c in range(len(self.feature_data['Pxx'][:,0])):
-                plt.plot(self.feature_data['f'],self.feature_data['Pxx'][c])
+                plt.plot(self.feature_data['f'],self.feature_data['Pxx'][c], label='ch'+str(c))
 
         plt.xlabel(self.para_dict['xlabel'])
         plt.ylabel(self.para_dict['ylabel'])
