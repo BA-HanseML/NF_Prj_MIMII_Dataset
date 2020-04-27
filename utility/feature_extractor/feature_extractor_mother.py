@@ -13,6 +13,7 @@ class feature_extractor_type(Enum):
     PSD = 1
     MEL_SPECTRUM = 2
     WELECHPSD = 3
+    preNNFILTER = 101
 
 
 # TODO load based on columns header

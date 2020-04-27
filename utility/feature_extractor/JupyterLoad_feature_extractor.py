@@ -20,17 +20,23 @@ def package_file_folder(BASE_FOLDER,filename):
     return os.path.os.path.abspath(BASE_FOLDER+'/utility/feature_extractor/' + filename)
     
 
-# run / load the scripts
-## -
+# run / load the script
+## - MAIN
 fp = package_file_folder(BASE_FOLDER, 'feature_extractor_mother.py') 
 exec(open(fp).read())
 ## -
 fp = package_file_folder(BASE_FOLDER, 'memory_files.py') 
 exec(open(fp).read())
-## -
+## - 2D SPECTRA
 fp = package_file_folder(BASE_FOLDER, 'feature_extractor_mel_spectra.py') 
 exec(open(fp).read())
-## -
+
+## - 1D SPECTRA
 fp = package_file_folder(BASE_FOLDER, 'feature_extractor_psd.py') 
+exec(open(fp).read())
+## -
+
+##-  PRE STAGES
+fp = package_file_folder(BASE_FOLDER, 'feature_extractore_pre_nnFilterDenoise.py') 
 exec(open(fp).read())
 
