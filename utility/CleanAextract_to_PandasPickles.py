@@ -134,7 +134,7 @@ def CleanAextract_to_PandasPickles(base_folder,
         FEOloop.save_to_file(os.path.abspath(target_folder_full+'/' + file_name))
         df.at[i, target_file_prefix] = target_folder + '\\' + file_name # TODO the backslash ...
      
-    df.to_pickle(os.path.join(target_folder_full,'FEpandas_' + target_file_prefix + '.pkl'))
+    df.to_pickle(os.path.join(target_folder_full,'FEpandas_'  + target_file_prefix + '_' +FileFindDict['SNR'] + FileFindDict['machine'] + '.pkl'))
     df['path'] = df['path'].apply(get_relpath)
     return df
     
