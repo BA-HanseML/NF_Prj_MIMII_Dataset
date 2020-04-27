@@ -21,24 +21,29 @@ class feature_extractor_mel(feature_extractor):
                               n_mels=64, 
                               n_fft=1024,
                               power=2.0,
-                              hop_length=512):
+                              hop_length=512,
+                              channel=0):
             
             self.para_dict['hyperpara']={ \
             'n_mels': n_mels,
             'n_fft': n_fft,
             'power': power,
-            'hop_length': hop_length}
+            'hop_length': hop_length,
+            'channel': channel}
             
             self.para_dict['file_name_mainhyperparastr'] = 'nm'+str(n_mels) 
             
             if os.path.isfile(self._full_wave_path()):
                 #print('recalc mel')
-                self.create_from_wav(self.para_dict['wave_filepath'], channel=self.para_dict['wave_channel'][0] )
+                self.create_from_wav(self.para_dict['wave_filepath'] )
             
             
-    def create_from_wav(self, filepath, channel=0, multichannel='concat'):
+    def create_from_wav(self, filepath):
             
             # calc librosa 
+
+            channel = self.para_dict['hyperpara']['channel']
+            #multichannel = self.para_dict['hyperpara']['multichannel']
             self.para_dict['data_channel_use_str'] = 'ch'+str(channel)
             
             self.para_dict['wave_channel'] = [channel]

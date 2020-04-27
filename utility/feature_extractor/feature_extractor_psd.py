@@ -21,28 +21,33 @@ class feature_extractor_welchPSD(feature_extractor):
                               window='hamming', 
                               nfft=512,
                               nperseg =128,
-                              scaleing='spectrum'):
+                              scaleing='spectrum',
+                              multichannel='none',
+                              channel=0):
             
             self.para_dict['hyperpara']={ \
             'window': window,
             'nfft': nfft,
             'nperseg': nperseg,
-            'scaleing': scaleing}
+            'scaleing': scaleing,
+            'multichannel': multichannel,
+            'channel': channel}
             
             self.para_dict['file_name_mainhyperparastr'] = 'seg'+str(nperseg)
             
             if os.path.isfile(self._full_wave_path()):
-                self.create_from_wav(self.para_dict['wave_filepath'], channel=self.para_dict['wave_channel'][0] )
+                self.create_from_wav(self.para_dict['wave_filepath'] )
                 
-    def create_from_wav(self, filepath, channel=0, multichannel='concat'):
+    def create_from_wav(self, filepath):
         # multichannel = 'concat', 'stack_matrix'
         # channel= int single channel else list or str 'all'
         
         # TODO for the multichannel stuff... if int or list
+        channel = self.para_dict['hyperpara']['channel']
+        multichannel = self.para_dict['hyperpara']['multichannel']
         self.stack = False
         if  multichannel=='concat' and channel=='all':
             self.para_dict['data_channel_use_str'] = 'ch'+'Allc'
-            
             af = np.array(self._read_wav(filepath))
             self.para_dict['wave_channel'] = [c+1 for c in range(af.shape[0])]
             af= af.flatten()
