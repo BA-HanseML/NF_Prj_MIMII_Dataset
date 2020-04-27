@@ -2,16 +2,16 @@ print('load feature_extractore_pre_nnFilterDenoise')
 
 
 class feature_extractor_pre_nnFilterDenoise(feature_extractor):
-    def __init__(self, base_folder, name='welch'):
+    def __init__(self, base_folder, name='nnfilt'):
         super().__init__(base_folder,name,
                         xlabel = 'time',
                         ylabel = 'amp',
                         zlabel = 'none')
         
-        self.stack = False
+        
         # set type
         self.para_dict['type'] = feature_extractor_type.preNNFILTER
-        self.para_dict['type_name'] = 'preNNfilter'
+        self.para_dict['type_name'] = 'pNNfilt'
         # default hyper
         self.set_hyperparamter()
 
@@ -25,7 +25,7 @@ class feature_extractor_pre_nnFilterDenoise(feature_extractor):
                 'aggregation': aggregation,
                 'nfft': nfft}
         
-        self.para_dict['file_name_mainhyperparastr'] = 'nf'+str(nfft)
+        #self.para_dict['file_name_mainhyperparastr'] = 'nf'+str(nfft)
 
         if os.path.isfile(self._full_wave_path()):
                 self.create_from_wav(self.para_dict['wave_filepath'] )

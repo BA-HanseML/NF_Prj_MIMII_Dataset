@@ -121,8 +121,17 @@ def CleanAextract_to_PandasPickles(base_folder,
             
         #
         #TODO add the cleaner and create form memory in extractor
-        FEOloop = feature_extractor_from_dict(FeatureExtractorObj.get_dict(), base_folder)
-        FEOloop.create_from_wav(file_path)
+        if CleanerObj:
+            tempd = CleanerObj.get_dict()
+            #print(i)
+            CLOloop =  feature_extractor_from_dict(tempd, base_folder)
+            CLOloop.create_from_wav(file_path)
+            tempd2= FeatureExtractorObj.get_dict()
+            FEOloop = feature_extractor_from_dict(tempd2, base_folder)
+            FEOloop.create_from_wav(CLOloop.get_wav_memory_file())
+        else:
+            FEOloop = feature_extractor_from_dict(FeatureExtractorObj.get_dict(), base_folder)
+            FEOloop.create_from_wav(file_path)
         
         file_name = target_file_prefix + '_' + \
                     df.iloc[i]['SNR']  + \

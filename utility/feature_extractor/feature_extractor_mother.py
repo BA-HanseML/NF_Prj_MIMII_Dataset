@@ -27,12 +27,15 @@ class feature_extractor_memory_wave_file():
 
 
 def feature_extractor_from_dict(d, base_folder):
-    #print(d)
+    #print(d['para_dict']['type'] )
     if d['para_dict']['type'] == feature_extractor_type.MEL_SPECTRUM:
         fe = feature_extractor_mel(base_folder)
         fe.read_from_dict(d)
     if d['para_dict']['type'] == feature_extractor_type.WELECHPSD:
         fe = feature_extractor_welchPSD(base_folder)
+        fe.read_from_dict(d)
+    if d['para_dict']['type'] == feature_extractor_type.preNNFILTER:
+        fe = feature_extractor_pre_nnFilterDenoise(base_folder)
         fe.read_from_dict(d)
     return fe
     
