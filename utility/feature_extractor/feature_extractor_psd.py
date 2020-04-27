@@ -22,7 +22,7 @@ class feature_extractor_welchPSD(feature_extractor):
                               nfft=512,
                               nperseg =128,
                               scaleing='spectrum',
-                              multichannel='none',
+                              multichannel=None,
                               channel=0):
             
             self.para_dict['hyperpara']={ \
@@ -34,7 +34,9 @@ class feature_extractor_welchPSD(feature_extractor):
             'channel': channel}
             
             self.para_dict['file_name_mainhyperparastr'] = 'seg'+str(nperseg)
-            
+            if multichannel!=None:            
+                self.para_dict['file_name_mainhyperparastr'] += multichannel[0]
+
             if os.path.isfile(self._full_wave_path()):
                 self.create_from_wav(self.para_dict['wave_filepath'] )
                 
@@ -43,6 +45,7 @@ class feature_extractor_welchPSD(feature_extractor):
         # channel= int single channel else list or str 'all'
         
         # TODO for the multichannel stuff... if int or list
+        #print(self.para_dict['hyperpara'], self.para_dict['file_name_mainhyperparastr'])
         channel = self.para_dict['hyperpara']['channel']
         multichannel = self.para_dict['hyperpara']['multichannel']
         self.stack = False

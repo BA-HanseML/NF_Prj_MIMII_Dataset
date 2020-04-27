@@ -39,7 +39,7 @@ class feature_extractor_mel(feature_extractor):
             
             
     def create_from_wav(self, filepath):
-            
+
             # calc librosa 
 
             channel = self.para_dict['hyperpara']['channel']
