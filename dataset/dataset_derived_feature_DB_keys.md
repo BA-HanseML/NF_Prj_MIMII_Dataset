@@ -3,7 +3,7 @@
 any derived feature DB is a pandas data frame with some main keys to identify the indevitual wav file it corresponds to.
 
 ## file naming rule
-<machine>_<SNRs>_<IDs>_<name of feature and key paramter>
+\<machine\>\_\<SNRs\>\_\<IDs\>\_\<name of feature and key paramter\>
 i.e: pump_0dB_00020406_full_spectrum_128.pkl
 pump_0dB6DB_00020406_full_spectrum_128.pkl
 
