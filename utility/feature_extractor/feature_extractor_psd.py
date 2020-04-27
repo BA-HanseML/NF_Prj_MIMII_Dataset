@@ -38,11 +38,20 @@ class feature_extractor_welchPSD(feature_extractor):
         # channel= int single channel else list or str 'all'
         
         # TODO for the multichannel stuff... if int or list
-        self.para_dict['data_channel_use_str'] = 'ch'+str(channel)
+        if  multichannel=='concat' and channel=='all':
+            self.para_dict['data_channel_use_str'] = 'ch'+'Allc'
+            
+            af = np.array(self._read_wav(filepath))
+            self.para_dict['wave_channel'] = [c+1 for c in range(af.shape[0])]
+            af= af.flatten()
+        else:
+            self.para_dict['data_channel_use_str'] = 'ch'+str(channel)
+            self.para_dict['wave_channel'] = [channel]
+            af = np.array(self._read_wav(filepath))[channel, :]
         
-        self.para_dict['wave_channel'] = [channel]
         
-        af = np.array(self._read_wav(filepath))[channel, :]
+        
+        
         
         f, Pxx = scipy.signal.welch(af,
                            fs=self.para_dict['wave_srate'],
