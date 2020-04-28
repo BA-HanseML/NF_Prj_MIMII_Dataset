@@ -36,6 +36,9 @@ class feature_extractor_pre_nnFilterDenoise(feature_extractor):
         self.para_dict['data_channel_use_str'] = 'ch'+'All'
         af = np.array(self._read_wav(filepath))
         
+        # mod here   
+        # make list of spectra not of time doamin
+        # make list dependent
         for c in range(af.shape[0]):
             # Stft
             S = np.abs(librosa.stft(af[c,:],n_fft=self.para_dict['hyperpara']['nfft']))
@@ -48,9 +51,18 @@ class feature_extractor_pre_nnFilterDenoise(feature_extractor):
         self.feature_data = af
     
     def get_wav_memory_file(self):
+        # move taransforamtion to time here
         wmf = feature_extractor_memory_wave_file()
         wmf.filepath = self.para_dict['wave_filepath']
         wmf.channel = self.feature_data
         wmf.srate= self.para_dict['wave_srate']
-        wmf.length = self.feature_data.shape[1]
+        wmf.length = self.feature_data.shape[1] # TODO if one dim
         return wmf
+
+    def get_fft_memory_file(self):
+        # return sfft per channel
+        stftf = 1
+        return stftf 
+
+
+    

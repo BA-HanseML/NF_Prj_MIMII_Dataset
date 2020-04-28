@@ -58,6 +58,45 @@ def BaseDataFrame(nf, af, FileFindDict):
     return df
     
 
+#file name : <diagram_name>\<filenameprefix>_<outportname>
+#file name meta : <diagram_name>\<diagram_name>_metainfo.txt
+#file processd fileslists :  <diagram_name>\<diagram_name>_prcfile.csv
+
+class extractor_diagram():
+    def __init__(self,base_folder, filename_prefix, target_folder_base = 'dataset', threadnr=0 ):
+        self.base_folder = base_folder
+        self.filename_prefix = filenameprefix
+        self.filename_prefix = target_folder_base
+        self.pre = {}
+        self.ext = {}
+        self.name = 'base'
+        self.ini_diagram()
+        self._write_meta_file()
+      
+    
+    def _write_meta_file(self):
+        #all pre ext etc to text file form str and hyper  
+        #time of cration 
+        #if possibel git hash   
+        pass
+    def _get_fullfilepath(self):
+        pass
+    
+    def ini_diagram(self): # custom
+        # extractor diagram name
+        
+        # extractor pre objects and corresponding outports=extractor names
+        
+        pass
+    
+    def execute_diagram(self,file_path): # custom
+        # combine as needed
+
+        # save outports to pkl
+        pass
+    
+
+# change to take a diagram_object(file_path,base)
 def CleanAextract_to_PandasPickles(base_folder,
                                    target_folder,
                                    FileFindDict = {'SNR': '6dB',
