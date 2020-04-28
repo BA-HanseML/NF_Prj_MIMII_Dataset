@@ -68,7 +68,7 @@ class feature_extractor_welchPSD(feature_extractor):
         
         
         if not self.stack:
-            f, Pxx = scipy.signal.welch(af,
+            f, A = scipy.signal.welch(af,
                            fs=self.para_dict['wave_srate'],
                            window=self.para_dict['hyperpara']['window'],
                            nperseg=self.para_dict['hyperpara']['nperseg'], 
@@ -86,21 +86,21 @@ class feature_extractor_welchPSD(feature_extractor):
                            nfft=self.para_dict['hyperpara']['nfft'],
                            scaling=self.para_dict['hyperpara']['scaleing'])
                 if c == 0:
-                    Pxx = Pc
+                    A = Pc
                 else:
-                    Pxx = np.vstack((Pc,Pxx))
+                    A = np.vstack((Pc,A))
 
                            
         
-        self.feature_data = {'f': f, 'Pxx': Pxx}
+        self.feature_data = {'f': f, 'A': A}
      
     def plot(self, loglog=True):
         if not self.stack:
-            plt.plot(self.feature_data['f'],self.feature_data['Pxx'], 
+            plt.plot(self.feature_data['f'],self.feature_data['A'], 
             label = self.para_dict['wave_filepath'])
         else:
-            for c in range(len(self.feature_data['Pxx'][:,0])):
-                plt.plot(self.feature_data['f'],self.feature_data['Pxx'][c], label='ch'+str(c))
+            for c in range(len(self.feature_data['A'][:,0])):
+                plt.plot(self.feature_data['f'],self.feature_data['A'][c], label='ch'+str(c))
 
         plt.xlabel(self.para_dict['xlabel'])
         plt.ylabel(self.para_dict['ylabel'])
@@ -113,8 +113,18 @@ class feature_extractor_welchPSD(feature_extractor):
         plt.title(f"welch {self.para_dict['hyperpara']['scaleing']} - {self.name}")
      
     def flat_feature(self):
-        return self.feature_data['Pxx']
+        return self.feature_data['A'].flatten()
+
+    def channel_feature(self):
+        return self.feature_data['A']
      
     def freq_axis(self):
         return self.feature_data['f']
-        
+
+    def get_feature(self, feat_para_dict):
+        if feat_para_dict['function'] == 'flat':
+            return self.flat_feature()
+        elif feat_para_dict['function'] == 'channel':
+            return self.channel_feature()
+        else:
+             raise Exception('feat get function "' + feat_para_dict['function'] + '" unknown')

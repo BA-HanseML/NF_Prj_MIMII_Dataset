@@ -88,4 +88,13 @@ class feature_extractor_mel(feature_extractor):
             vectorarray[:, n_mels * t: n_mels * (t + 1)] = self.feature_data[:, t: t + vectorarray_size].T
         
         return vectorarray
+
+    def get_feature(self, feat_para_dict):
+        if feat_para_dict['function'] == 'flat':
+            return self.flat_feature()
+        elif feat_para_dict['function'] == 'frame':
+            return self.frame_pack_feature( feat_para_dict['frames'])
+        else:
+             raise Exception('feat get function "' + feat_para_dict['function'] + '" unknown')
+
         
