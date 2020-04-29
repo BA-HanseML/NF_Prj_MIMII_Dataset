@@ -10,8 +10,8 @@ dataset/*
 
 # --- modeling ---
 modeling/*
-!modeling/*/*.yml
-!modeling/*/*.ipynb
+!modeling/*.yml
+!modeling/*.ipynb
 !modeling/modeling_struct.md
 
 # --- reference --- 
