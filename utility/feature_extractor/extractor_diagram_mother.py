@@ -44,8 +44,8 @@ def outport_akkulist_join(exdia_list=[]):
     ej.name = exdia_list[0].name
     for i,e in enumerate(exdia_list):
         if i==0:
-           ej.outport_akkulist = e.outport_akkulist.copy()
-           ej.target_akkulist = e.target_akkulist.copy()
+           ej.outport_akkulist = e.outport_akkulist
+           ej.target_akkulist = e.target_akkulist
         else:
             for op in e.outport_akkulist:
                 ej.outport_akkulist[op] += e.outport_akkulist[op] 
@@ -62,7 +62,7 @@ def outport_akkulist_tofile(base_folder,target_folder,exdia,machine,SNR,ID):
     for outport in exdia.outport_akkulist:
         outport_path[outport] = os.path.join(target_folder, filename_base + '_outp' + outport +'.pkl')
         filepath = os.path.abspath(base_folder+outport_path[outport])
-        print(outport)
+        #print(outport)
         pickle.dump(exdia.outport_akkulist[outport],
                     open( filepath, "wb" ) )
     
@@ -74,7 +74,7 @@ def outport_akkulist_tofile(base_folder,target_folder,exdia,machine,SNR,ID):
         for i in range(len(exdia.outport_akkulist[outport])):
             #print(i)
             filepath = exdia.outport_akkulist[outport][i]['para_dict']['wave_filepath']
-            print(filepath)
+            #print(filepath)
             df.at[i,'path'] = filepath
             abnormal = exdia.target_akkulist[i]
             df.at[i,'abnormal'] = abnormal
