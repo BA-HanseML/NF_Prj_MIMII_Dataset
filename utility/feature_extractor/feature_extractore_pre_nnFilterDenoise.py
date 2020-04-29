@@ -23,7 +23,8 @@ class feature_extractor_pre_nnFilterDenoise(feature_extractor):
 
         self.para_dict['hyperpara']={ \
                 'aggregation': aggregation,
-                'nfft': nfft}
+                'nfft': nfft,
+                'channel': channel}
         
         #self.para_dict['file_name_mainhyperparastr'] = 'nf'+str(nfft)
 
@@ -39,7 +40,14 @@ class feature_extractor_pre_nnFilterDenoise(feature_extractor):
         # mod here   
         # make list of spectra not of time doamin
         # make list dependent
-        for c in range(af.shape[0]):
+        if self.para_dict['hyperpara']['channel']=='all':
+            cl = range(af.shape[0])
+        elif type(self.para_dict['hyperpara']['channel'])==int:
+            cl = [self.para_dict['hyperpara']['channel']]
+        elif type(self.para_dict['hyperpara']['channel'])==list:
+            cl = self.para_dict['hyperpara']['channel']
+            
+        for c in cl:
             # Stft
             S = np.abs(librosa.stft(af[c,:],n_fft=self.para_dict['hyperpara']['nfft']))
             nlm = librosa.decompose.nn_filter(S,aggregate=self.para_dict['hyperpara']['aggregation'])
