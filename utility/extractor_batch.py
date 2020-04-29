@@ -121,6 +121,7 @@ def extractor_batch(base_folder, target_folder, extdia,
     target_folder_full = os.path.abspath(base_folder+target_folder)
     os.makedirs(target_folder_full, exist_ok=True)
     lw.log('Target folder will be: ' + target_folder_full)
+    lw.log('Extractor diagram is fof type: ' + str(extdia))
     
     for m in IfStrReturnList(FileFindDict['machine']):
         for snr in IfStrReturnList(FileFindDict['SNR']):
@@ -168,7 +169,9 @@ def extractor_batch(base_folder, target_folder, extdia,
                     joinlist = outport_akkulist_join(exdia_list=edl) 
                     outport_akkulist_tofile(base_folder, target_folder, joinlist, m, snr, id)
                     lw.log('multithread mode list joined and pickled for the id' ) 
-                lw.log('total time needed for the ID: ' + str(np.round(time.time()- ts,2)) + 'sec') 
+                tneeded_sec = np.round(time.time()- ts,2)
+                tneeded_min = np.round(tneeded_sec/60,2)
+                lw.log('total time needed for the ID: ' + str(tneeded_sec) + 'sec' + ' = ' + str(tneeded_min) + 'min') 
                         
                     
     lw.close()
