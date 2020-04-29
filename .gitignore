@@ -8,6 +8,12 @@ dataset/*
 *.pkl
 *.npy
 
+# --- modeling ---
+modeling/*
+!modeling/*/*.yml
+!modeling/*/*.ipynb
+!modeling/modeling_struct.md
+
 # --- reference --- 
 ref/*.pdf
 !ref/paper_list.md
