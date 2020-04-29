@@ -27,7 +27,7 @@ class ExtractorDiagramThread(Thread):
             # Get the work from the queue and expand the tuple
             file_path, target_class = self.queue.get()  
             # execute diagaram
-            self.co.execute_diagram(file_path,target_class)
+            self.extdia.execute_diagram(file_path,target_class)
             self.queue.task_done()
 
 
@@ -95,17 +95,17 @@ def get_file_list(machine, snr, id, target_class_map,
 def multithreadpolltracker(queue, total):
     last = total
     done_l = 0
-    pbar2 = tqdma(total=total)
+    pbar = tqdm(total=total)
     while not queue.empty():
         time.sleep(0.05)
         if last > queue.qsize():
             done = total-int(queue.qsize())
             #print(done, end ="--")
-            pbar2.update(done-done_l)
+            pbar.update(done-done_l)
             done_l = done
         last = queue.qsize()
     done = total
-    pbar2.update(done)
+    pbar.update(done)
 
 def extractor_batch(base_folder, target_folder, extdia, 
                     FileFindDict = {'SNR': '6dB',
@@ -136,8 +136,10 @@ def extractor_batch(base_folder, target_folder, extdia,
                 
                 if n_jobs == 1: # in the notebook
                     ed = extdia(base_folder,0)
-                    for f,tc in tqdm(zip(filelist, targetlist)):
+                    pbar= tqdm(total = len(filelist))
+                    for f,tc in (zip(filelist, targetlist)):
                         ed.execute_diagram(f,tc)
+                        pbar.update()
                     outport_akkulist_tofile(base_folder,target_folder,ed,m,snr,id)
                     lw.log('list for the id pickled' ) 
                 else: # to threads
@@ -153,7 +155,7 @@ def extractor_batch(base_folder, target_folder, extdia,
                         wl.append(worker)
                     # fill the Queue
                     lw.log('multithread mode filling the queue' )
-                    for f,tc in tqdm(zip(filelist, targetlist)):
+                    for f,tc in (zip(filelist, targetlist)):
                         queue.put((f, tc))
                     
                     multithreadpolltracker(queue, len(filelist))

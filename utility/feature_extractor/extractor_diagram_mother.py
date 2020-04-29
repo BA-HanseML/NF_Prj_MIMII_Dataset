@@ -79,7 +79,7 @@ def outport_akkulist_tofile(base_folder,target_folder,exdia,machine,SNR,ID):
             abnormal = exdia.target_akkulist[i]
             df.at[i,'abnormal'] = abnormal
             df.at[i,'datafile_idx'] = i
-            df.at[i,outport] = outport_path[outport]
+            df.at[i,outport] = outport_path[outport].replace('/','\\')
         
     df['SNR'] = SNR
     df['machine'] = machine
