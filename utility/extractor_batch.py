@@ -104,6 +104,7 @@ def multithreadpolltracker(queue, total):
             pbar.update(done-done_l)
             done_l = done
         last = queue.qsize()
+    queue.join()
     done = total
     pbar.update(done)
 
@@ -125,6 +126,7 @@ def extractor_batch(base_folder, target_folder, extdia,
         for snr in IfStrReturnList(FileFindDict['SNR']):
             for id in IfStrReturnList(FileFindDict['ID']):
                 lw.log('Working on machinepart:' + m + ' SNR:' + snr + ' ID:' + id )
+                ts = time.time()
                 # create file list for ID batch
                 filelist, targetlist = get_file_list(m, snr, id, 
                                          target_class_map, 
@@ -159,14 +161,14 @@ def extractor_batch(base_folder, target_folder, extdia,
                         queue.put((f, tc))
                     
                     multithreadpolltracker(queue, len(filelist))
-                    queue.join()
+                    
                     for w in wl:
                         w.stop = True
                     lw.log('multithread mode all threads done' ) 
                     joinlist = outport_akkulist_join(exdia_list=edl) 
                     outport_akkulist_tofile(base_folder, target_folder, joinlist, m, snr, id)
                     lw.log('multithread mode list joined and pickled for the id' ) 
-                        
+                lw.log('total time needed for the ID: ' + str(np.round(time.time()- ts,2)) + 'sec') 
                         
                     
     lw.close()
