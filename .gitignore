@@ -1,18 +1,11 @@
 # Project based
 
-
 # --- dataset ---
 dataset/*
 !dataset/*/*.ipynb
 !dataset/dataset_struct.md
 *.pkl
 *.npy
-
-# --- modeling ---
-modeling/*
-!modeling/*.yml
-!modeling/*/*.ipynb
-!modeling/modeling_struct.md
 
 # --- reference --- 
 ref/*.pdf
