@@ -1,3 +1,10 @@
+print('load load_data')
+
+# main imports
+import numpy as np
+import pandas as pd
+import os
+
 def load_data(path_descr, feat={'function':'flat', 'frames':3}
               , feat_col=None, SNR='6dB', machine='pump', ID='00'
               , train_set=True, BASE_FOLDER=BASE_FOLDER):
