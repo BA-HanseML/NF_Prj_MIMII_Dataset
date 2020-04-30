@@ -1,6 +1,5 @@
 # Project based
 
-
 # --- dataset ---
 dataset/*
 !dataset/*/*.ipynb
@@ -143,4 +142,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-

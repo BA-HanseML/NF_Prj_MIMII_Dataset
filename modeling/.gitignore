@@ -1,0 +1,8 @@
+# Project based
+
+# --- modeling ---
+./*
+!./*/*.ipynb
+!./*/modeling_struct.md
+*.pkl
+*.npy
