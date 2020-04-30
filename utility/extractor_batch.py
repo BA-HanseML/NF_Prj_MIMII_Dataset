@@ -126,6 +126,7 @@ def extractor_batch(base_folder, target_folder, extdia,
     for m in IfStrReturnList(FileFindDict['machine']):
         for snr in IfStrReturnList(FileFindDict['SNR']):
             for id in IfStrReturnList(FileFindDict['ID']):
+                lw.log('-'*44 )
                 lw.log('Working on machinepart:' + m + ' SNR:' + snr + ' ID:' + id )
                 ts = time.time()
                 # create file list for ID batch
