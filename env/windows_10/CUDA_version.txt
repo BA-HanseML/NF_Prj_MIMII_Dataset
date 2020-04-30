@@ -1,4 +1,0 @@
-NVIDIA base driver GTX970 : 445.75
-CUDA : 10.0.130_411.31
-cuDNN : v7.6.5.32 for cuda 10.0
-TensorRT : 5.0.4.3
