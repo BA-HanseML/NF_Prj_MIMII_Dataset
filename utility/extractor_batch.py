@@ -115,7 +115,12 @@ def extractor_batch(base_folder, target_folder, extdia,
                     n_jobs = 1,
                     target_class_map = {'abnormal':1, 'normal': 0},
                     FileCountLimit = None,
-                    datset_folder_from_base = 'dataset'):
+                    datset_folder_from_base = 'dataset',
+                    augment = False, # create one augmentation for a given target class i.e. 'normal'
+                    DeviceType = 0, # 0 continuses or 1 sporatic 
+                    fHP = None, # simple FIR HP to cut of very low freq to not overload MEL
+                    main_channel = 0): # assuming a DOA was able to get mein direction (pseudo DOA ...)
+                    
     lw = LoggerWrap()
     base_folder_full = os.path.abspath(base_folder)
     target_folder_full = os.path.abspath(base_folder+target_folder)

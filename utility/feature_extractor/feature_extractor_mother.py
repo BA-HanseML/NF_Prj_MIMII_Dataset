@@ -38,6 +38,10 @@ def feature_extractor_from_dict(d, base_folder):
     if d['para_dict']['type'] == feature_extractor_type.preNNFILTER:
         fe = feature_extractor_pre_nnFilterDenoise(base_folder)
         fe.read_from_dict(d)
+    if d['para_dict']['type'] == feature_extractor_type.ICA2:
+        fe = feature_extractor_ICA2(base_folder)
+        fe.read_from_dict(d)
+        
     return fe
     
 def feature_extractor_from_file(filepath, base_folder):

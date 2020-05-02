@@ -2,7 +2,7 @@ print('load feature_extractor_ICA2')
 
 from sklearn.decomposition import FastICA
 
-class extractor_diagram_ICA2(feature_extractor):
+class feature_extractor_ICA2(feature_extractor):
     def __init__(self, base_folder, name='ICA2'):
         super().__init__(base_folder,name,
                         xlabel = 'time',
