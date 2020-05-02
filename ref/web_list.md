@@ -32,3 +32,13 @@ Channel Jeff Heaton:
 great help with the CUDA and use cases of Keras and general deep learning
 https://www.youtube.com/channel/UCR1-GEpyOPzT2AO4D_eifdw
 
+## Machine parts
+YoutubeChannel: Engineering Mindset shows function of classic industrla machine parts we foudn it helpfull to get a feel for the machine parts of the porject
+https://www.youtube.com/channel/UCk0fGHsCEzGig-rSzkfCjMw
+pump : https://www.youtube.com/watch?v=TxqPAPg4nb4
+valve: https://www.youtube.com/watch?v=-MLGr1_Fw0c
+Youtube example for linear slider: https://www.youtube.com/watch?v=uewMphsBamk
+fan: https://www.youtube.com/watch?v=dY6rzhXcVs8
+
+
+

@@ -17,23 +17,17 @@ class extractor_diagram():
         self.outport_akkulist = {} # one list per output port 
         self.target_akkulist = []        
         self.name = 'base'
-        
+        self.probe_port = {}
         self.ini_diagram()
         
 
     def ini_diagram(self): # custom
-        # extractor diagram name
-        
-        # extractor pre objects and corresponding 
-        
-        # outport ini
+
         
         pass
     
-    def execute_diagram(self,file_path,file_class): # custom
-        # combine as needed
-        
-        # save outports to pkl
+    def execute_diagram(self,file_path,file_class, probe=False): # custom
+
         pass
         
 

@@ -24,7 +24,7 @@ class extdia_v0(extractor_diagram):
         #self.outport_akkulist['STFT_den'] = []
         pass
     
-    def execute_diagram(self,file_path,file_class): # custom
+    def execute_diagram(self,file_path,file_class, probe=False): # custom
         #-record target to akku append later
         #print(file_path)
         self.target_akkulist.append(file_class)
@@ -32,6 +32,8 @@ class extdia_v0(extractor_diagram):
         #-
         denoise = feature_extractor_from_dict(self.pre['denoise'].get_dict(), self.base_folder)
         denoise.create_from_wav(file_path)
+        if probe:
+            self.probe_port['denoise'] = denoise.get_wav_memory_file()
         #TODO STFT out
         
         #-
