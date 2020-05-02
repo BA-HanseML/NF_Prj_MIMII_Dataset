@@ -1,11 +1,13 @@
 print('Load detection_pipe')
 
 # main imports
-from sklearn.covariance import EllipticEnvelope
-from sklearn.ensemble import IsolationForest
-from sklearn.mixture import GaussianMixture
-from sklearn.svm import OneClassSVM
-from sklearn.metrics import roc_auc_score
+import numpy as np
+import pickle
+from datetime import datetime
+
+## PipeThreading objects
+from queue import Queue
+from threading import Thread
 
 class Pipe(object):
     def __init__(self, preprocessing_steps=None, modeling_step=None):        
@@ -37,13 +39,12 @@ class Pipe(object):
                                     task['SNR'],
                                     task['machine'],
                                     'ID'+task['ID'],
-                                    datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+                                    datetime.now().strftime("%Y%m%d_%H%M%S")
                                     ]) + '.pkl'
         else:
             self.filepath = path
 
     def get_data(self, task):
-        time.sleep(.5)
         self.df_train, data_train = load_data(train_set=True, **task)
         self.df_test, data_test = load_data(train_set=False, **task)
         self.ground_truth = self.df_test.abnormal.apply(lambda x : 1 if x==0 else -1)
@@ -97,10 +98,6 @@ class Pipe(object):
         print('pipe saved to pickle')
         return True
     
-    
-## PipeThreading objects
-from queue import Queue
-from threading import Thread
 
 # thread class
 class PipeThread(Thread):
