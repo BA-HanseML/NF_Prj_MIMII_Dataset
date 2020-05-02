@@ -32,11 +32,11 @@ class feature_extractor_pre_nnFilterDenoise(feature_extractor):
                 self.create_from_wav(self.para_dict['wave_filepath'] )
         
     def create_from_wav(self, filepath):
-        
+
         # assuming for now all channels
         self.para_dict['data_channel_use_str'] = 'ch'+'All'
         af = np.array(self._read_wav(filepath))
-        
+
         # mod here   
         # make list of spectra not of time doamin
         # make list dependent

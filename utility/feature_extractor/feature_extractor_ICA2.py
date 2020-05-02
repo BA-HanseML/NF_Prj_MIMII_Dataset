@@ -42,11 +42,11 @@ class feature_extractor_ICA2(feature_extractor):
             
     def get_wav_memory_file(self, main=False):
             
-        wmf = feature_extractor_memory_wave_file()
+        wmf = memory_wave_file()
         wmf.filepath = self.para_dict['wave_filepath']
         if main:
             ica_range, ica_chnr, in_chnr = self._ICA_2_main_channel(self.feature_data)
-            wmf.channel = np.array([self.wave_data[ica_chnr]])
+            wmf.channel = self.wave_data[ica_chnr].reshape(1,-1)
         else:
             wmf.channel = self.wave_data
         wmf.srate= self.para_dict['wave_srate']
