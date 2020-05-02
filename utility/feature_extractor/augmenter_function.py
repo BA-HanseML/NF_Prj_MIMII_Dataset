@@ -29,16 +29,20 @@ def aug_band_chain(s,sr,n=3):
     for i in range(n):
         frc_l, frc_u = get_rand_fband()
         fkern = design_band_bass(sr,frc_l, frc_u)
-        sout = apply_filter(fkern,sout)
+        for si in range(sout.shape[0]):
+            sout[si] = apply_filter(fkern,sout[si])
     return sout
     
 def pitch_add(s,sr):
-    return librosa.effects.pitch_shift(s, sr, n_steps=1)
+    sout = s
+    for si in range(s.shape[0]):
+        sout[si] = librosa.effects.pitch_shift(sout[si], sr, n_steps=1)
+    return sout
     
-    
+import copy
 def create_augmenter(wmf):
     import random 
-    s = wmf.channel[0]
+    s = copy.deepcopy(wmf.channel)
     pitch  = np.random.random_sample()>0.7
     bandadd = random.randint(2,6)
     if pitch:
@@ -49,7 +53,7 @@ def create_augmenter(wmf):
     
     wmf_r = memory_wave_file()
     wmf_r.filepath = wmf.filepath
-    wmf_r.channel = [s]
+    wmf_r.channel = s
     wmf_r.srate = wmf.srate
     wmf_r.length = len(s)
     return wmf_r

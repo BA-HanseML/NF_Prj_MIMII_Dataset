@@ -13,6 +13,7 @@ class feature_extractor_type(Enum):
     PSD = 1
     MEL_SPECTRUM = 2
     WELECHPSD = 3
+    ICA2 = 11
     preNNFILTER = 101
 
 
