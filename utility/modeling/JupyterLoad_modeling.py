@@ -18,5 +18,8 @@ exec(open(fp).read())
 fp = package_file_folder(BASE_FOLDER, 'split_data.py') 
 exec(open(fp).read())
 ## -
-fp = package_file_folder(BASE_FOLDER, 'clustering.py') 
+fp = package_file_folder(BASE_FOLDER, 'anomaly_detection_models.py') 
+exec(open(fp).read())
+## -
+fp = package_file_folder(BASE_FOLDER, 'detection_pipe.py') 
 exec(open(fp).read())

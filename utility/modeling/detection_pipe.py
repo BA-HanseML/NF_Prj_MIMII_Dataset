@@ -1,72 +1,120 @@
-def find_max(ch_scores):
-    ''' 
-    1. returns the index of the first local maximum
-    2. if first or element is global maximum, returns index 0
-    '''
-    
-    maxima = argrelextrema(np.array(ch_scores), np.greater)
-    
-    if ch_scores[0] == np.max(ch_scores):
-        maxima = [[0]]
+print('Load detection_pipe')
 
-    return maxima[0][0]
+# main imports
+from sklearn.covariance import EllipticEnvelope
+from sklearn.ensemble import IsolationForest
+from sklearn.mixture import GaussianMixture
+from sklearn.svm import OneClassSVM
+from sklearn.metrics import roc_auc_score
 
-def evaluate_clustering(model, args, X, metric='ch_score'):
-    # initiate scoring lists
-    _score = []
-    outlier = []
+class Pipe(object):
+    def __init__(self, preprocessing_steps=None, modeling_step=None):        
+        # instantiate evaluating parameters
+        self.roc_auc = None
 
-    # set up cluster storing
-    clusters = []
+        # instantiate the preprocessing steps
+        self.preproc_steps = [step(**kwargs) for step, kwargs in preprocessing_steps]        
 
-    for arg_idx, arg in enumerate(args):
-        # reinitialize model with arguments
-        model.__init__(**arg)
+        # create the predictive model             
+        self._mdl, self.model_args = modeling_step # model object
+        # model instance
+        self.model = self._mdl(**self.model_args)
 
-        # store predictions
-        _clusters = model.fit_predict(X)
-        clusters.append(_clusters)
+    def to_pickle(self, filepath=None):
+        self.update_filepath(filepath)
 
-        if len(np.unique(_clusters)) >= 2: 
-            # calculate the score
-            if metric == 'ch_score':
-                _score.append(calinski_harabasz_score(X, _clusters))
+        with open(self.filepath, 'wb') as f:
+            pickle.dump(self, f)
 
-            elif metric == 'db_score':
-                _score.append(davies_bouldin_score(X, _clusters))
+    def update_filepath(self, path=None):
+        if not path or (type(path)==dict):
+            if not path:
+                task = self.task
+            else:
+                task = path
+                self.filepath = '.\\pipes\\' + '_'.join([ task['feat_col'],
+                                    ''.join([str(i) for i in list(task['feat'].values())]),
+                                    task['SNR'],
+                                    task['machine'],
+                                    'ID'+task['ID'],
+                                    datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+                                    ]) + '.pkl'
         else:
-            # if we have only 1 cluster, the scoring fails
-            # we need to address this case
-            _score.append(np.NaN)
+            self.filepath = path
 
-        outlier.append(np.sum(_clusters==-1))
+    def get_data(self, task):
+        time.sleep(.5)
+        self.df_train, data_train = load_data(train_set=True, **task)
+        self.df_test, data_test = load_data(train_set=False, **task)
+        self.ground_truth = self.df_test.abnormal.apply(lambda x : 1 if x==0 else -1)
 
-    # get the best set of model arguments
-    if metric == 'ch_score':
-        best_index = find_max(_score)
+        # update filepath accordingly to task
+        self.update_filepath(task)
 
-    elif metric == 'db_score':
-        best_index = np.argmin(_score)
+        return data_train, data_test
 
-    best_args = args[best_index]
-    best_clusters = clusters[best_index]
+    def preprocess(self, data_train, data_test):
+        # run through all the preprocessing steps
+        for step in self.preproc_steps:
+            data_train =  step.fit_transform(data_train)
+            data_test = step.transform(data_test)
 
-    return best_clusters, best_args, _score
+        # return preprocessed data
+        return data_train, data_test
 
-def evaluate_args(ch_score, args, score_label='calinski harabasz score', keyword=None):
+    def fit_model(self, data_train):
+        # fit the model
+        self.model.fit(data_train)
 
-    plt.figure(figsize=(5,5), dpi=200)
+    def evaluate(self, data_test, ground_truth):
+        # calculate evaluation score
 
-    max_clusters = len(ch_score)
+        self.df_test['pred_scores'] = self.model.predict_score(data_test)
+        self.df_test['pred_labels'] = self.model.predict(data_test)
+        self.roc_auc = self.model.eval_roc_auc(data_test, ground_truth)
 
-    # create the plot
-    plt.title('Clustering metric score')
+    def run_pipe(self, task):
+        self.task = task
+        # get the data
+        print('...loading data')
+        data_train, data_test = self.get_data(task)
+        print('data loading completed\n\n...preprocessing data')
 
-    plt.scatter(x=[i for i in range(2,max_clusters+2)],y=ch_score,s=50, edgecolor='k')
+        # preprocessing
+        data_train, data_test = self.preprocess(data_train, data_test)
+        print('data preprocessing finished\n\n...fitting the model')
 
-    plt.grid(True)
-    plt.xlabel("number of clusters")
-    plt.ylabel(score_label)
-    plt.xticks([i for i in range(2,max_clusters+1)])
+        # fitting the model
+        self.fit_model(data_train)
+        print('model fitted successfully\n\n...evaluating model')
 
-    plt.show()
+        # evaluating over ground truth
+        self.evaluate(data_test, self.ground_truth)
+        print('evaluation successfull, roc_auc:', self.roc_auc)
+
+        # saving to pickle
+        self.to_pickle()
+        print('pipe saved to pickle')
+        return True
+    
+    
+## PipeThreading objects
+from queue import Queue
+from threading import Thread
+
+# thread class
+class PipeThread(Thread):
+
+    def __init__(self, queue):
+        Thread.__init__(self)
+        self.queue = queue
+        self.stop = False
+
+    def run(self):
+        while not self.stop:
+            # Get the work from the queue and expand the tuple
+            pipe, task = self.queue.get()  
+            # run the pipe
+            pipe.run_pipe(task)
+            # return done
+            self.queue.task_done()
