@@ -46,7 +46,15 @@ exec(open(fp).read())
 fp = package_file_folder(BASE_FOLDER, 'extractor_diagram_mother.py') 
 exec(open(fp).read())
 
+##- Simple filter
+fp = package_file_folder(BASE_FOLDER, 'Simple_FIR_HP.py') 
+exec(open(fp).read())
+
 
 ##- Augmentaion
 fp = package_file_folder(BASE_FOLDER, 'augmenter_function.py') 
+exec(open(fp).read())
+
+##- Time Slicer
+fp = package_file_folder(BASE_FOLDER, 'TimeSliceAppendActivation.py') 
 exec(open(fp).read())

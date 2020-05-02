@@ -5,7 +5,7 @@
 
 """ Weighted prediction error(WPE) method for speech dereverberation."""
 
-import stft
+#import stft
 import argparse
 import time
 import os
@@ -15,27 +15,77 @@ import librosa
 from numpy.lib import stride_tricks
 # import matplotlib.pyplot as plt
 
-class Configrations():
-    """Argument parser for WPE method configurations."""
-    def __init__(self):
-        self.parser = argparse.ArgumentParser()
 
-    def parse(self):
-        self.parser.add_argument('filename')
-        self.parser.add_argument(
-            '-o', '--output', default='drv.wav',
-            help='output filename')
-        self.parser.add_argument(
-            '-m', '--mic_num', type=int, default=3,
-            help='number of input channels')
-        self.parser.add_argument(
-            '-n','--out_num', type=int, default=2,
-            help='number of output channels')
-        self.parser.add_argument(
-            '-p', '--order', type=int, default=30,
-            help='predition order')
-        self.cfgs = self.parser.parse_args()
-        return self.cfgs
+import numpy as np
+from numpy.lib import stride_tricks
+
+def wpe_stft(data, frame_size=512, overlap=0.75, window=None):
+    """ Multi-channel short time fourier transform 
+
+    Args:
+        data: A 2-dimension numpy array with shape=(channels, samples)
+        frame_size: An integer number of the length of the frame
+        overlap: A float nonnegative number less than 1 indicating the overlap
+                 factor between adjacent frames
+
+    Return:
+        A 3-dimension numpy array with shape=(channels, frames, frequency_bins) 
+    """
+    assert(data.ndim == 2)
+    if window == None:
+        window = np.hanning(frame_size) 
+    frame_shift = int(frame_size - np.floor(overlap * frame_size))
+    cols = int(np.ceil((data.shape[1] - frame_size) / frame_shift)) + 1
+    data = np.concatenate(
+        (data, np.zeros((data.shape[0], frame_shift), dtype = np.float32)),
+        axis = 1)
+    samples = data.copy()
+    frames = stride_tricks.as_strided(
+        samples,
+        shape=(samples.shape[0], cols, frame_size),
+        strides=(
+            samples.strides[-2], 
+            samples.strides[-1] * frame_shift, 
+            samples.strides[-1])).copy()
+    frames *= window
+    return np.fft.rfft(frames)
+
+def wpe_istft(data, frame_size=None, overlap=0.75, window=None):
+    """ Multi-channel inverse short time fourier transform
+
+    Args:
+        data: A 3-dimension numpy array with shape=(channels, frames, frequency_bins) 
+        frame_size: An integer number of the length of the frame
+        overlap: A float nonnegative number less than 1 indicating the overlap
+                 factor between adjacent frames
+
+    Return:
+        A 2-dimension numpy array with shape=(channels, samples)
+    """
+    assert(data.ndim == 3)
+    real_data = np.fft.irfft(data)
+    if frame_size == None:
+        frame_size = real_data.shape[-1]
+    frame_num = data.shape[-2]
+    frame_shift = int(frame_size - np.floor(frame_size * overlap))
+    length = (frame_num - 1) * frame_shift + frame_size
+    output = np.zeros((data.shape[0], length))
+    for i in range(frame_num):
+        index = i*frame_shift
+        output[:, index : index + frame_size] += real_data[:,i]
+    return output
+    
+def wpe_log_spectrum(raw_data, frame_length=512):
+    """Log magnitude spectrogram"""
+    if raw_data.ndim == 1:
+        raw_data = np.reshape(raw_data, (1, -1))
+    freq_data = wpe_stft(raw_data)
+    phase = np.angle(freq_data)
+    freq_data = np.abs(freq_data)
+    freq_data = np.maximum(freq_data, 1e-8)
+    log_data = np.log10(freq_data / freq_data.min())
+    return log_data, phase
+
 
 
 class WpeMethod(object):
@@ -54,7 +104,7 @@ class WpeMethod(object):
         overlap: A float nonnegative number less than 1 indicating the overlap
                  factor between adjacent frames
     """
-    def __init__(self, mic_num, out_num, order=30):
+    def __init__(self, mic_num, out_num, order=30 , verbose=False):
         self.channels = mic_num
         self.out_num = out_num
         self.p = order
@@ -62,6 +112,7 @@ class WpeMethod(object):
         self.frame_size = 512
         self.overlap = 0.5
         self._iterations = 2
+        self.verbose = verbose
     
     @property
     def iterations(self):
@@ -73,18 +124,21 @@ class WpeMethod(object):
         self._iterations = int(value)
 
     def _display_cfgs(self):
-        print('\nSettings:')
-        print("Input channel: %d" % self.channels)
-        print("Output channel: %d" % self.out_num)
-        print("Prediction order: %d\n" % self.p)
+        if self.verbose:
+            print('\nSettings:')
+            print("Input channel: %d" % self.channels)
+            print("Output channel: %d" % self.out_num)
+            print("Prediction order: %d\n" % self.p)
 
 
     def run_offline(self, data):
         self._display_cfgs()
         time_start = time.time()
-        print("Processing...")
+        if self.verbose:
+            print("Processing...")
         drv_data = self.__fdndlp(data)
-        print("Done!\nTotal time: %f\n" % (time.time() - time_start))
+        if self.verbose:
+            print("Done!\nTotal time: %f\n" % (time.time() - time_start))
         return drv_data
 
     def __fdndlp(self, data):
@@ -101,7 +155,7 @@ class WpeMethod(object):
             A 2-dimension numpy array with shape=(output_channels, samples)
         """
 
-        freq_data = stft.stft(
+        freq_data = wpe_stft(
             data / np.abs(data).max(), 
             frame_size=self.frame_size, overlap=self.overlap)
         self.freq_num = freq_data.shape[-1]
@@ -110,7 +164,7 @@ class WpeMethod(object):
             xk = freq_data[:,:,i].T
             dk = self.__ndlp(xk)
             drv_freq_data[:,:,i] = dk.T
-        drv_data = stft.istft(
+        drv_data = wpe_istft(
             drv_freq_data, 
             frame_size=self.frame_size, overlap=self.overlap)
         return drv_data / np.abs(drv_data).max()
@@ -173,15 +227,4 @@ class WpeMethod(object):
         print('Write to file: %s.' % filepath)
         sf.write(filepath, data.T, fs, subtype='PCM_16')
 
-#if __name__ == '__main__':
-#    cfgs = Configrations().parse()
-#    # cfgs.filename = '../wav_sample/sample_4ch.wav'
-#    wpe = WpeMethod(cfgs.mic_num, cfgs.out_num, cfgs.order)
-#    data, fs = wpe.load_audio(cfgs.filename)
-#    drv_data = wpe.run_offline(data)
-#    wpe.write_wav(drv_data, fs, cfgs.output)
 
-    # plt.figure()
-    # spec, _ = stft.log_spectrum(drv_data[0])
-    # plt.pcolor(spec[0].T)
-    # plt.show()

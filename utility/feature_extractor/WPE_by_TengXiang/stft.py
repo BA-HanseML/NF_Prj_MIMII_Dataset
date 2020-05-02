@@ -6,7 +6,7 @@
 import numpy as np
 from numpy.lib import stride_tricks
 
-def stft(data, frame_size=512, overlap=0.75, window=None):
+def wpe_stft(data, frame_size=512, overlap=0.75, window=None):
     """ Multi-channel short time fourier transform 
 
     Args:
@@ -37,7 +37,7 @@ def stft(data, frame_size=512, overlap=0.75, window=None):
     frames *= window
     return np.fft.rfft(frames)
 
-def istft(data, frame_size=None, overlap=0.75, window=None):
+def wpe_istft(data, frame_size=None, overlap=0.75, window=None):
     """ Multi-channel inverse short time fourier transform
 
     Args:
@@ -62,7 +62,7 @@ def istft(data, frame_size=None, overlap=0.75, window=None):
         output[:, index : index + frame_size] += real_data[:,i]
     return output
     
-def log_spectrum(raw_data, frame_length=512):
+def wpe_log_spectrum(raw_data, frame_length=512):
     """Log magnitude spectrogram"""
     if raw_data.ndim == 1:
         raw_data = np.reshape(raw_data, (1, -1))
