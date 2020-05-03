@@ -21,8 +21,6 @@ dependencies:
     - librosa
     - audioread
     - pandas
-    - pip:
-        - pyroomacoustics
 channels:
     - defaults
     - conda-forge

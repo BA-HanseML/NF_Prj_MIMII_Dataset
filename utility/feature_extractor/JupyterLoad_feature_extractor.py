@@ -34,12 +34,31 @@ exec(open(fp).read())
 ## - 1D SPECTRA
 fp = package_file_folder(BASE_FOLDER, 'feature_extractor_psd.py') 
 exec(open(fp).read())
-## -
+## - BSS
+fp = package_file_folder(BASE_FOLDER, 'feature_extractor_ICA2.py') 
+exec(open(fp).read())
 
 ##-  PRE STAGES
 fp = package_file_folder(BASE_FOLDER, 'feature_extractore_pre_nnFilterDenoise.py') 
 exec(open(fp).read())
+##-
+fp = package_file_folder(BASE_FOLDER, '\WPE_by_TengXiang\wpe.py') 
+exec(open(fp).read())
+
 
 ##- Diagram mother
 fp = package_file_folder(BASE_FOLDER, 'extractor_diagram_mother.py') 
+exec(open(fp).read())
+
+##- Simple filter
+fp = package_file_folder(BASE_FOLDER, 'Simple_FIR_HP.py') 
+exec(open(fp).read())
+
+
+##- Augmentaion
+fp = package_file_folder(BASE_FOLDER, 'augmenter_function.py') 
+exec(open(fp).read())
+
+##- Time Slicer
+fp = package_file_folder(BASE_FOLDER, 'TimeSliceAppendActivation.py') 
 exec(open(fp).read())

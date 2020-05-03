@@ -32,11 +32,11 @@ class feature_extractor_pre_nnFilterDenoise(feature_extractor):
                 self.create_from_wav(self.para_dict['wave_filepath'] )
         
     def create_from_wav(self, filepath):
-        
+
         # assuming for now all channels
         self.para_dict['data_channel_use_str'] = 'ch'+'All'
         af = np.array(self._read_wav(filepath))
-        
+
         # mod here   
         # make list of spectra not of time doamin
         # make list dependent
@@ -50,7 +50,7 @@ class feature_extractor_pre_nnFilterDenoise(feature_extractor):
         for c in cl:
             # Stft
             S = np.abs(librosa.stft(af[c,:],n_fft=self.para_dict['hyperpara']['nfft']))
-            nlm = librosa.decompose.nn_filter(S,aggregate=self.para_dict['hyperpara']['aggregation'])
+            nlm = librosa.decompose.nn_filter(S,aggregate=self.para_dict['hyperpara']['aggregation'], axis=1)
             den = librosa.core.istft(nlm)
             af[c,:len(den)] = librosa.core.istft(nlm)
             af[c,len(den):]=0.

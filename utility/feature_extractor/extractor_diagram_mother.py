@@ -7,33 +7,33 @@ print('load extractor_diagram_mother')
 
 import copy
 class extractor_diagram():
-    def __init__(self,base_folder,  threadnr=0 ):
+    def __init__(self,base_folder,  threadnr=0 , main_channel=0,augment= -1, DeviceType=0, fHP = None ):
         
         self.base_folder = base_folder
         self.threadnr = threadnr
+        
+        self.augment = augment
+        self.DeviceType=DeviceType
+        self.fHP = fHP
+        self.main_channel =main_channel
         
         self.pre = {}
         self.ext = {}
         self.outport_akkulist = {} # one list per output port 
         self.target_akkulist = []        
         self.name = 'base'
-        
+        self.probe_port = {}
         self.ini_diagram()
+
         
 
     def ini_diagram(self): # custom
-        # extractor diagram name
-        
-        # extractor pre objects and corresponding 
-        
-        # outport ini
+
         
         pass
     
-    def execute_diagram(self,file_path,file_class): # custom
-        # combine as needed
-        
-        # save outports to pkl
+    def execute_diagram(self,file_path,file_class, probe=False): # custom
+
         pass
         
 

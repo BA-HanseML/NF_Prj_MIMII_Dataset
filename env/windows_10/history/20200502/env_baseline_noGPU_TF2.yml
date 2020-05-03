@@ -1,10 +1,10 @@
-name: mimiibaseTF2GPU
+name: mimiibaseTF2
 
 dependencies:
     - python=3.7
     - pip>=19.0
     - jupyter
-    - tensorflow-gpu=2.0
+    - tensorflow=2.0
     - keras
     - Keras-Applications
     - Keras-Preprocessing
@@ -21,9 +21,7 @@ dependencies:
     - librosa
     - audioread
     - pandas
-    - pip:
-        - pyroomacoustics
 channels:
     - defaults
     - conda-forge
-    
+
