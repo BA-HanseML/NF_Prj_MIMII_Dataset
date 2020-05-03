@@ -7,7 +7,7 @@ print('load extractor_diagram_mother')
 
 import copy
 class extractor_diagram():
-    def __init__(self,base_folder,  threadnr=0 , main_channel=0,augment= None, DeviceType=0, fHP = None ):
+    def __init__(self,base_folder,  threadnr=0 , main_channel=0,augment= -1, DeviceType=0, fHP = None ):
         
         self.base_folder = base_folder
         self.threadnr = threadnr
