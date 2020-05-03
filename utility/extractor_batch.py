@@ -144,7 +144,7 @@ def extractor_batch(base_folder, target_folder, extdia,
                 # start processing
                 
                 if n_jobs == 1: # in the notebook
-                    ed = extdia(base_folder,0)
+                    ed = extdia(base_folder,0,main_channel,augment,DeviceType,fHP)
                     pbar= tqdm(total = len(filelist))
                     for f,tc in (zip(filelist, targetlist)):
                         ed.execute_diagram(f,tc)
@@ -157,7 +157,7 @@ def extractor_batch(base_folder, target_folder, extdia,
                     wl = []
                     queue = Queue()
                     for w in range(n_jobs):
-                        edl.append(extdia(base_folder,w))
+                        edl.append(extdia(base_folder,w,main_channel,augment,DeviceType,fHP))
                         worker = ExtractorDiagramThread(queue,edl[w],w)
                         worker.daemon = True
                         worker.start()
