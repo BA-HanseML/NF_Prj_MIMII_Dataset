@@ -1,3 +1,7 @@
+# Enviroments Notes
+
+
+
 # cooperational guidline
 
 Main enviorment name = 
@@ -10,21 +14,7 @@ rules for utiltys
 
 
 
-# Baseline dependencys
 
-## orginal list
-keras==2.1.6
-Keras-Applications==1.0.8
-Keras-Preprocessing==1.0.5
-
-matplotlib==3.0.3
-numpy==1.16.0
-PyYAML==5.1
-scikit-learn==0.20.2
-librosa==0.6.0
-audioread==2.1.5
-setuptools==41.0.0
-tensorflow==1.15.0
 
 ## Tensor Flow Win10 CUDA
 check if GPU is CUDA compatible : https://developer.nvidia.com/cuda-gpus

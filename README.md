@@ -82,7 +82,7 @@ Information about the Conda environment, Jupyter settings and GPU elements in te
 ### Folder: sub_notebooks = MISC
 miscellaneous material and interesting site experiments - partially unsorted.
 
-# Future work
+# Future Work
 
 ## not explored options and missing ends
 A list of not fully or not at all explored techniques mostly do to time restriction. And general potential for improvement. Sub Chapter [imporvments](doc/imporvments.md)
@@ -102,9 +102,10 @@ To the creators of the MIMII dataset
 To the creators of the gigantic audio processing library [librosa](https://librosa.github.io/)
 To the creators of the library [pyrommacustics](https://pyroomacoustics.readthedocs.io/en/pypi-release/)
 To all the developers of python, scipy, numpy, scikit learn and tensorflow ... and all the great python stuff that we can build on.
+To Mike X Cohen for his great Python DSP [Udemy courses](https://www.udemy.com/user/mike-x-cohen/) 
 To all the founders and minds of machine learning you created a awesome universe to explore.
 
-To the team at [neuefisch GmbH](https://www.neuefische.de), that made this project possible by training us with there data scince bootcamp.
+To the team at [neuefisch GmbH](https://www.neuefische.de), that made this project possible by training us in the data scince bootcamp.
 
 To so many more form the web like towardsdatascience.com and stackoverflow ...
 
