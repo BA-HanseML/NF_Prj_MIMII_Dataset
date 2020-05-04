@@ -1,18 +1,29 @@
+print('Load split_data')
+
+# main imports
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
 def split_index(indeces, labels):
-    
     '''
     Will combine the testset from all abnormal operation data
     and add up the same amount of normal operation data
     the remaining will be the training dataset
     
-    indeces: indeces of descriptive table or dataframe
-    labels: labels whether instance is abnormal (label==1 - abnormal)
+    indeces: array-like
+        Indeces of descriptive table or dataframe
+        
+    labels: array-like
+        Labels whether instance is abnormal (label==1 indicates abnormal instance)
     '''
 
+    # get indices
     idx_abnormal = indeces[labels==1]
-    num_abnormal = len(idx_abnormal)
-    
     idx_normal = indeces[labels==0]
+    
+    # split the normal data
+    num_abnormal = len(idx_abnormal)
     idx_train, idx_test_normal = train_test_split(idx_normal, test_size=num_abnormal)
 
     # the testset contains all abnormal operation data
@@ -24,7 +35,10 @@ def split_index(indeces, labels):
 def tt_split(table_path):
     '''
     Reads desciptive table from pickle, splits it into training and testing dataset.
-    Returns table with additional column with training/testing index
+    Returns table with additional column with training/testing index.
+    
+    table_path: string
+        Path to the descriptive dataframe
     '''
 
     table = pd.read_pickle(table_path)
