@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-def split_index(indeces, labels):
+def split_index(indeces, labels, files):
     '''
     Will combine the testset from all abnormal operation data
     and add up the same amount of normal operation data
@@ -20,6 +20,7 @@ def split_index(indeces, labels):
 
     # get indices
     idx_abnormal = indeces[labels==1]
+    idx_augmented = indeces[labels==-1]
     idx_normal = indeces[labels==0]
     
     # split the normal data
@@ -28,8 +29,15 @@ def split_index(indeces, labels):
 
     # the testset contains all abnormal operation data
     idx_test = idx_test_normal.union(idx_abnormal)
+    
+    # the respective augmented file in the test-set should not appear in train-set
+    files_test_normal = files[idx_test_normal]
+    files_augmented = files[idx_augmented]
+    idx_augmented_test = idx_augmented[files_augmented.isin(files_test_normal)]
+    
+    idx_train = idx_train.union(idx_augmented)
 
-    return idx_train, idx_test
+    return idx_train, idx_test, idx_augmented_test
 
 
 def tt_split(table_path):
@@ -48,34 +56,34 @@ def tt_split(table_path):
     IDs = table.ID.unique()
 
     if 'train_set' in table.columns:
+        table = table.drop(columns=['train_set'])
 
-        print('{} --> Train test split already done, passed'.format(table_path))
+    # initialize the new column
+    tt_series = pd.Series(0, index=table.index,
+                            name='train_set', dtype=np.int8)
 
-    else:
+    # split for every individual ID, machine and SNR
+    for SNR in SNRs:
+        for machine in machines:
+            for ID in IDs:
 
-        # initialize the new column
-        tt_series = pd.Series(0, index=table.index,
-                              name='train_set', dtype=np.int8)
+                # create the individual mask 
+                # and read the indeces and labels accordingly
+                mask = (table.SNR == SNR) & (
+                    table.machine == machine) & (table.ID == ID)
+                
+                idx = table[mask].index
+                labels = table[mask].abnormal
+                files = table[mask].path
 
-        # split for every individual ID, machine and SNR
-        for SNR in SNRs:
-            for machine in machines:
-                for ID in IDs:
+                # get the indeces that belong to the training dataset 
+                # and update the new column
+                idx_train, _, idx_augmented_test = split_index(idx, labels, files)
+                tt_series[idx_train] = 1
+                tt_series[idx_augmented_test] = -1
+                
 
-                    # create the individual mask 
-                    # and read the indeces and labels accordingly
-                    mask = (table.SNR == SNR) & (
-                        table.machine == machine) & (table.ID == ID)
-                    
-                    idx = table[mask].index
-                    labels = table[mask].abnormal
+    table = table.join(tt_series)
+    table.to_pickle(table_path)
 
-                    # get the indeces that belong to the training dataset 
-                    # and update the new column
-                    idx_train, _ = split_index(idx, labels)
-                    tt_series[idx_train] = 1
-
-        table = table.join(tt_series)
-        table.to_pickle(table_path)
-
-        print('{} --> Done'.format(table_path))
+    print('{} --> Done'.format(table_path))

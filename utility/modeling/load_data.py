@@ -8,7 +8,7 @@ import pickle
 
 def load_data(path_descr, feat={'function':'flat', 'frames':3}
               , feat_col=None, SNR='6dB', machine='pump', ID='00'
-              , train_set=True, BASE_FOLDER=BASE_FOLDER):
+              , train_set=1, BASE_FOLDER=BASE_FOLDER):
     
     df_descr = pd.read_pickle(path_descr)
 
@@ -19,7 +19,7 @@ def load_data(path_descr, feat={'function':'flat', 'frames':3}
 
         feat_col = input('Feature column not assigned, please define any of the following: \n' + '\n'.join(poss_cols)+'\n -->')
 
-    msk = (df_descr.SNR==SNR) & (df_descr.machine==machine) & (df_descr.ID==ID) & (df_descr.train_set==int(train_set))
+    msk = (df_descr.SNR==SNR) & (df_descr.machine==machine) & (df_descr.ID==ID) & (df_descr.train_set==train_set)
     df = df_descr[msk].copy()
     
     # unpack those features:
