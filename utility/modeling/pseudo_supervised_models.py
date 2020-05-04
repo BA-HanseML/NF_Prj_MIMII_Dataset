@@ -22,6 +22,8 @@ class uni_LogisticRegression(LogisticRegression):
 
         self.def_threshold=def_threshold
         self.roc_auc = None
+        self.name='logreg'
+        self.sufix=str(C)
 
     # fit inherited
     # predict inherited
@@ -65,7 +67,9 @@ class uni_RandomForestClassifier(RandomForestClassifier):
 
         self.def_threshold=def_threshold
         self.roc_auc = None
-
+        self.name='RFC'
+        self.sufix=str(max_depth)
+        
     # fit inherited
     # predict inherited
 

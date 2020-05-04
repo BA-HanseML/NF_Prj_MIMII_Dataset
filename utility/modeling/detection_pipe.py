@@ -39,6 +39,8 @@ class Pipe(object):
                                     task['SNR'],
                                     task['machine'],
                                     'ID'+task['ID'],
+                                    self.model.name,
+                                    self.model.sufix,
                                     datetime.now().strftime("%Y%m%d_%H%M%S")
                                     ]) + '.pkl'
         else:
