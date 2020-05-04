@@ -45,9 +45,9 @@ class Pipe(object):
             self.filepath = path
 
     def get_data(self, task):
-        self.df_train, data_train = load_data(train_set=True, **task)
-        self.df_test, data_test = load_data(train_set=False, **task)
-        self.ground_truth = self.df_test.abnormal.apply(lambda x : 1 if x==0 else -1)
+        self.df_train, data_train = load_data(train_set=1, **task)
+        self.df_test, data_test = load_data(train_set=0, **task)
+        self.ground_truth = self.df_test.abnormal.replace(to_replace=1, value=-1).replace(to_replace=0, value=1)
 
         # update filepath accordingly to task
         self.update_filepath(task)
@@ -64,8 +64,10 @@ class Pipe(object):
         return data_train, data_test
 
     def fit_model(self, data_train):
+        # get ground truth for train_set
+        y_train = self.df_train.abnormal.replace(to_replace=0, value=1)
         # fit the model
-        self.model.fit(data_train)
+        self.model.fit(data_train, y=y_train)
 
     def evaluate(self, data_test, ground_truth):
         # calculate evaluation score
