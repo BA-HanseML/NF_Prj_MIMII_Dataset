@@ -39,7 +39,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 class uni_RandomForestClassifier(RandomForestClassifier):
     def __init__(self, 
-                 criterion='gini', 
+                 n_estimators=100, 
                  max_depth=None,
                  min_samples_split=2, 
                  min_samples_leaf=1,
@@ -53,7 +53,7 @@ class uni_RandomForestClassifier(RandomForestClassifier):
                  def_threshold=0):
         
         # most of the keywords are being routed directly to the mother
-        super().__init__(criterion=criterion,
+        super().__init__(n_estimators=n_estimators,
             max_depth=max_depth,
             min_samples_split=min_samples_split,
             min_samples_leaf=min_samples_leaf,
@@ -78,4 +78,37 @@ class uni_RandomForestClassifier(RandomForestClassifier):
 
     def eval_roc_auc(self, data_test, y_true):
         return roc_auc_score(y_true, self.predict_score(data_test))
+
+
+from sklearn.model_selection import GridSearchCV
+
+class uni_GridSearchCV(GridSearchCV):
+    def __init__(self, 
+                 estimator=None,
+                 param_grid ={}, 
+                 scoring=None,
+                 cv = 5,
+                 est_name='',
+                 def_threshold=0):
+        
+        # most of the keywords are being routed directly to the mother
+        super().__init__(estimator=estimator,
+            param_grid=param_grid,
+            scoring=scoring, cv=cv)
+
+        self.def_threshold=def_threshold
+        self.roc_auc = None
+        self.name='CV'
+        self.sufix=est_name
+        
+    # fit inherited
+    # predict inherited
+
+    def predict_score(self, data):
+        return self.predict_proba(data)[:,1]
+
+    def eval_roc_auc(self, data_test, y_true):
+        return roc_auc_score(y_true, self.predict_score(data_test))        
+        
+
     
