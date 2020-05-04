@@ -3,6 +3,7 @@ print('Load detection_pipe')
 # main imports
 import numpy as np
 import pickle
+import os
 from datetime import datetime
 
 ## PipeThreading objects
@@ -29,12 +30,15 @@ class Pipe(object):
             pickle.dump(self, f)
 
     def update_filepath(self, path=None):
+        if not os.path.exists('pipes'):
+            os.mkdir('pipes')
+        
         if not path or (type(path)==dict):
             if not path:
                 task = self.task
             else:
                 task = path
-                self.filepath = '.\\pipes\\' + '_'.join([ task['feat_col'],
+                self.filepath = './pipes/' + '_'.join([ task['feat_col'],
                                     ''.join([str(i) for i in list(task['feat'].values())]),
                                     task['SNR'],
                                     task['machine'],
