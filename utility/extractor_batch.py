@@ -171,10 +171,14 @@ def extractor_batch(base_folder, target_folder, extdia,
                     
                     for w in wl:
                         w.stop = True
+                    
+                    
                     lw.log('multithread mode all threads done' ) 
                     joinlist = outport_akkulist_join(exdia_list=edl) 
                     outport_akkulist_tofile(base_folder, target_folder, joinlist, m, snr, id)
                     lw.log('multithread mode list joined and pickled for the id' ) 
+                    del edl # trying to fiht the memory leak
+                    del joinlist
                 tneeded_sec = np.round(time.time()- ts,2)
                 tneeded_min = np.round(tneeded_sec/60,2)
                 lw.log('total time needed for the ID: ' + str(tneeded_sec) + 'sec' + ' = ' + str(tneeded_min) + 'min') 
