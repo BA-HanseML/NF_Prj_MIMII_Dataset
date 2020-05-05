@@ -1,7 +1,7 @@
 # Environments Notes
 
 
-Environment parameter is important to know if the code is reused. So here a collection to the topics:
+Environment parameter are important to know if the code is reused. So here a collection of information to the topics:
 
 * Conda environment
 * Jupyter
