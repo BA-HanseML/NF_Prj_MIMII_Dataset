@@ -1,181 +1,120 @@
-# NF_Prj_MIMII_Dataset
+# Can a machien hear if a machine is broken
 
-## What is this repo about
+## Discription of the Study - in this repo
 
+This repo is about a concept study on the MIMII dataset to detect anomaly of machines or machine parts like fans, slider, pump and valves by means of classic machine learning and  deep learning methods. 
 
+In condition monitoring of machinery, it is common to use structure-borne sound and order tracking (RPM, etc.) to detect malfunctions, for various reasons like ease of retrofitting or need for a mobile solution and size of the machine part or operational needs like zero downtime, airborne sound anomaly detection could be preferable. The proof of concept study conducted here, shows that by applying machine learning anomaly detection on acoustic sensing, an ML/AI sensor can be constructed that has good performance so that it can compete with a trained technician when detecting anomalous by listen to the machine, with the potential benefit of staying 24/7 at the machine part of interest. The development can be seen as groundwork for an embedding solution of smart sensor as a part of an IoT plant supervision system (like SCADA).
 
+Anomaly detection with machine learning means mostly unsupervised learning as the base assumption is that abnormal operation is unknown. Abnormal operation could be potentially very diverse of nature, so even if the recordings of abnormal operation would exist training on them would lead to over fitting. Furthermore, the application of smart sensor would be lesser useful. 
 
-## Orign the project
+This means a smart senor microphone system needs to be trained by being placed for a reasonable training time in front of a healthy machine part, to become an armed detector that learned what is normal under representative background noise. Herein lies also the limitations of the study as in a real-world scenario more machine parts are connected and the dataset specifically focuses on one part. But a general abnormally also of an ensemble of machine parts could be possible with the same technique.
 
-### based on the data set from zenodo
-https://zenodo.org/record/3384388#.XpNAUpnRYuV
+To reach a optimum architecture various machine learning techniques are explored and eventually a divers ensemble connecting, the following list summarizes the techniques explored:
 
-### based on the base line project on gitHub
+*	Stochastic model (a multi-dimensional normal distribution is found and outlier defined by significant)
+*	Random Isolation trees (a decision tree depth is taken assuming outlier need only view decisions to be found as spatial separated in one or more feature)
+*	Auto encoder (an underrepresented auto encoder reconstruction error is taken)
+*	Pseudo supervision (where normal observation is augmented/ distorted to train a binary classifier)
+
+In the picture bellow a expletory classification ensemble is sketched, this is a example to show the main parts that are:
+
+![dievens](doc/media_main/DiverseEnsamble_general_examble.png)
+
+*	Feature extraction pre-filter like BSS blind source separation or denoising filter
+*	Feature extraction like welch spectra (PSDs) or MEL spectra  
+*	Classifier like RFC Random Forrest Classifier
+*	Stochastic models for outlier detection like GMM Gaussian Mixture Model, etc.
+*	Unsupervised outlier detection like Neural Network Autoencoder 
+*	Or Outlier classification like IFC isolation forest classifier
+*	The time frame-based ensemble collects different classification over the time processed as some classifier work on longer buffer parts then others this may helps to regulate the training of the algorithms and can improve training speeds.
+
+In order to make any machine learning algorithm able to work with audio it is necessary to use various signal processing steps (feature extraction pre filter) that may be of classic nature or also take use of machine learning methods like clustering for preprocessing on the time buffer like activation detection. 
+In application the reaction time of such a abnormally detection is around 10 sec at the current construction and training chain build up but some indication could be found to reduce this eventually. 
+
+## About the data set
+
+The data have a general discretion through the ZENDO page where it is open for [download](https://zenodo.org/record/3384388#.XpNAUpnRYuV)
+
+The related [paper](https://arxiv.org/pdf/1909.09347.pdf) by the MIMII dataset creators  - Harsh Purohit, Ryo Tanabe, Kenji Ichige, Takashi Endo,Yuki Nikaido, Kaori Suefusa, and Yohei Kawaguchi can be found here: https://arxiv.org/pdf/1909.09347.pdf
+
+At this point we like to sincerely thank you for sharing the data set, it serves a great challenge!
+
+Some further interpretation from our end can be found in the sub chapter: [about the dataset](doc/about_the_dataset.md)
+
+Furthermore the MIMII creators also provided an autoencoder based baseline model on GitHub:
 https://github.com/MIMII-hitachi/mimii_baseline
+This repo was of great help to get into the topic and inspired us.
 
-### The Data Set and Machine parts
+## Structure of Study = How to read the Repo
 
-This is summery and our intpretion of the information given, on first glance to the data
+The repo has some folders that correspond to ether setup or the main chapters of the study find here some overview information and links to the in depth chapters.
 
-from the paper () we know the followeing about the machine partst
+### Study parts and Algorthem part
 
-the dataset contains 4 machine parts and 4 varaints each the data set then has 3 levels of SNR
+## Folder/part: feature_extraction_diagrasm
+The feature extraction diagram is chain of filters and feature extractions like the MEL spectrum as an output. Thereby the folder host the tuning and test of the components finally used ones and explored ones. As well as the batch creation scripts for the pre-processing the dataset. More in the sub chapter [feature extraction diagrams](doc/feature_extraction.md)
 
-there is very little details overall given that can be, this is ok since the machine algorthem has it neither and 
-and needs to just on sound only without any context know how of what a i.e. pump is. But for us the trainers and bulders of the soultion can be of help to contexturlize the diffcultys for some examples.
+## Folder/part: Modeling
+The modeling folder hosts all the explored machine learning variants sorted in sub folders like each with general dicription: 
+* Stochastic 
+* [pseudo_supervsed](modeling/pseudo_supervised/pseudo_supervised.md)
 
 
-10sec
 
-#### SNR and about the noise
+## Setup 
+### Folder: dataset
+host the unpacked dataset from the zendo site the structure expected is discrped in the sub chapter: [dataset folder structure](dataset/dataset_struct.md).
+Attintionly it has folders for the extracted features after using the diagrams (see above).
 
-Signal to noise ration 
+### Folder: Utiliy
+Utility-function and classes stored in py-files rather than jupyter notebooks. In the folder utility/Workshop some application and basic tests of the utilities can be found.
 
-#### Valve
+### Folder: doc
+all subchapter and media material for documention
 
-The valves are solenoid https://en.wikipedia.org/wiki/Solenoid_valve
+### Folder: ref
+refernces like papers, etc. see below.
 
-General time beahvioer is sportig
+### Folder: env
+Information about the Conda environment, Jupyter settings and GPU elements in tensor flow. Notice this work was done on windows 10 with anaconda and jupyter.
 
-#### pump
+### Folder: sub_notebooks = MISC
+miscellaneous material and interesting site experiments - partially unsorted.
 
-The pumps are waterpumps that drain water from a pool and discharge water to the poolcontinuously
-extra splashing noise
-continues running
+# Future Work
 
-the assumtion then centrifugal pump https://en.wikipedia.org/wiki/Centrifugal_pump
+## not explored options and missing ends
+A list of not fully or not at all explored techniques mostly do to time restriction. And general potential for improvement. Sub Chapter [imporvments](doc/imporvments.md)
 
-#### fan
+## application notes
+Notes for the application as a smart sensor a small discussion on implication and follow up work for deployment. Sub chapter: [application notes] (doc/feature_extraction. MD) 
 
-Discription in the data set:
-The fans represent industrial fans, which are used to provide a continuous flow of gas or air in factorie
-assumtion is that it will be :Industrial Centrifugal Fans
-continus operation.
-also not clear is if the microphne is in the air stream
-https://en.wikipedia.org/wiki/Centrifugal_fan
+## workflow improvments
+Some reflection on workflow chosen and setup. Sub chapter [workflow improvments](doc/workflow_improvment.md) 
 
-#### linear slider
-The slide railsin this paper represent linear slide systems, which consist of a mov-ing platform and a stage base
-somthing similer to this: https://www.thomsonlinear.com/en/products/linear-motion-systems-products
 
-#### Sensor the microphone
-8 micrphone sin cicle of 68mm diameter the divce is called tomago 3: http://www.sifi.co.jp/system/modules/pico/index.php?content_id=39
-Tomago is japanes for egg microphon design for confrence table to record all particpends evenly
-promotion video https://www.youtube.com/watch?v=8zCsN3hCmLc
+# Credits and Refrences
 
+## THANKS to...
 
+To the creators of the MIMII dataset
+To the creators of the gigantic audio processing library [librosa](https://librosa.github.io/)
+To the creators of the library [pyrommacustics](https://pyroomacoustics.readthedocs.io/en/pypi-release/)
+To all the developers of python, scipy, numpy, scikit learn and tensorflow ... and all the great python stuff that we can build on.
+To Mike X Cohen for his great Python DSP [Udemy courses](https://www.udemy.com/user/mike-x-cohen/) 
+To all the founders and minds of machine learning you created a awesome universe to explore.
 
-## Infrstrucure of apporche 
+To the team at [neuefisch GmbH](https://www.neuefische.de), that made this project possible by training us in the data scince bootcamp.
 
-### overview
+To so many more form the web like towardsdatascience.com and stackoverflow ...
 
-feature extraction 
-prefilter -> denoise or dereverb -> spectra frames -> file 
-(augmentatin)
+## Refernces 
+Find all references: papers, source code and other web sources in the following sub chapters: 
 
-Training pipline - diffrent model types
-
-Ensamble and time accuamtion to 10sec
-
-
-### feature extraction
-
-#### diagrams
-
-#### denoise tech
-
-#### source seperation 
-
-#### Spectra
-
-#### basic statistics
-
-#### time rearanging
-
-#### auto detction of types
-distingush sportic and continus runnning 
-
-#### multi threading 
-
-
-### audio augmentaion for unsupervised 
-
-### Modling
-
-#### stochastic outlyer detection
-
-#### auto encoder
-
-#### X
-
-### Ensamble Blending
-
-#### time accumation
-
-#### blender
-
-### results
-
-## appliction notes
-the application of a alogrithem like that would be imagnable to be embedded in a smart sensor maybe the training needs 
-a cloud server or notebook but the outlyer ensamble would run 
-
-
-
-
-## future work
-
-### feature extraction
-DOA
-time slicing and rearnge
-ICA JAde
-derverb 
-wavelet spectra freq. following...
-
-basic stat brain storming
-- >open ideas sub notebooks
-
-
-### modeling
-pseudo supervised 
-CNN and U-net attention maps
-
-### performace for embedding
-denoise and convuluton etc... what would be the sample buffer
-
-more threading in extraction and training
-
-diagrams STFT transfer instread of time .
-
-## enviroment and tools
-
-### OS
-
-### GPU support for tensorflow
-
-### yml conda envioerment and jupyter
-
-
-## Credis and refrences
-
-librosa team 
-pyroomacustic 
-thanks to hitachi ,,,
-
-### litruture and paper
-THe following link is list compiled of all inpirational papaers and helpfull litrure to get into the topic serounding 
-link
-
-### web links
-the following list contains web sites and youtube links that have been insperational or helpfull to undersand the soroudning topcs
-assuming from our base line of data scince with some know how in DSP but not so much audio specic and other helpfull stuff.
-
-### github list
-the github list contains all insperation links to source code that have been used or have been helpfull examples
-at some point for the soultion thanks to all the creators !
-
-
-
+* [Papers and Books](ref/paper_list.md)   
+* [Sorce code / GitHubs](ref/github_list.md)
+* [Websites / Videos](ref/web_list.md)
 
 
 

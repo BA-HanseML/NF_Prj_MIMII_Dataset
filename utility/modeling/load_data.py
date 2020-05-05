@@ -56,7 +56,7 @@ def load_data(path_descr, feat={'function':'flat', 'frames':3}
                     df = pd.merge(df, multiplier_frame, on='ID', how='outer')
                     
                 else:
-                    data[num_instances*i:num_instances*(i+1), :] = np.atleast_2d(feat_extractor_.get_feature({'function':'frame', 'frames':5}))
+                    data[num_instances*i:num_instances*(i+1), :] = np.atleast_2d(feat_extractor_.get_feature(feat))
                 
                 # next instance
                 i += 1
