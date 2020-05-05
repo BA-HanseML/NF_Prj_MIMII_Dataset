@@ -52,34 +52,34 @@ The repo has some folders that correspond to ether setup or the main chapters of
 
 ### Study parts and Algorthem part
 
-## Folder/part: feature_extraction_diagrasm
+#### Folder/part: feature_extraction_diagram
 The feature extraction diagram is chain of filters and feature extractions like the MEL spectrum as an output. Thereby the folder host the tuning and test of the components finally used ones and explored ones. As well as the batch creation scripts for the pre-processing the dataset. More in the sub chapter [feature extraction diagrams](doc/feature_extraction.md)
 
-## Folder/part: Modeling
+#### Folder/part: Modeling
 The modeling folder hosts all the explored machine learning variants sorted in sub folders like each with general dicription: 
 * Stochastic 
 * [pseudo_supervsed](modeling/pseudo_supervised/pseudo_supervised.md)
 
 
 
-## Setup 
+### Setup 
 ### Folder: dataset
 host the unpacked dataset from the zendo site the structure expected is discrped in the sub chapter: [dataset folder structure](dataset/dataset_struct.md).
 Attintionly it has folders for the extracted features after using the diagrams (see above).
 
-### Folder: Utiliy
+##### Folder: Utiliy
 Utility-function and classes stored in py-files rather than jupyter notebooks. In the folder utility/Workshop some application and basic tests of the utilities can be found.
 
-### Folder: doc
+#### Folder: doc
 all subchapter and media material for documention
 
-### Folder: ref
+#### Folder: ref
 refernces like papers, etc. see below.
 
-### Folder: env
+#### Folder: env
 Information about the Conda environment, Jupyter settings and GPU elements in tensor flow. Notice this work was done on windows 10 with anaconda and jupyter.
 
-### Folder: sub_notebooks = MISC
+#### Folder: sub_notebooks = MISC
 miscellaneous material and interesting site experiments - partially unsorted.
 
 # Future Work
