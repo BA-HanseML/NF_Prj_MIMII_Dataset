@@ -1,117 +1,78 @@
-print('Load anomaly_detection_models')
+print('Load tensorflow models')
 
 # main imports
+import numpy as np
 from sklearn.metrics import roc_auc_score
 import tensorflow as tf
 
-class MyModel(tf.keras.Model):
-
-  def __init__(self):
-    super(MyModel, self).__init__()
-    #self.layers = []
-    self.input_layer = tf.keras.layers.Input(shape=(400,))
-    self.output_layer = tf.keras.layers.Dense(400, activation=None)
-    self.dense1 = tf.keras.layers.Dense(64, activation=tf.nn.relu)
-    self.dense2 = tf.keras.layers.Dense(64, activation=tf.nn.relu)
-    self.dense3 = tf.keras.layers.Dense(8, activation=tf.nn.relu)
-    self.dense4 = tf.keras.layers.Dense(64, activation=tf.nn.relu)
-    self.dense5 = tf.keras.layers.Dense(64, activation=tf.nn.relu)
-
-  def call(self, inputs, training=False):
-    x = self.input_layer(inputs)
-    x = self.dense1(x)
-    x = self.dense2(x)
-    x = self.dense3(x)
-    x = self.dense4(x)
-    x = self.dense5(x)
-    return self.output_layer(x)
-
-
-
-class uni_AutoEncoder(tf.keras.Model):
-    def __init__(self,
-                 # initialization parameters
-                 optimizer='adam',
-                 loss='mean_squared_error',
-                 metrics=None,
-                 # fitting parameters
-                 epochs=50,
-                 batch_size=24,
-                 shuffle=True,
-                 validation_split=0.1,
-                 verbose=1,
-                 inter_layers=None,
-                 def_threshold=0
-                 ):
-        
-        super().__init__()
-        
-        if not inter_layers:
-            self.inter_layers = []
-            self.inter_layers.append(tf.keras.layers.Dense(64, activation=tf.nn.relu))
-            self.inter_layers.append(tf.keras.layers.Dense(64, activation=tf.nn.relu))
-            self.inter_layers.append(tf.keras.layers.Dense(8, activation=tf.nn.relu))
-            self.inter_layers.append(tf.keras.layers.Dense(64, activation=tf.nn.relu))
-            self.inter_layers.append(tf.keras.layers.Dense(64, activation=tf.nn.relu))
-        else:
-            self.inter_layers = inter_layers
-        
+class uni_AutoEncoder(object):
+    def __init__(self,optimizer='adam',loss='mean_squared_error',metrics=None,epochs=50,batch_size=1024,shuffle=True,
+                 shuffle_buffer_size=1000,validation_split=0.2,verbose=1,
+                 inter_layers=[(tf.keras.layers.Dense, {'units':64, 'activation':tf.nn.relu}),
+                               (tf.keras.layers.Dense, {'units':64, 'activation':tf.nn.relu}),
+                               (tf.keras.layers.Dense, {'units':8, 'activation':tf.nn.relu}),
+                               (tf.keras.layers.Dense, {'units':64, 'activation':tf.nn.relu}),
+                               (tf.keras.layers.Dense, {'units':64, 'activation':tf.nn.relu})],
+                 def_threshold=0):
+        self.inter_layers = inter_layers
         self.optimizer = optimizer
         self.loss = loss
-        
+        self.metrics = metrics
         self.epochs = epochs
         self.batch_size = batch_size
         self.shuffle = shuffle
+        self.shuffle_buffer_size = shuffle_buffer_size
         self.validation_split = validation_split
         self.verbose = verbose
-        
-        self.def_threshold=def_threshold
+        self.def_threshold = def_threshold
         self.roc_auc = None
         self.uni_name = 'AutoEnc'
-        self.sufix = '' # '{}comp'.format(self.n_components)
+        self.sufix = '°'.join([str(layer[1]['units']) for layer in inter_layers])
 
-    # compile inherited
+    def preprocess_data(self, data):
+        data = data.astype('float32')
+        data_tensor = tf.data.Dataset.from_tensor_slices((data, data))
+        data_tensor = data_tensor.shuffle(self.shuffle_buffer_size).batch(self.batch_size)
+        return data_tensor
     
-    def call(self, inputs, training):
-        super().call(inputs, training)
-        # h = self.input_layer(inputs)
-        # return self.output_layer(h)
-    
-    def forward_model(self, inputDim):
-        input_layer = tf.keras.layers.Input(shape=(inputDim,))
-        output_layer = tf.keras.layers.Dense(inputDim, activation=None)
+    def build_keras_model(self, inputDim):
+        """
+        define the keras model
+        the model based on the simple dense auto encoder (64*64*8*64*64)
+        """
+        inputLayer = tf.keras.layers.Input(shape=(inputDim,))
         
-        h = input_layer
-        for layer in self.inter_layers:
-            h = layer(h)
-        
-        return input_layer, output_layer(h)
+        for i, layer in enumerate(self.inter_layers):
+            layer_type = layer[0]
+            layer_kwargs = layer[1]
+            if i == 0:
+                h = layer_type(**layer_kwargs)(inputLayer)
+            else:
+                h = layer_type(**layer_kwargs)(h)
+                
+            h = tf.keras.layers.Dense(inputDim, activation=None)(h)
+
+        return tf.keras.Model(inputs=inputLayer, outputs=h)
     
     def fit(self, data_train):
-        # add input and output-layer
+        # build model
         inputDim = data_train.shape[1]
-        print('im here')
-        # compile and fit model
-        self.input_layer, self.output_layer = self.forward_model(inputDim)
-        super().__init__(inputs=self.input_layer, outputs=self.output_layer)
-        print('im here')
-        super().compile(optimizer=self.optimizer, loss=self.loss)
-        print(self.summary)
-        print('im here')
-        self.history = super().fit(data_train, 
-                    data_train,
-                    epochs = self.epochs,
-                    batch_size = self.batch_size,
-                    shuffle = self.shuffle,
-                    validation_split = self.validation_split,
-                    verbose = self.verbose)
-                
+        self.model = self.build_keras_model(inputDim)
         
-    # predict inherited
+        # compile and fit model
+        self.model.compile(optimizer=self.optimizer, loss=self.loss, metrics=self.metrics)
+        data_train = self.preprocess_data(data_train)
+        self.model.fit(data_train,
+                       epochs = self.epochs,
+                       #validation_split = self.validation_split,
+                       verbose = self.verbose)
 
+    def predict(self, data):
+        return self.model.predict(data.astype('float32'))
+    
     def predict_score(self, data):
-        error_pred = data - self.predict(data)
-        return error_pred
+        pred_score = np.mean(np.square(data - self.predict(data)), axis=1)
+        return pred_score
         
     def eval_roc_auc(self, data_test, y_true):
         return roc_auc_score(y_true, self.predict_score(data_test))
