@@ -11,7 +11,7 @@ from queue import Queue
 from threading import Thread
 
 class Pipe(object):
-    def __init__(self, preprocessing_steps=None, modeling_step=None):        
+    def __init__(self, preprocessing_steps=None, modeling_step=None,pseudo_sup=False):        
         # instantiate evaluating parameters
         self.roc_auc = None
 
@@ -22,6 +22,9 @@ class Pipe(object):
         self._mdl, self.model_args = modeling_step # model object
         # model instance
         self.model = self._mdl(**self.model_args)
+        
+        # toggle flag for pseudo supervised to have classes >0 -> 0 1 and not -1 and 1
+        self.pseudo_sup = pseudo_sup
 
     def to_pickle(self, filepath=None):
         self.update_filepath(filepath)
@@ -50,11 +53,14 @@ class Pipe(object):
         else:
             self.filepath = path
 
+
     def get_data(self, task):
         self.df_train, data_train = load_data(train_set=1, **task)
         self.df_test, data_test = load_data(train_set=0, **task)
-        self.ground_truth = self.df_test.abnormal.replace(to_replace=1, value=-1).replace(to_replace=0, value=1)
-
+        if self.pseudo_sup:
+            self.ground_truth = self.df_test.abnormal#.replace(to_replace=1, value=-1).replace(to_replace=0, value=1)
+        else:
+            self.ground_truth = self.df_test.abnormal.replace(to_replace=1, value=-1).replace(to_replace=0, value=1)
         # update filepath accordingly to task
         self.update_filepath(task)
 
@@ -71,9 +77,13 @@ class Pipe(object):
 
     def fit_model(self, data_train):
         # get ground truth for train_set
-        y_train = self.df_train.abnormal.replace(to_replace=0, value=1)
+        if self.pseudo_sup:
+            self.y_train = self.df_train.abnormal.replace(to_replace=-1, value=1)#.replace(to_replace=0, value=1) # becsuse -1 is augmented and 0=normal to 1
+        else:
+            self.y_train=None
         # fit the model
-        self.model.fit(data_train, y=y_train)
+        self.model.fit(data_train, y=self.y_train)
+        print(self.model.eval_roc_auc(data_train, self.y_train))
 
     def evaluate(self, data_test, ground_truth):
         # calculate evaluation score

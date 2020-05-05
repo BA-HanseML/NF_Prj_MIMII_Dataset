@@ -6,7 +6,8 @@ from sklearn.linear_model import LogisticRegression
 # model_class_definition
 class uni_LogisticRegression(LogisticRegression):
     def __init__(self, 
-                 penalty='l2', 
+                 penalty='l2',
+                 max_iter=100,
                  tol=0.0001,
                  C=1.0, 
                  class_weight='balanced',
@@ -18,7 +19,8 @@ class uni_LogisticRegression(LogisticRegression):
             tol=tol,
             C=C,
             class_weight=class_weight,
-            random_state=random_state)
+            random_state=random_state,
+            max_iter=max_iter)
 
         self.def_threshold=def_threshold
         self.roc_auc = None
@@ -105,7 +107,7 @@ class uni_GridSearchCV(GridSearchCV):
     # predict inherited
 
     def predict_score(self, data):
-        return self.predict_proba(data)[:,1]
+        return self.predict_proba(data)[:,0]
 
     def eval_roc_auc(self, data_test, y_true):
         return roc_auc_score(y_true, self.predict_score(data_test))        

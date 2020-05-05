@@ -14,7 +14,7 @@ def time_to_index(t,sr,l):
     
 
 
-def TimeSliceAppendActivation(y, sr):
+def TimeSliceAppendActivation(y, sr, fn=''):
     # create STFT
     ch_stft = librosa.stft(y[0], n_fft =1024,hop_length =512, win_length = 1024)
     t_f = np.linspace(0,len(y[0])/sr,ch_stft.shape[1])
@@ -76,12 +76,16 @@ def TimeSliceAppendActivation(y, sr):
             new_audio = np.append(new_audio, y[i][i_s:i_e])
             #noise_audio = np.append(noise_audio, y[0][last_e:i_s])
             #last_e = i_e
-
-        new_audio_app = np.array([])
-        r_len = int(np.ceil(len(y[0])/len(new_audio)))
-        for j in range(r_len):
-            new_audio_app = np.append(new_audio_app, new_audio)
-            new_audio_app = new_audio_app[:len(y[0])]  
+        
+        if len(new_audio) > 0:
+            new_audio_app = np.array([])
+            r_len = int(np.ceil(len(y[0])/len(new_audio)))
+            for j in range(r_len):
+                new_audio_app = np.append(new_audio_app, new_audio)
+                new_audio_app = new_audio_app[:len(y[0])]  
+        else:
+            print('message from time slicer:',i, fn)
+            new_audio_app = y[i] # if slicing failed
         
         if i==0:
             #print(out)
