@@ -6,8 +6,8 @@ from sklearn.metrics import roc_auc_score
 import tensorflow as tf
 
 class uni_AutoEncoder(object):
-    def __init__(self,optimizer='adam',loss='mean_squared_error',metrics=None,epochs=50,batch_size=1024,shuffle=True,
-                 shuffle_buffer_size=1000,validation_split=0.2,verbose=1,
+    def __init__(self,optimizer='adam',loss='mean_squared_error',metrics=None,epochs=50,batch_size=512,shuffle=True,
+                 shuffle_buffer_size=2048,validation_split=0.2,verbose=1,
                  inter_layers=[(tf.keras.layers.Dense, {'units':64, 'activation':tf.nn.relu}),
                                (tf.keras.layers.Dense, {'units':64, 'activation':tf.nn.relu}),
                                (tf.keras.layers.Dense, {'units':8, 'activation':tf.nn.relu}),

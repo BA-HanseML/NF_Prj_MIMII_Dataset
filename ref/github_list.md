@@ -2,6 +2,9 @@
 
 ## GitHub
 
+### Baseline
+https://github.com/MIMII-hitachi/mimii_baseline
+
 ### Audio general
 https://github.com/context-net/context-net/tree/master/audio_context_net
 

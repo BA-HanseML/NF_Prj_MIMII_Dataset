@@ -27,13 +27,17 @@ https://www.google.com/search?client=firefox-b-d&q=cross+correlation+to+find+tim
 Mike X Cohen
 https://www.youtube.com/channel/UCUR_LsXk7IYyueSnXcNextQ/playlists
 
+### scikit-learn
+Introduction to novelty and outlier detection in scikit-learn
+https://scikit-learn.org/stable/modules/outlier_detection.html
+
 ### TensorFlow
 Channel Jeff Heaton:
 great help with the CUDA and use cases of Keras and general deep learning
 https://www.youtube.com/channel/UCR1-GEpyOPzT2AO4D_eifdw
 
 ## Machine parts
-YoutubeChannel: Engineering Mindset shows function of classic industrla machine parts we foudn it helpfull to get a feel for the machine parts of the porject
+YoutubeChannel: Engineering Mindset shows function of classic industrial machine parts we found it helpful to get a feel for the machine parts of the project
 https://www.youtube.com/channel/UCk0fGHsCEzGig-rSzkfCjMw
 pump : https://www.youtube.com/watch?v=TxqPAPg4nb4
 valve: https://www.youtube.com/watch?v=-MLGr1_Fw0c
