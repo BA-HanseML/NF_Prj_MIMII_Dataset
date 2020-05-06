@@ -74,6 +74,15 @@ class Pipe(object):
 
         # return preprocessed data
         return data_train, data_test
+    
+    def preprocess_post(self, data_train, data_test):
+        # run through all the preprocessing steps
+        for step in self.preproc_steps:
+            data_train =  step.transform(data_train)
+            data_test = step.transform(data_test)
+
+        # return preprocessed data
+        return data_train, data_test
 
     def fit_model(self, data_train):
         # get ground truth for train_set

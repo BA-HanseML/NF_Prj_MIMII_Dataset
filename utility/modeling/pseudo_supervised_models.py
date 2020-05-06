@@ -81,6 +81,49 @@ class uni_RandomForestClassifier(RandomForestClassifier):
     def eval_roc_auc(self, data_test, y_true):
         return roc_auc_score(y_true, self.predict_score(data_test))
 
+#------------------------------------------------------------------------------
+from sklearn.svm import SVC
+class uni_svm(SVC):
+    def __init__(self, 
+                 C=1.0,
+                 kernel='rbf',
+                 degree=3,
+                 gamma='scale', 
+                 coef0=0.0,
+                 tol=1e-3, 
+                 max_iter=-1,
+                 random_state=25,def_threshold=0):
+        
+        # most of the keywords are being routed directly to the mother
+        super().__init__(C=C,
+            kernel=kernel,
+            degree=degree,
+            gamma=gamma,
+            coef0=coef0,
+            tol=tol,
+            max_iter=max_iter,
+            random_state=random_state, probability=True,
+            )
+
+        self.def_threshold=def_threshold
+        self.roc_auc = None
+        self.name='SVM'
+        self.sufix=str(C)
+
+    # fit inherited
+    # predict inherited
+
+    def predict_score(self, data):
+        return self.predict_proba(data)[:,1]
+
+    def eval_roc_auc(self, data_test, y_true):
+        return roc_auc_score(y_true, self.predict_score(data_test))
+        
+#-------------------------------------------------------------------------
+
+
+
+
 
 from sklearn.model_selection import GridSearchCV
 
@@ -107,7 +150,7 @@ class uni_GridSearchCV(GridSearchCV):
     # predict inherited
 
     def predict_score(self, data):
-        return self.predict_proba(data)[:,0]
+        return self.predict_proba(data)[:,1]
 
     def eval_roc_auc(self, data_test, y_true):
         return roc_auc_score(y_true, self.predict_score(data_test))        
