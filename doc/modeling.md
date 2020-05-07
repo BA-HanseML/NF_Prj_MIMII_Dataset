@@ -2,6 +2,8 @@
 
 ## Workflow
 
+The degree of freedom for different features, preprocessing steps, models, and hyperparameters is 
+
 # Metric
 
 ## 

@@ -6,13 +6,13 @@ Title: MIMII DATASET: SOUND DATASET FORMALFUNCTIONING INDUSTRIAL MACHINE INVESTI
 by: Harsh Purohit, Ryo Tanabe, Kenji Ichige, Takashi Endo,Yuki Nikaido, Kaori Suefusa, and Yohei Kawaguchi
 /1909.09347.pdf
 
-@book{10.5555/3153997,
-author = {Gron, Aurlien},
-title = {Hands-On Machine Learning with Scikit-Learn and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems},
-year = {2017},
-isbn = {1491962291},
-publisher = {O’Reilly Media, Inc.},
-edition = {1st}
+@book{géron2019hands,
+  title={Hands-on Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems},
+  author={G{\'e}ron, A.},
+  isbn={9781492032649},
+  url={https://books.google.de/books?id=OCS1twEACAAJ},
+  year={2019},
+  publisher={O'Reilly Media, Incorporated}
 }
 
 ## Anomaly detection for Machines general 
