@@ -53,18 +53,16 @@ class Pipe(object):
         else:
             self.filepath = path
 
-    def split_data(self):
-        tt_split(self.task['path_descr'])
 
-    def get_data(self):
-        self.df_train, data_train = load_data(train_set=1, **self.task)
-        self.df_test, data_test = load_data(train_set=0, **self.task)
+    def get_data(self, task):
+        self.df_train, data_train = load_data(train_set=1, **task)
+        self.df_test, data_test = load_data(train_set=0, **task)
         if self.pseudo_sup:
             self.ground_truth = self.df_test.abnormal
         else:
             self.ground_truth = self.df_test.abnormal.replace(to_replace=1, value=-1).replace(to_replace=0, value=1)
         # update filepath accordingly to task
-        self.update_filepath(self.task)
+        self.update_filepath(task)
 
         return data_train, data_test
 
@@ -97,22 +95,18 @@ class Pipe(object):
         
         if self.pseudo_sup: print(self.model.eval_roc_auc(data_train, self.y_train))
 
-    def evaluate(self, data_test):
+    def evaluate(self, data_test, ground_truth):
         # calculate evaluation score
 
         self.df_test['pred_scores'] = self.model.predict_score(data_test)
         self.df_test['pred_labels'] = self.model.predict(data_test)
-        self.roc_auc = self.model.eval_roc_auc(data_test, self.ground_truth)
+        self.roc_auc = self.model.eval_roc_auc(data_test, ground_truth)
 
     def run_pipe(self, task):
         self.task = task
-        #try:
-        # split data into train and testset
-        self.split_data()
-        
         # get the data
         print('...loading data')
-        data_train, data_test = self.get_data()
+        data_train, data_test = self.get_data(task)
         print('data loading completed\n\n...preprocessing data')
 
         # preprocessing
@@ -130,11 +124,7 @@ class Pipe(object):
         # saving to pickle
         self.to_pickle()
         print('pipe saved to pickle')
-        #except:
-        #    print('Something went wrong')
-        #    return False
-        #else:
-        #    return True
+        return True
     
 
 # thread class
@@ -151,5 +141,5 @@ class PipeThread(Thread):
             pipe, task = self.queue.get()  
             # run the pipe
             pipe.run_pipe(task)
-            # finish job
+            # return done
             self.queue.task_done()
