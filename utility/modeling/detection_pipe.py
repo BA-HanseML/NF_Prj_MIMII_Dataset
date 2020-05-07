@@ -124,7 +124,7 @@ class Pipe(object):
         print('model fitted successfully\n\n...evaluating model')
 
         # evaluating over ground truth
-        self.evaluate(data_test, self.ground_truth)
+        self.evaluate(data_test)
         print('evaluation successfull, roc_auc:', self.roc_auc)
 
         # saving to pickle
