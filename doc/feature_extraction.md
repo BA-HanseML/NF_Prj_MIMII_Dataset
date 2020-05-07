@@ -19,3 +19,9 @@ For pre-filtering we settled:
 Further audio augmentation for pseudo supervision is a topic in feature extraction.
 
 In the documentation many links lead to Jupyter notebooks in the the folder feature_extraction_diagrams.
+
+
+## Diagrams
+
+
+## Pre Pre Processing and Time Sliceing
