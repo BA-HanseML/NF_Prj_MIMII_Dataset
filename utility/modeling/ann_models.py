@@ -26,7 +26,7 @@ class uni_AutoEncoder(object):
         self.verbose = verbose
         self.def_threshold = def_threshold
         self.roc_auc = None
-        self.uni_name = 'AutoEnc'
+        self.name = 'AutoEnc'
         self.sufix = '°'.join([str(layer[1]['units']) for layer in inter_layers])
 
     def preprocess_data(self, data):
@@ -54,7 +54,7 @@ class uni_AutoEncoder(object):
 
         return tf.keras.Model(inputs=inputLayer, outputs=h)
     
-    def fit(self, data_train):
+    def fit(self, data_train, y=None):
         # build model
         inputDim = data_train.shape[1]
         self.model = self.build_keras_model(inputDim)
