@@ -1,4 +1,8 @@
 # Can a machien hear if a machine is broken
+a machine learning apporche to machine anomely detection on the MIMII dataset
+
+![story](doc/media_main/story.png)
+
 
 ## Discription of the Study - in this repo
 
