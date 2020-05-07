@@ -11,7 +11,7 @@ from queue import Queue
 from threading import Thread
 
 class Pipe(object):
-    def __init__(self, preprocessing_steps=None, modeling_step=None,pseudo_sup=False):        
+    def __init__(self, preprocessing_steps=None, modeling_step=None, pseudo_sup=False):        
         # instantiate evaluating parameters
         self.roc_auc = None
 
@@ -58,7 +58,7 @@ class Pipe(object):
         self.df_train, data_train = load_data(train_set=1, **task)
         self.df_test, data_test = load_data(train_set=0, **task)
         if self.pseudo_sup:
-            self.ground_truth = self.df_test.abnormal#.replace(to_replace=1, value=-1).replace(to_replace=0, value=1)
+            self.ground_truth = self.df_test.abnormal
         else:
             self.ground_truth = self.df_test.abnormal.replace(to_replace=1, value=-1).replace(to_replace=0, value=1)
         # update filepath accordingly to task
@@ -87,12 +87,13 @@ class Pipe(object):
     def fit_model(self, data_train):
         # get ground truth for train_set
         if self.pseudo_sup:
-            self.y_train = self.df_train.abnormal.replace(to_replace=-1, value=1)#.replace(to_replace=0, value=1) # becsuse -1 is augmented and 0=normal to 1
+            self.y_train = self.df_train.abnormal.replace(to_replace=-1, value=1)
         else:
             self.y_train=None
         # fit the model
         self.model.fit(data_train, y=self.y_train)
-        print(self.model.eval_roc_auc(data_train, self.y_train))
+        
+        if self.pseudo_sup: print(self.model.eval_roc_auc(data_train, self.y_train))
 
     def evaluate(self, data_test, ground_truth):
         # calculate evaluation score

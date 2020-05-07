@@ -24,5 +24,8 @@ exec(open(fp).read())
 fp = package_file_folder(BASE_FOLDER, 'pseudo_supervised_models.py') 
 exec(open(fp).read())
 ## -
+fp = package_file_folder(BASE_FOLDER, 'ann_models.py') 
+exec(open(fp).read())
+## -
 fp = package_file_folder(BASE_FOLDER, 'detection_pipe.py') 
 exec(open(fp).read())

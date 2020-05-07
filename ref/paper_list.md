@@ -6,6 +6,14 @@ Title: MIMII DATASET: SOUND DATASET FORMALFUNCTIONING INDUSTRIAL MACHINE INVESTI
 by: Harsh Purohit, Ryo Tanabe, Kenji Ichige, Takashi Endo,Yuki Nikaido, Kaori Suefusa, and Yohei Kawaguchi
 /1909.09347.pdf
 
+@book{géron2019hands,
+  title={Hands-on Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems},
+  author={G{\'e}ron, A.},
+  isbn={9781492032649},
+  url={https://books.google.de/books?id=OCS1twEACAAJ},
+  year={2019},
+  publisher={O'Reilly Media, Incorporated}
+}                                                                                                                                         
 ## Anomaly detection for Machines general 
 
 Anomaly Detection Based on an Ensemble of Dereverberation and Anomalous Sound Extraction
@@ -46,7 +54,7 @@ Audio Processing from www.analog.com chapter 20
 Open source practices for musicsignal processing research
 http://www.justinsalamon.com/uploads/4/3/9/4/4394963/mcfee_opensource_ieeespm_2019.pdf
 
-## Denoise
+## Denoise (Noise Cancelation)
 
 Audio Denoising by GeneralizedTime-Frequency Thresholding
 by Kai Siedenburg and Monika Döorfler

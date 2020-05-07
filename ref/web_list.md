@@ -56,6 +56,12 @@ great help with the CUDA and use cases of Keras and general deep learning
 https://www.youtube.com/channel/UCR1-GEpyOPzT2AO4D_eifdw
 
 ## ML
+
+### scikit-learn
+Introduction to novelty and outlier detection in scikit-learn
+https://scikit-learn.org/stable/modules/outlier_detection.html
+
+### towardsdatascience
 Outlier Detection with Extended Isolation Forest
 https://towardsdatascience.com/outlier-detection-with-extended-isolation-forest-1e248a3fe97b
 

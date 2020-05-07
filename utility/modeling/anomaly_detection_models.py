@@ -26,6 +26,8 @@ class uni_EllipticEnvelope(EllipticEnvelope):
 
         self.def_threshold=def_threshold
         self.roc_auc = None
+        self.name = 'EllEnv'
+        self.sufix = str(self.support_fraction)
 
     # fit inherited
     # predict inherited
@@ -64,6 +66,8 @@ class uni_IsolationForest(IsolationForest):
 
         self.def_threshold=def_threshold
         self.roc_auc = None
+        self.name = 'IsoForr'
+        self.sufix = '{}est_{}mf'.format(self.n_estimators, self.max_features)
 
     # fit inherited
     # predict inherited
@@ -103,12 +107,65 @@ class uni_OneClassSVM(OneClassSVM):
 
         self.def_threshold=def_threshold
         self.roc_auc = None
+        self.name = 'OneClSVM'
+        self.sufix = self.kernel + '_{}deg'.format(self.degree)
 
     # fit inherited
     # predict inherited
 
     def predict_score(self, data):
         return self.decision_function(data)
+
+    def eval_roc_auc(self, data_test, y_true):
+        return roc_auc_score(y_true, self.predict_score(data_test))
+    
+    
+class uni_GaussianMixture(GaussianMixture):
+    def __init__(self, 
+                 n_components=1, 
+                 covariance_type='full', 
+                 tol=1e-3,
+                 reg_covar=1e-6, 
+                 max_iter=100, 
+                 n_init=1, 
+                 init_params='kmeans',
+                 weights_init=None, 
+                 means_init=None, 
+                 precisions_init=None,
+                 random_state=None, 
+                 warm_start=False,
+                 verbose=0, 
+                 verbose_interval=10,
+                 def_threshold=0
+                 ):
+        
+        # most of the keywords are being routed directly to the mother
+        super().__init__(
+                        n_components=n_components, 
+                        covariance_type=covariance_type, 
+                        tol=tol,
+                        reg_covar=reg_covar, 
+                        max_iter=max_iter, 
+                        n_init=n_init, 
+                        init_params=init_params,
+                        weights_init=weights_init, 
+                        means_init=means_init, 
+                        precisions_init=precisions_init,
+                        random_state=random_state, 
+                        warm_start=warm_start,
+                        verbose=verbose, 
+                        verbose_interval=verbose_interval)
+
+        self.def_threshold=def_threshold
+        self.roc_auc = None
+        self.name = 'GM'
+        self.sufix = '{}comp'.format(self.n_components)
+
+    # fit inherited
+    # predict inherited
+
+    def predict_score(self, data):
+        return self.predict_proba(data)
 
     def eval_roc_auc(self, data_test, y_true):
         return roc_auc_score(y_true, self.predict_score(data_test))
