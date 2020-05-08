@@ -36,7 +36,41 @@ class uni_LogisticRegression(LogisticRegression):
     def eval_roc_auc(self, data_test, y_true):
         return roc_auc_score(y_true, self.predict_score(data_test))
         
+#--------------------------------------------------------------
+
+#https://stackoverflow.com/questions/37089177/probability-prediction-method-of-kneighborsclassifier-returns-only-0-and-1
+from sklearn.neighbors import KNeighborsClassifier
+      
+class uni_KNeighborsClassifier(KNeighborsClassifier):
+    def __init__(self, 
+                 n_neighbors=100,
+                 algorithm='auto', # ‘ball_tree’, ‘kd_tree’, ‘brute’
+                 leaf_size=30,
+                 p=1, #manhattan_distance  
+                 def_threshold=0):
         
+        # most of the keywords are being routed directly to the mother
+        super().__init__(n_neighbors=n_neighbors,
+            algorithm=algorithm,
+            leaf_size=leaf_size,
+            p=p)
+
+        self.def_threshold=def_threshold
+        self.roc_auc = None
+        self.name='KNC'
+        self.sufix=str(n_neighbors)
+
+    # fit inherited
+    # predict inherited
+
+    def predict_score(self, data):
+        return self.predict_proba(data)[:,1]
+
+    def eval_roc_auc(self, data_test, y_true):
+        return roc_auc_score(y_true, self.predict_score(data_test))
+
+      
+#--------------------------------------------------------------        
 from sklearn.ensemble import RandomForestClassifier
 
 class uni_RandomForestClassifier(RandomForestClassifier):
