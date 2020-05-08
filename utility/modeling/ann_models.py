@@ -13,7 +13,7 @@ class uni_AutoEncoder(object):
                                (tf.keras.layers.Dense, {'units':8, 'activation':tf.nn.relu}),
                                (tf.keras.layers.Dense, {'units':64, 'activation':tf.nn.relu}),
                                (tf.keras.layers.Dense, {'units':64, 'activation':tf.nn.relu})],
-                 def_threshold=0):
+                 def_threshold=10):
         self.inter_layers = inter_layers
         self.optimizer = optimizer
         self.loss = loss
@@ -67,11 +67,15 @@ class uni_AutoEncoder(object):
                        #validation_split = self.validation_split,
                        verbose = self.verbose)
 
-    def predict(self, data):
+    def predict_raw(self, data):
         return self.model.predict(data.astype('float32'))
     
+    def predict(self, data):
+        pred_label = np.array([-1 if i>self.def_threshold else 1 for i in self.predict_score(data)])
+        return pred_label
+    
     def predict_score(self, data):
-        pred_score = np.mean(np.square(data - self.predict(data)), axis=1)
+        pred_score = -np.mean(np.square(data - self.predict_raw(data)), axis=1)
         return pred_score
         
     def eval_roc_auc(self, data_test, y_true):

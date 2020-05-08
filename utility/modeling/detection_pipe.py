@@ -63,6 +63,7 @@ class Pipe(object):
             self.ground_truth = self.df_test.abnormal
         else:
             self.ground_truth = self.df_test.abnormal.replace(to_replace=1, value=-1).replace(to_replace=0, value=1)
+        
         # update filepath accordingly to task
         self.update_filepath(self.task)
 
@@ -124,10 +125,13 @@ class Pipe(object):
         print('model fitted successfully\n\n...evaluating model')
 
         # evaluating over ground truth
-        self.evaluate(data_test, self.ground_truth)
+        self.evaluate(data_test)
         print('evaluation successfull, roc_auc:', self.roc_auc)
 
         # saving to pickle
+        if self.model.name == 'AutoEnc':
+            self.model = None
+
         self.to_pickle()
         print('pipe saved to pickle')
         #except:
