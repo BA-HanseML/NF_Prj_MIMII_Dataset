@@ -27,7 +27,7 @@ class uni_AutoEncoder(object):
         self.def_threshold = def_threshold
         self.roc_auc = None
         self.name = 'AutoEnc'
-        self.sufix = '°'.join([str(layer[1]['units']) for layer in inter_layers])
+        self.sufix = 'x'.join([str(layer[1]['units']) for layer in inter_layers])
 
     def preprocess_data(self, data):
         data = data.astype('float32')
