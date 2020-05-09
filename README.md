@@ -92,8 +92,8 @@ A list of general potential for improvement and not fully or not at all explored
 ## Application Notes
 Notes for the application as a smart sensor. A small discussion on implication and follow-up-work for deployment. Sub chapter: [application notes] (doc/feature_extraction. MD) 
 
-## Workflow Improvments
-Some reflection on workflow chosen and setup. Sub chapter [workflow improvments](doc/workflow_improvment.md) 
+## Workflow Improvements
+Some reflection on workflow chosen and setup. Sub chapter [workflow improvements](doc/workflow_improvment.md) 
 
 
 # Credits and Refrences
@@ -101,10 +101,15 @@ Some reflection on workflow chosen and setup. Sub chapter [workflow improvments]
 ## THANKS to...
 
 To the creators of the MIMII dataset
+
 To the creators of the gigantic audio processing library [librosa](https://librosa.github.io/)
+
 To the creators of the library [pyrommacustics](https://pyroomacoustics.readthedocs.io/en/pypi-release/)
+
 To all the developers of python, scipy, numpy, scikit learn and tensorflow ... and all the great python stuff that we can build on.
+
 To Mike X Cohen for his great Python DSP [Udemy courses](https://www.udemy.com/user/mike-x-cohen/) 
+
 To all the founders and minds of machine learning you created an awesome universe to explore.
 
 To the team at [neuefische GmbH](https://www.neuefische.de), that made this project possible by training us in the data science bootcamp.
