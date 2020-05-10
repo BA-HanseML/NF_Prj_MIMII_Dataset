@@ -1,5 +1,5 @@
 def get_rand_fband():
-    base = 500
+    base = 800
     limit = 4500
     band = np.random.random_sample()*0.4
     frc = base + np.random.random_sample()*(limit -base)
@@ -11,8 +11,8 @@ def design_band_bass(sr,frc_l, frc_u):
     filtorder = 16*np.round(sr/frc_l)+1
     lower_trans = .1
     upper_trans = .1
-    rand_increas = np.random.random_sample()*0.8
-    rand_decreas = np.random.random_sample()*0.1
+    rand_increas = np.random.random_sample()*0.6
+    rand_decreas = np.random.random_sample()*0.05
     filter_shape = [ 1-rand_decreas,1-rand_decreas,
                     1+rand_increas,1+rand_increas,
                     1-rand_decreas,1-rand_decreas ]
