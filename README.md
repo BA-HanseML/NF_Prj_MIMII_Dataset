@@ -60,8 +60,8 @@ The feature extraction diagram is a chain of filters and feature extractions lik
 
 #### Folder/part: Modeling
 The modeling folder hosts all the explored machine learning variants sorted in sub folders like each with general dicription: 
-* [Stochastic](modeling/unsupervised/unsupervised_modeling.md)
-* [pseudo_supervsed](modeling/pseudo_supervised/pseudo_supervised.md)
+* [unsupervised](modeling/unsupervised/unsupervised_modeling.md)
+* [pseudo_supervised](modeling/pseudo_supervised/pseudo_supervised.md)
 
 ### Setup
 
