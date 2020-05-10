@@ -29,13 +29,13 @@ class Pipe(object):
     def to_pickle(self, filepath=None):
         self.update_filepath(filepath)
 
+        if not os.path.exists('pipes'):
+            os.mkdir('pipes')
+        
         with open(self.filepath, 'wb') as f:
             pickle.dump(self, f)
 
     def update_filepath(self, path=None):
-        if not os.path.exists('pipes'):
-            os.mkdir('pipes')
-        
         if not path or (type(path)==dict):
             if not path:
                 task = self.task
@@ -63,6 +63,7 @@ class Pipe(object):
             self.ground_truth = self.df_test.abnormal
         else:
             self.ground_truth = self.df_test.abnormal.replace(to_replace=1, value=-1).replace(to_replace=0, value=1)
+        
         # update filepath accordingly to task
         self.update_filepath(self.task)
 
@@ -127,6 +128,10 @@ class Pipe(object):
         self.evaluate(data_test)
         print('evaluation successfull, roc_auc:', self.roc_auc)
 
+        # tensorflow models cannot be saved. It will be replaced by a dummy model
+        if self.model.name == 'AutoEnc':
+            self.model = dummy_model(name=self.model.name, sufix=self.model.sufix)
+
         # saving to pickle
         self.to_pickle()
         print('pipe saved to pickle')
@@ -136,6 +141,10 @@ class Pipe(object):
         #else:
         #    return True
     
+class dummy_model(object):
+    def __init__(self, name, sufix):
+        self.name = name
+        self.sufix = sufix
 
 # thread class
 class PipeThread(Thread):

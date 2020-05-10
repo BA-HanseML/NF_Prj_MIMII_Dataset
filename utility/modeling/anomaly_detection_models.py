@@ -165,7 +165,7 @@ class uni_GaussianMixture(GaussianMixture):
     # predict inherited
 
     def predict_score(self, data):
-        return self.predict_proba(data)
+        return self.score_samples(data)
 
     def eval_roc_auc(self, data_test, y_true):
         return roc_auc_score(y_true, self.predict_score(data_test))
