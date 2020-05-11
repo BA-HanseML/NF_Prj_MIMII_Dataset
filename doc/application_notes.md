@@ -4,8 +4,15 @@
 ## calibration phase
 - TODO explaint the possibel ways to make the machine learn normal and total time needed etc.
 
+
 ## what is abnormal in a spectrum or in time
 - after detecting a abnormal what feature is made the algorthem thing it is abnormal is vital for debugging and post missclassifaction training
 
 ## if multilabel use
 - if more cluster are found by unsupervised methodes the match to the cluster spectrum can be recorded and used to record how often a similer event is occuring this can be insight for machine monitoring and defining what modes are correlatble with other machine modes or what is worth investigating is not expalinabel etc.
+
+## setting recall or precssion modes
+- it might be possible by simple threshold tuning to increase the FN or FP missed abnormaltys over false alarms - with the idea in mind that hard to hear anomalys maybe not to bad failures
+and many false alarms would lead to disabling of the smart sensor in practise, as the mic. can only be extra sensor not safty and not process critcal based on its design.
+
+
