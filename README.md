@@ -53,12 +53,9 @@ This repo was of great help to get into the topic and inspired us.
 
 ### Dataset audtion show room
 
-Maybe you like to tune in, listen and have a look to some spectra of a small selection from the MIMII dataset, to get better feeling it.
-visit the show room:
-![click_show_room](doc/media_main/show_room_click.png)
+Maybe you like to tune in, listen and have a look to some spectra of a small selection from the MIMII dataset, to get better feeling it. Visit the show room:<br/>
+![click_show_room](doc/media_main/show_room_click.png) <br/><br/>
 [link to the showroom](https://ba-hanseml.github.io/MIMII_show_room/showroom.html)
-
-
 
 ## Structure of Study = How to read the Repo
 
