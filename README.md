@@ -1,4 +1,6 @@
-# Can a Machine Hear If a Machine Is Broken? - Unsupervised Anomaly Detection by Airborne Sound of Industrial Machinery
+# Can a Machine Hear If a Machine Is Broken? 
+**Unsupervised Anomaly Detection by Airborne Sound of Industrial Machinery**
+
 A machine learning approach to machine anomaly detection on the MIMII dataset.
 
 ![story](doc/media_main/story.png)
@@ -35,7 +37,7 @@ In the picture below an exemplary classification ensemble is sketched, this is a
 In order to make any machine learning algorithm able to work with audio it is necessary to use various signal processing steps (feature extraction pre filter) that may be of classic nature or also take use of machine learning methods like clustering for preprocessing on the time buffer like activation detection. 
 In application the reaction time of such an anomaly detection is around 10 sec at the current construction and training chain buildup. But some indication could be found to reduce this eventually.
 
-## About the Dataset
+## About the Dataset MIMII
 
 The data have a general discretion through the ZENODO page where it is open for [download](https://zenodo.org/record/3384388#.XpNAUpnRYuV)
 
@@ -48,6 +50,15 @@ Some further interpretation from our end can be found in the sub chapter: [about
 Furthermore the MIMII creators also provided an autoencoder based baseline model on GitHub:
 https://github.com/MIMII-hitachi/mimii_baseline
 This repo was of great help to get into the topic and inspired us.
+
+### Dataset audtion show room
+
+Maybe you like to tune in, listen and have a look to some spectra of a small selection from the MIMII dataset, to get better feeling it.
+visit the show room:
+![click_show_room](doc/media_main/show_room_click.png)
+[link to the showroom](https://ba-hanseml.github.io/MIMII_show_room/showroom.html)
+
+
 
 ## Structure of Study = How to read the Repo
 
