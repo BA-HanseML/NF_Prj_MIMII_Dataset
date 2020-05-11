@@ -7,7 +7,7 @@ import glob
 from tqdm.auto import tqdm 
 from queue import Queue
 from threading import Thread 
-import datetime
+from datetime import datetime
 import time
 import logging
 
@@ -38,7 +38,7 @@ def IfStrReturnList(s):
         return s
 
 def time_stemp_str():
-    now = datetime.datetime.now()
+    now = datetime.now()
     return (now.strftime("%Y-%m-%d %H:%M:%S"))
     
 class LoggerWrap():
