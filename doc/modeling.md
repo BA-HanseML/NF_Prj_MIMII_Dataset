@@ -41,6 +41,11 @@ The second model type in the unsupervised approach is the Autoencoder. The Autoe
 ![](https://miro.medium.com/max/1400/0*uq2_ZipB9TqI9G_k)
 *Example of an Autoencoder, cited from: https://miro.medium.com/max/1400/0\*uq2_ZipB9TqI9G_k
 
+## Pseudo supervised
+
+The approaches uses supervised machine learning on a set of normal observation and normal augmented, the normal augmented then become synthetic abnormal observation.
+[more details](../modeling/pseudo_supervised/pseudo_supervised.md)
+
 # Ensemble
 
 There is a high degree of freedom of different features, preprocessing steps, models, and hyperparameters. Possible permutations consist of 2 signal to noise ratios (SNR), 4 machines each SNR, 2 IDs each machine, 9 different feature-types each ID, results in 144 different permutations to explore before any selection of feature-parameter, model type or model-parameter.
