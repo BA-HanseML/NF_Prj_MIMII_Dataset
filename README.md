@@ -81,7 +81,7 @@ References like papers, etc. see below.
 #### Folder: env
 Information about the Conda environment, Jupyter settings and GPU elements in tensorflow. Notice this work was done on windows 10 with anaconda and jupyter.
 
-#### Folder: sub_notebooks = MISC
+#### Folder: misc
 miscellaneous material and interesting site experiments - partially unsorted.
 
 # Future Work
