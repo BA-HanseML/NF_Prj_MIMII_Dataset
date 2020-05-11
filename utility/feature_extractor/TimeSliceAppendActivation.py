@@ -89,7 +89,7 @@ def TimeSliceAppendActivation(y, sr, fn=''):
         
         if i==0:
             #print(out)
-            out = new_audio_app
+            out = np.array([new_audio_app])
         else:
             out = np.vstack((out,new_audio_app))
 

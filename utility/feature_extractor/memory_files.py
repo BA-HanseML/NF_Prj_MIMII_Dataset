@@ -12,7 +12,8 @@ class memory_wave_file():
         self.filepath = filepath
         #print('#')
         af, sr = librosa.load(os.path.abspath(base_folder+filepath), sr=None, mono=False)
-        #print(af)
+        
+        #print(af.shape)
         self.srate = sr
         self.length = len(af[0])
         self.channel = af
