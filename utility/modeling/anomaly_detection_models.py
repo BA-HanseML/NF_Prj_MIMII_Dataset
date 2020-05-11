@@ -66,7 +66,7 @@ class uni_IsolationForest(IsolationForest):
 
         self.def_threshold=def_threshold
         self.roc_auc = None
-        self.name = 'IsoForr'
+        self.name = 'IsoFor'
         self.sufix = '{}est_{}mf'.format(self.n_estimators, self.max_features)
 
     # fit inherited

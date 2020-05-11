@@ -25,7 +25,7 @@ def split_index(indeces, labels, files):
     
     # split the normal data
     num_abnormal = len(idx_abnormal)
-    idx_train, idx_test_normal = train_test_split(idx_normal, test_size=num_abnormal)
+    idx_train, idx_test_normal = train_test_split(idx_normal, test_size=num_abnormal, random_state=42)
 
     # the testset contains all abnormal operation data
     idx_test = idx_test_normal.union(idx_abnormal)
