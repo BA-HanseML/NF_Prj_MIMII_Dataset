@@ -1,0 +1,27 @@
+name: mimiibaseTF2GPU
+
+dependencies:
+    - python=3.7
+    - pip>=19.0
+    - jupyter
+    - tensorflow-gpu=2.0
+    - keras
+    - Keras-Applications
+    - Keras-Preprocessing
+    - matplotlib
+    - seaborn
+    - numpy
+    - scipy
+    - pandas
+    - PyYAML
+    - scikit-learn
+    - ffmpeg
+    - setuptools
+    - tqdm
+    - librosa
+    - audioread
+    - pandas
+channels:
+    - defaults
+    - conda-forge
+    

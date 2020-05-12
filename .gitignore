@@ -1,7 +1,13 @@
 # Project based
-data/*
+
+# --- dataset ---
 dataset/*
+!dataset/*/*.ipynb
 !dataset/dataset_struct.md
+*.pkl
+*.npy
+
+# --- reference --- 
 ref/*.pdf
 !ref/paper_list.md
 !ref/web_list.md

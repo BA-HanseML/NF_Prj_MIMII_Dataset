@@ -1,0 +1,22 @@
+name: mimiibaseTF2
+
+dependencies:
+    - python=3.7
+    - pip>=19.0
+    - jupyter
+    - tensorflow=2.0
+    - keras
+    - Keras-Applications
+    - Keras-Preprocessing
+    - matplotlib
+    - numpy
+    - PyYAML
+    - scikit-learn
+    - ffmpeg
+    - setuptools
+    - tqdm
+    - librosa
+    - audioread
+channels:
+    - conda-forge
+    - defaults

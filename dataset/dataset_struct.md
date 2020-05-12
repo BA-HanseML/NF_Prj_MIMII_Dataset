@@ -59,3 +59,7 @@ md 6dB
 7z.exe -o0dB -y x .\0_dB_valve.zip
 7z.exe -o0dB -y x .\0_dB_slider.zip
 ```
+
+# Addtional Folders from feature extractrion
+Feature extraction will create folder named after the extraction diagram like:
+exdia_v1 - for feature extraction diagram version 1 find more about feature extraction diagrams in [feature extraction](../doc/feature_extraction.md)
