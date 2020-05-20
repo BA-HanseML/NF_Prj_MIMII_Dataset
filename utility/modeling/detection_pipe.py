@@ -5,6 +5,7 @@ import numpy as np
 import pickle
 import os
 from datetime import datetime
+from sklearn.preprocessing import StandardScaler
 
 ## PipeThreading objects
 from queue import Queue
@@ -47,8 +48,7 @@ class Pipe(object):
                                     task['machine'],
                                     'ID'+task['ID'],
                                     self.model.name,
-                                    self.model.sufix,
-                                    datetime.now().strftime("%Y%m%d_%H%M%S")
+                                    self.model.sufix
                                     ]) + '.pkl'
         else:
             self.filepath = path
@@ -97,7 +97,18 @@ class Pipe(object):
         self.model.fit(data_train, y=self.y_train)
         
         if self.pseudo_sup: print(self.model.eval_roc_auc(data_train, self.y_train))
-
+    
+    def fit_score_scaler(self, data_train):
+        self.score_scaler = StandardScaler()
+        self.score_scaler.fit(
+            np.expand_dims(self.model.predict_score(data_train), axis=1)
+            )
+    
+    def predict_score(self, data):
+        return self.score_scaler.transform(
+            np.expand_dims(self.model.predict_score(data), axis=1)
+            )
+    
     def evaluate(self, data_test):
         # calculate evaluation score
 
@@ -122,7 +133,11 @@ class Pipe(object):
 
         # fitting the model
         self.fit_model(data_train)
-        print('model fitted successfully\n\n...evaluating model')
+        print('model fitted successfully\n\n...fitting the prediction scaler')
+        
+        # fitting the prediction scaler
+        self.fit_score_scaler(data_train)
+        print('prediction scaler fitted successfully\n\n...evaluating model')
 
         # evaluating over ground truth
         self.evaluate(data_test)
