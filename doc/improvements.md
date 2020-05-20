@@ -46,3 +46,16 @@ In speech recognition the mel frequency cepstrum is used very successful since t
 
 
 
+## Modeling
+
+### Pseudo-supervised
+
+The main problem with the pursuit of supervised approach used in the study is that it fits too well in training, this indicates that the augmentation is too easy to distinguish from normal. Nonetheless it was good enough to create a decent detector. But it also points to many possibilities of improvement like:
+
+By incorporating the augmentation directly into the learning loop, thereby creating an adversary feedback loop. This means that the training result of the supervised classifier is taken into a tuning function for the augmentation and after tuning the augmentation the next training is conducted with the goal to reach a low training score with the assumption in mind that a particularly hard to distinguish syntactic abnormal would be harder to distinguish than the real abnormal.
+
+This might be achievable with convolution layouts. In case this would be successful a convolution a neural network could be used in U-net architecture to emphasize the abnormal parts in a Spectra. 
+
+On the problem of the used augmentation is that it is applied throughout the entire time of one file in this case 10 seconds. If the augmentation would also be randomized by time or simply asked a convolution on the STFT the approach can even be used when sequential modeling is as used.
+
+Thereby many opportunities have to be explored and the study is only showing of very simple version of the pseudo-supervised approach.
