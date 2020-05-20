@@ -21,9 +21,11 @@ This can also be used to steer the training better by operator as it would be po
 
 
 ## setting recall or precession modes - sensitivity setting
-It might be possible by simple threshold tuning to increase the FN or FP missed abnormality’s over false alarms - with the idea in mind that hard to hear anomaly’s maybe not to bad failures and many false alarms would lead to disabling of the smart sensor in practise, as the mic. can only be extra sensor not safety and not process critical sensor element (at least based on the reached performance for now).
+It might be possible by simple threshold tuning to increase the FN or FP missed abnormality’s over false alarms - with the idea in mind that hard to hear anomaly’s maybe not to bad failures and many false alarms would lead to disabling of the smart sensor in practice, as the mic. can only be extra sensor not safety and not process critical sensor element (at least based on the reached performance for now).
 
-If such modes are established in practise these can be offered as i.e. 3 modes sensitive, neutral and robust where sensitive is most jumpy alarm and conservative alarm while robust is only triggering when the algorithm is very sure something happens.
+If such modes are established in practice these can be offered as i.e. 3 modes sensitive, neutral and robust where sensitive is most jumpy alarm and conservative alarm while robust is only triggering when the algorithm is very sure something happens.
 
+## Real time - Reaction Time
+Some of the pre filter used are not strictly working real time and are not formulated extremely robust, this is absolutely solvabel but was not the objective of the study so some more work needs be put into this if application is sought.
 
-
+Right now the time frame ensamble means all down to 10sec but floating but in any case the PSD based decisions will need window updates and increase the reaction time to at least ~5sec(guessed values based on half window fill) to detect something. Depending on devices and changes done to the time windows this can be improved but optimization was not explored to much for the reaction time.
