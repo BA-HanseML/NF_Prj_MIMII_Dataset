@@ -24,6 +24,9 @@ class Pipe(object):
         # model instance
         self.model = self._mdl(**self.model_args)
         
+        # attribute for the specific task of the pipe
+        self.task = None
+        
         # toggle flag for pseudo supervised to have classes >0 -> 0 1 and not -1 and 1
         self.pseudo_sup = pseudo_sup
 
@@ -78,14 +81,13 @@ class Pipe(object):
         # return preprocessed data
         return data_train, data_test
     
-    def preprocess_post(self, data_train, data_test):
+    def preprocess_post(self, data):
         # run through all the preprocessing steps
         for step in self.preproc_steps:
-            data_train =  step.transform(data_train)
-            data_test = step.transform(data_test)
+            data = step.transform(data)
 
         # return preprocessed data
-        return data_train, data_test
+        return data
 
     def fit_model(self, data_train):
         # get ground truth for train_set
@@ -118,7 +120,7 @@ class Pipe(object):
 
     def run_pipe(self, task):
         self.task = task
-        #try:
+
         # split data into train and testset
         self.split_data()
         
@@ -177,3 +179,85 @@ class PipeThread(Thread):
             pipe.run_pipe(task)
             # finish job
             self.queue.task_done()
+            
+            
+# class uni_Ensemble(object):
+#     def __init__(self, SNR, machine, ID):
+#         self.SNR = SNR
+#         self.machine = machine
+#         self.ID = ID
+        
+#         self.weights = [1.3, 1.0, 0.9, 0.8]
+        
+#         self.tasks = [{
+#                     'path_descr': find_data_file(SNR, machine, ID),
+#                     'feat':feature[1], 
+#                     'feat_col':feature[0], 
+#                     'SNR':SNR, 
+#                     'machine':machine,
+#                     'ID':ID,
+#                     'BASE_FOLDER':BASE_FOLDER
+#         } for feature in [('MEL_den', {'function':'frame', 'frames':3}), # Autoencoder MEL spectrum
+#                           ('MEL_den', {'function':'frame', 'frames':5}), # Isolation Forest MEL spectrum
+#                          ('PSD_raw', {'function':'flat'}), # Isolation Forest Welch method
+#                          ('PSD_raw', {'function':'flat'})]] # SVM augmented Welch method
+        
+#         self.pipes = [
+#             Pipe(preprocessing_steps=[(PCA, {'n_components':64}),(StandardScaler, {})], 
+#                  modeling_step=(uni_AutoEncoder, {'epochs':5}),
+#                  pseudo_sup=False), # Autoencoder MEL spectrum
+            
+#             Pipe(preprocessing_steps=[(PCA, {'n_components':64}),(StandardScaler, {})], 
+#                  modeling_step=(uni_IsolationForest, {'n_estimators':64, 'max_features':4}),
+#                  pseudo_sup=False), # Isolation Forest MEL spectrum
+            
+#             Pipe(preprocessing_steps=[(StandardScaler, {})], 
+#                  modeling_step=(uni_IsolationForest, {'n_estimators':200, 'max_features':1}),
+#                  pseudo_sup=False), # Isolation Forest Welch method
+            
+#             Pipe(preprocessing_steps=[(StandardScaler, {})], 
+#                  modeling_step=(uni_svm, {'C': 0.1, 'degree':3,'kernel':'rbf'}),
+#                  pseudo_sup=True), # SVM augmented Welch method
+#         ]
+        
+#     def fit(self):
+#         for pipe, task in zip(self.pipes, self.tasks):
+            
+#             # set up the task
+#             pipe.task = task
+            
+#             # split data into train and testset
+#             pipe.split_data()
+            
+#             # get the data
+#             print('...loading data')
+#             data_train, data_test = pipe.get_data()
+#             print('data loading completed\n\n...preprocessing data')
+
+#             # preprocessing
+#             data_train, data_test = pipe.preprocess(data_train, data_test)
+#             print('data preprocessing finished\n\n...fitting the model')
+
+#             # fitting the model
+#             pipe.fit_model(data_train)
+#             print('model fitted successfully\n\n...fitting the prediction scaler')
+
+#             # fitting the prediction scaler
+#             pipe.fit_score_scaler(data_train)
+#             print('prediction scaler fitted successfully\n\n...evaluating model')
+
+#             # evaluating over ground truth
+#             pipe.evaluate(data_test)
+#             print('evaluation successfull, roc_auc:', pipe.roc_auc)
+            
+            
+#     def predict(self, data):
+#         predictions = np.array([])
+#         for pipe, weight in zip(self.pipes, self.weights):
+#             np.append(predictions, np.expand_dims(pipe.predict_score(data)*weight, axis=1), axis=1)
+            
+#         prediction = np.sum(predictions, axis=0)
+#         return prediction
+    
+#     def evaluate():
+#         pass
