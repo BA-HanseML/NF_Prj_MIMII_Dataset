@@ -2,6 +2,7 @@ print('Load detection_pipe')
 
 # main imports
 import numpy as np
+import pandas as pd
 import pickle
 import os
 from datetime import datetime
@@ -95,20 +96,40 @@ class Pipe(object):
             self.y_train = self.df_train.abnormal.replace(to_replace=-1, value=1)
         else:
             self.y_train=None
+        
         # fit the model
         self.model.fit(data_train, y=self.y_train)
         
         if self.pseudo_sup: print(self.model.eval_roc_auc(data_train, self.y_train))
     
-    def fit_score_scaler(self, data_train):
-        self.score_scaler = StandardScaler()
-        self.score_scaler.fit(
-            np.expand_dims(self.model.predict_score(data_train), axis=1)
-            )
+    def predict(self, data):
+        return self.model.predict_score(data)
     
-    def predict_score(self, data):
+    def fit_aggr_score_scaler(self, data_train, file_index_train):
+        
+        prediction = self.aggr_by_file_index(
+           self.predict(data_train),
+           file_index_train
+        )
+        
+        self.score_scaler = StandardScaler()
+        self.score_scaler.fit(prediction)
+    
+    def aggr_by_file_index(prediction, files):
+        
+        prediction = pd.Series(pipe.df_test.pred_scores, name='scores_aggr')
+        
+        return prediction.groupby(by=files).sum()
+    
+    def predict_aggr_score(self, data, file_index):
+        
+        prediction = self.aggr_by_file_index(
+           self.predict(data),
+           file_index
+        )
+        
         return self.score_scaler.transform(
-            np.expand_dims(self.model.predict_score(data), axis=1)
+            np.expand_dims(prediction, axis=1)
             )
     
     def evaluate(self, data_test):
