@@ -52,7 +52,44 @@ The implementation used in the study cut out the activation times and re-append 
 The augmentation of any audio file is done as a pre-step in the feature extraction diagram. The augmentation itself is done by randomly designing FIR filters that represent band passes and eventually shifting the frequencies a.k.a. pitching. This type of augmentation leads to the syntactic abnormal recording for the purpose of pseudo-supervised learning [read more about pseudo-supervised learning](../modeling/pseudo_supervised/pseudo_supervised.md). 
 
 
-##
+## Denoising
+
+In order to reduce the background noise of a recording many techniques are possible. In this study we only used blind mono channel denoising, that means we have no detailed information of what is the signal and what is noise the assumption is that noise can be filtered based on its distribution in the spectrum. The most successful variant has been tuned and tested in the following notebook: [notebook](../feature_extraction_diagrams/A04_DenoiseDesign_mono/librosa_NNFilter_BlindDenoise.ipynb) 
+
+Below is a picture of the result of that filter visualized as a MEL spectrum. You can see that this filter is successfully reducing the background noise content and sort of sharpening the essential components, this statement is derived by comparing the denoised spectrum with the recording where lesson noise was added.
+
+![denoise](\media_feature_extraction\denoise_example.png)
+
+In the example above which is a recording of a pump, where in the background you hear water splashing. It is particularly interesting that this splashing is attached by the filter it seems it is randomly enough distributors in the spectrum while the key permanent voices of the pump is maintained. Therefore this algorithm one is place and a feature extraction diagram.
+
+The denoisng filter it's named [nn_filter](https://librosa.github.io/librosa/generated/librosa.decompose.nn_filter.html) from the library librosa.
+
+Many more denoising and technics could be explored. In the feature extraction subfolder you can find some hints based on the library [pyroomacoustics](https://github.com/LCAV/pyroomacoustics). As soon as to be no using doesn't have to be blind even more powerful techniques could be possible by using outer adaptive filters etc.. 
+
+## Main channel and DOA
+
+To find the most interesting channel or microphone the simple assumption this that the microphone that points towards the derives is that microphone. While this would mean that any processing is done in mono finding of his direction can actually be out of the ties by using direction of arrival algorithms. This algorithm has maybe also the power to be used as a  spatial filter to reduce noise or focus better on the main source. All these automations have not been used yet but been initially explored in the notebook: [DOA_notebook](../feature_extraction_diagrams/A21_DirectionOfArrival_DOA/pyroomacustic_DOA.ipynb)
+
+![CSSM DOA](media_feature_extraction/CSSM_DOA.png)
+In the picture above the device is placed at 90° off the microphone ring as you can see the direction of arrival is estimated at least in the right sector and it might be even possible that the direction of arrival points much more accurately to the actual main source of noise. The placement of the device in relation to the microphone ring is known in from the descriptions of the data set what is not known is the size of the device. Further experimentation is required before a direction of arrival filter can be used.
+
+But it proves the point that technology is available, out of the box that can be used to determine the main direction or the best channel.
+
+## Source separation
+
+One way to leverage the availability of multiple recordings in different spatial relationship is to try source separation. In this study we used individual component analysis from [scikit-lern (fastICA)](https://scikit-learn.org/stable/modules/decomposition.html#ica)
+
+The individual component analysis is used under the naive assumption that there are only two sources in the recorded with 8 microphones namely background noise and machine noise. Then the assumption is that the source channel with the most diverse mixing coefficients will be more likely to have important information of the recording. Many other interpretation would be possible as a maximum of eight sources could be distinguished by eight microphones. But the microphone ring has a small diameter relative to space of interest, so that source separation at least in its simple version has a limited effectiveness. One interesting find though was that the estimated mixing matrix can also be used to determine anomalies. In the end it was outperformed by the spectrum - But if successful it would use only very few features. 
+
+(Blind source separation techniques and you can find hints about that in the folder: feature_extraction_diagrams/A20_BSS_BlindSourceSeperation)
+
 
 
 ## Version of diagrams
+
+Multiple versions of feature extraction diagram are created the picture below version 0 and one are depicted. All possible diagrams are recorded in the following file feature_extraction_diagrams/DiagramVersions.graphml
+
+![dias](media_feature_extraction/Diagrams.png)
+
+notice this file has been created with the tool [yEd](https://www.yworks.com/products/yed)
+
