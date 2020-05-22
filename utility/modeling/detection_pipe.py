@@ -105,36 +105,33 @@ class Pipe(object):
     def predict(self, data):
         return self.model.predict_score(data)
     
-    def fit_aggr_score_scaler(self, data_train, file_index_train):
-        
-        prediction = self.aggr_by_file_index(
+    def fit_aggr_score_scaler(self, data_train, files_train):
+        prediction = self.sum_by_file(
            self.predict(data_train),
-           file_index_train
+           files_train
         )
-        
         self.score_scaler = StandardScaler()
-        self.score_scaler.fit(prediction)
+        self.score_scaler.fit(np.expand_dims(prediction, axis=1))
     
-    def aggr_by_file_index(prediction, files):
-        
-        prediction = pd.Series(pipe.df_test.pred_scores, name='scores_aggr')
-        
+    def sum_by_file(self, prediction, files):
+        prediction = pd.Series(prediction)
         return prediction.groupby(by=files).sum()
     
-    def predict_aggr_score(self, data, file_index):
-        
-        prediction = self.aggr_by_file_index(
+    def median_by_file(self, prediction, files):
+        prediction = pd.Series(prediction)
+        return prediction.groupby(by=files).median()
+    
+    def predict_aggr_score(self, data, files):
+        prediction = self.sum_by_file(
            self.predict(data),
-           file_index
+           files
         )
-        
         return self.score_scaler.transform(
             np.expand_dims(prediction, axis=1)
             )
     
     def evaluate(self, data_test):
         # calculate evaluation score
-
         self.df_test['pred_scores'] = self.model.predict_score(data_test)
         self.df_test['pred_labels'] = self.model.predict(data_test)
         self.roc_auc = self.model.eval_roc_auc(data_test, self.ground_truth)
@@ -159,7 +156,7 @@ class Pipe(object):
         print('model fitted successfully\n\n...fitting the prediction scaler')
         
         # fitting the prediction scaler
-        self.fit_score_scaler(data_train)
+        self.fit_aggr_score_scaler(data_train, self.df_train.path)
         print('prediction scaler fitted successfully\n\n...evaluating model')
 
         # evaluating over ground truth
