@@ -56,34 +56,34 @@ def tt_split(table_path):
     IDs = table.ID.unique()
 
     if 'train_set' in table.columns:
-        table = table.drop(columns=['train_set'])
+        print('{} --> Already Done'.format(table_path))
+    else:
+        # initialize the new column
+        tt_series = pd.Series(0, index=table.index,
+                                name='train_set', dtype=np.int8)
 
-    # initialize the new column
-    tt_series = pd.Series(0, index=table.index,
-                            name='train_set', dtype=np.int8)
+        # split for every individual ID, machine and SNR
+        for SNR in SNRs:
+            for machine in machines:
+                for ID in IDs:
 
-    # split for every individual ID, machine and SNR
-    for SNR in SNRs:
-        for machine in machines:
-            for ID in IDs:
+                    # create the individual mask 
+                    # and read the indeces and labels accordingly
+                    mask = (table.SNR == SNR) & (
+                        table.machine == machine) & (table.ID == ID)
+                    
+                    idx = table[mask].index
+                    labels = table[mask].abnormal
+                    files = table[mask].path
 
-                # create the individual mask 
-                # and read the indeces and labels accordingly
-                mask = (table.SNR == SNR) & (
-                    table.machine == machine) & (table.ID == ID)
-                
-                idx = table[mask].index
-                labels = table[mask].abnormal
-                files = table[mask].path
+                    # get the indeces that belong to the training dataset 
+                    # and update the new column
+                    idx_train, _, idx_augmented_test = split_index(idx, labels, files)
+                    tt_series[idx_train] = 1
+                    tt_series[idx_augmented_test] = -1
+                    
 
-                # get the indeces that belong to the training dataset 
-                # and update the new column
-                idx_train, _, idx_augmented_test = split_index(idx, labels, files)
-                tt_series[idx_train] = 1
-                tt_series[idx_augmented_test] = -1
-                
+        table = table.join(tt_series)
+        table.to_pickle(table_path)
 
-    table = table.join(tt_series)
-    table.to_pickle(table_path)
-
-    print('{} --> Done'.format(table_path))
+        print('{} --> Done'.format(table_path))

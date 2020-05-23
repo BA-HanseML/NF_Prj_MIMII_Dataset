@@ -7,6 +7,9 @@ dataset/*
 *.pkl
 *.npy
 
+# --- main pipes ---
+pipes/*
+
 # --- reference --- 
 ref/*.pdf
 !ref/paper_list.md
