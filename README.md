@@ -1,7 +1,7 @@
 # Can a Machine Hear If a Machine Is Broken? 
-**Unsupervised Anomaly Detection by Airborne Sound of Industrial Machinery** <br>
-A machine learning approach to machine anomaly detection on the MIMII dataset.<br>
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/BA-HanseML/NF_Prj_MIMII_Dataset) ![GitHub issues](https://img.shields.io/github/issues/BA-HanseML/NF_Prj_MIMII_Dataset) [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/BA-HanseML/NF_Prj_MIMII_Dataset/blob/master/LICENSE) [![GitHub contributors](https://img.shields.io/github/contributors/BA-HanseML/NF_Prj_MIMII_Dataset)](https://GitHub.com/BA-HanseML/NF_Prj_MIMII_Dataset/graphs/contributors)
+**Unsupervised Anomaly Detection by Airborne Sound of Industrial Machinery** <br/>
+A machine learning approach to machine anomaly detection on the MIMII dataset.<br/>
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/BA-HanseML/NF_Prj_MIMII_Dataset)  [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/BA-HanseML/NF_Prj_MIMII_Dataset/blob/master/LICENSE) [![GitHub contributors](https://img.shields.io/github/contributors/BA-HanseML/NF_Prj_MIMII_Dataset)](https://GitHub.com/BA-HanseML/NF_Prj_MIMII_Dataset/graphs/contributors) ![GitHub issues](https://img.shields.io/github/issues/BA-HanseML/NF_Prj_MIMII_Dataset)
 ![story](doc/media_main/story.png) 
 ___
 ![pack](https://img.shields.io/badge/anaconda-4.8.3-red) ![pack](https://img.shields.io/badge/Python-3.7.6-green) ![pack](https://img.shields.io/badge/scikitlearn-0.22.2-blue) ![pack](https://img.shields.io/badge/Tensorflow-2.0.0-yellow) ![pack](https://img.shields.io/badge/jupyter-1.0.0-orange) ![pack](https://img.shields.io/badge/librosa-0.6.3-yellow) 
