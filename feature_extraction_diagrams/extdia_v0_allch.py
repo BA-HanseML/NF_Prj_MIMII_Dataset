@@ -1,5 +1,9 @@
 print('load # extractor diagram V0 all channel to psd')
 
+# Special variant of the version 0 that allows to test stacked Spectra output, 
+# this means all eight channels are used it can also be used to check for 
+# performance to create a trade-off if all channels should be used
+
 class extdia_v0_allch(extractor_diagram):
 
     def ini_diagram(self): # custom

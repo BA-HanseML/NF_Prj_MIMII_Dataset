@@ -1,5 +1,8 @@
 print('load # extractor diagram V1 essential')
 
+# Essential version for the final summary automation in the main notebook. 
+#It contains only the winning prefilter and feature extraction from the development process.
+
 class extdia_v1_essential(extractor_diagram):
 
     def ini_diagram(self): # custom

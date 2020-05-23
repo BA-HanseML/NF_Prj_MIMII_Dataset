@@ -1,5 +1,8 @@
 print('load # extractor diagram V1')
 
+#Notice : that the dereverb is disabled because it would double the 
+# calculation time. This diagram is quite extensive and was built to have lot of choices for the modeling part.
+
 class extdia_v1(extractor_diagram):
 
     def ini_diagram(self): # custom
