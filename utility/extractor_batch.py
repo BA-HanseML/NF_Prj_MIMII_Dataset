@@ -1,5 +1,8 @@
 print('load extractor_batch')
 
+# Utility to run multiple feature extraction 
+# diagrams over many files with multiple threats
+
 import pandas as pd
 import os
 import sys
@@ -108,6 +111,7 @@ def multithreadpolltracker(queue, total):
     done = total
     pbar.update(done)
 
+# Main Function
 def extractor_batch(base_folder, target_folder, extdia, 
                     FileFindDict = {'SNR': '6dB',
                                     'machine': 'pump', 

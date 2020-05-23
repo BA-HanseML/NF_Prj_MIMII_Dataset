@@ -1,5 +1,6 @@
 print('load feature_extractore_pre_nnFilterDenoise')
 
+# Feature extractor prefilter wrapping for the librosa nn filter
 
 class feature_extractor_pre_nnFilterDenoise(feature_extractor):
     def __init__(self, base_folder, name='nnfilt'):

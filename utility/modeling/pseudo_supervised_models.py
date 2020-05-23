@@ -1,5 +1,6 @@
 print('Load pseudo_supervised_models')
 
+# Wrappings for the models used in pseudo-supervised training
 
 from sklearn.linear_model import LogisticRegression
 
@@ -38,7 +39,6 @@ class uni_LogisticRegression(LogisticRegression):
         
 #--------------------------------------------------------------
 
-#https://stackoverflow.com/questions/37089177/probability-prediction-method-of-kneighborsclassifier-returns-only-0-and-1
 from sklearn.neighbors import KNeighborsClassifier
       
 class uni_KNeighborsClassifier(KNeighborsClassifier):

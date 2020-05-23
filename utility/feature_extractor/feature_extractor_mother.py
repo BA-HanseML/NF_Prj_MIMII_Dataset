@@ -1,12 +1,6 @@
 print('load feature_extractor_mother')
 
-def Plain_Spectraplot(data):
-    pass
-    
-def Plain_freqplot(data):
-    pass
-
-
+# Enumeration off the IDs of feature extraction implemented as feature extractor classes
 from enum import Enum
 class feature_extractor_type(Enum):
     BASE = 0
@@ -17,16 +11,7 @@ class feature_extractor_type(Enum):
     preNNFILTER = 101
 
 
-# TODO load based on columns header
-
-class feature_extractor_memory_wave_file():
-    def __init__(self):
-        self.filepath = ''
-        self.channel = None
-        self.srate = 0
-        self.length = 0
-
-
+# Autoloader function based on a dictionary that would be stored in a feature extractor pickle file
 def feature_extractor_from_dict(d, base_folder):
     #print(d['para_dict']['type'] )
     if d['para_dict']['type'] == feature_extractor_type.MEL_SPECTRUM:
@@ -43,13 +28,18 @@ def feature_extractor_from_dict(d, base_folder):
         fe.read_from_dict(d)
         
     return fe
-    
+
+# Autoloader function that can read from a pickle fire
 def feature_extractor_from_file(filepath, base_folder):
     d = pickle.load( open( filepath, "rb" ))
     return feature_extractor_from_dict(d,base_folder)
 
+# Main class definition
+# This mother class is a API definition
 class feature_extractor():
     def __init__(self,base_folder, name='base_feature', xlabel='x', ylabel='y',zlabel='z'):
+        # Three main memory components off a feature extractor
+
         self.para_dict = \
         {'name': name,
          'xlabel': xlabel,
@@ -98,7 +88,7 @@ class feature_extractor():
             af, sr = librosa.load(self._full_wave_path(filepath), sr=None, mono=False)
             self.para_dict['wave_srate'] = sr
             self.para_dict['wave_length'] = len(af[0])
-        else: # TODO make this more robust but 
+        else: # TODO make this more robust  
             self.para_dict['wave_filepath'] = filepath.filepath.replace(os.path.abspath(self.base_folder),'')
             af  = filepath.channel
             self.para_dict['wave_srate'] = filepath.srate

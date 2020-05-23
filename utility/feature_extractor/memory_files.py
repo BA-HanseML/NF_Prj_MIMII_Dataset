@@ -1,3 +1,4 @@
+# A container for an audio file to be exchanged from one filter to another in memory
 class memory_wave_file():
     def __init__(self):
         self.filepath = ''
