@@ -1,6 +1,6 @@
 # Can a Machine Hear If a Machine Is Broken? 
-**Unsupervised Anomaly Detection by Airborne Sound of Industrial Machinery** 
-A machine learning approach to machine anomaly detection on the MIMII dataset.
+**Unsupervised Anomaly Detection by Airborne Sound of Industrial Machinery** <br>
+A machine learning approach to machine anomaly detection on the MIMII dataset.<br>
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/BA-HanseML/NF_Prj_MIMII_Dataset) ![GitHub issues](https://img.shields.io/github/issues/BA-HanseML/NF_Prj_MIMII_Dataset) [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/BA-HanseML/NF_Prj_MIMII_Dataset/blob/master/LICENSE) [![GitHub contributors](https://img.shields.io/github/contributors/BA-HanseML/NF_Prj_MIMII_Dataset)](https://GitHub.com/BA-HanseML/NF_Prj_MIMII_Dataset/graphs/contributors)
 ![story](doc/media_main/story.png) 
 ___
