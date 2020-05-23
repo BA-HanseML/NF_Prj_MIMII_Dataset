@@ -5,7 +5,19 @@ A machine learning approach to machine anomaly detection on the MIMII dataset.
 
 ![story](doc/media_main/story.png)
 
-## Discription of the Study - in this Repo
+## Introduction
+
+This study is the final "Capstone" project of [ArneSch](https://github.com/ArneSch) and [HssDix](https://github.com/HssDix) for the 3 month data science bootcamp at [neuefische](https://github.com/neuefische) in Hamburg. This project has been developed in 4 weeks of April and May 2020.
+
+[![GitHub contributors](https://img.shields.io/github/contributors/BA-HanseML/NF_Prj_MIMII_Dataset)](https://GitHub.com/BA-HanseML/NF_Prj_MIMII_Dataset/graphs/contributors)
+
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/BA-HanseML/NF_Prj_MIMII_Dataset/blob/master/LICENSE)
+We provide this work under the MIT License.
+
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/BA-HanseML)
+If you have any questions concerning this repository do not hesitate to contact us.
+
+## Description of the Study - in this Repo
 
 This repo is about a concept study on the MIMII dataset to detect anomalies of machines or machine parts like fans, slider, pump and valves by means of classic machine learning and deep learning methods. 
 
@@ -67,18 +79,21 @@ The repo has some folders that correspond to either setup or the main chapters o
 The feature extraction diagram is a chain of filters and feature extractions like the MEL spectrum as an output. Thereby the folder hosts the tuning and test of the components, finally used ones and explored ones. As well as the batch creation scripts for pre-processing the dataset. More in the sub chapter [feature extraction diagrams](doc/feature_extraction.md)
 
 #### Folder/part: Modeling
-The modeling folder hosts all the explored machine learning variants sorted in sub folders like each with general dicription: 
+The modeling folder hosts all the explored machine learning variants sorted in sub folders like each with general description: 
 * [unsupervised](modeling/unsupervised/unsupervised_modeling.md)
 * [pseudo_supervised](modeling/pseudo_supervised/pseudo_supervised.md)
 
-### Setup
+The ensemble is being explored in the ensemble folder:
+* [ensemble](modeling/ensemble/ensemble.md)
+
+### Setup parts
 
 #### Folder: dataset
 Hosts the unpacked dataset from the zenodo site. The structure expected is discribed in the subchapter: [dataset folder structure](dataset/dataset_struct.md).
 Additionaly it has folders for the extracted features after using the diagrams (see above).
 
-#### Folder: Utiliy
-Utility-function and classes stored in py-files rather than jupyter notebooks. In the folder utility/Workshop some application and basic tests of the utilities can be found.
+#### Folder: Utility
+Utility-function and classes stored in py-files rather than jupyter notebooks. In the folder utility/workshop some application and basic tests of the utilities can be found.
 
 #### Folder: doc
 All subchapter and media material for documention.
@@ -90,29 +105,28 @@ References like papers, etc. see below.
 Information about the Conda environment, Jupyter settings and GPU elements in tensorflow. Notice this work was done on windows 10 with anaconda and jupyter.
 
 #### Folder: misc
-miscellaneous material and interesting site experiments - partially unsorted.
+Miscellaneous material and interesting site experiments - partially unsorted.
 
-# Future Work
+## Future Work
 
-## Not Explored Options And Missing Ends
+### Not Explored Options And Missing Ends
 A list of general potential for improvement and not fully or not at all explored techniques mostly due to time restrictions. Sub Chapter [improvements](doc/improvements.md)
 
-## Application Notes
-Notes for the application as a smart sensor. A small discussion on implication and follow-up-work for deployment. Sub chapter: [application notes] (doc/feature_extraction. MD) 
+### Application Notes
+Notes for the application as a smart sensor. A small discussion on implication and follow-up-work for deployment. Sub chapter: [application notes](doc/feature_extraction.md) 
 
-## Workflow Improvements
-Some reflection on workflow chosen and setup. Sub chapter [workflow improvements](doc/workflow_improvment.md) 
+### Workflow Improvements
+Some reflection on workflow chosen and setup. Sub chapter [workflow improvements](doc/workflow_improvement.md) 
 
+## Credits and References
 
-# Credits and Refrences
-
-## THANKS to...
+### THANKS to...
 
 To the creators of the MIMII dataset
 
 To the creators of the gigantic audio processing library [librosa](https://librosa.github.io/)
 
-To the creators of the library [pyrommacustics](https://pyroomacoustics.readthedocs.io/en/pypi-release/)
+To the creators of the library [pyroomacustics](https://pyroomacoustics.readthedocs.io/en/pypi-release/)
 
 To all the developers of python, scipy, numpy, scikit learn and tensorflow ... and all the great python stuff that we can build on.
 
@@ -122,9 +136,9 @@ To all the founders and minds of machine learning you created an awesome univers
 
 To the team at [neuefische GmbH](https://www.neuefische.de), that made this project possible by training us in the data science bootcamp.
 
-To so many more form the web like towardsdatascience.com and stackoverflow ...
+To so many more form the web like towardsdatascience.com, stackoverflow ...
 
-## References 
+### References 
 Find all references: papers, source code and other web sources in the following sub chapters: 
 
 * [Papers and Books](ref/paper_list.md)   
