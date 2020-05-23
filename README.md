@@ -109,7 +109,7 @@ Miscellaneous material and interesting site experiments - partially unsorted.
 A list of general potential for improvement and not fully or not at all explored techniques mostly due to time restrictions. Sub Chapter [improvements](doc/improvements.md)
 
 ### Application Notes
-Notes for the application as a smart sensor. A small discussion on implication and follow-up-work for deployment. Sub chapter: [application notes](doc/feature_extraction.md) 
+Notes for the application as a smart sensor. A small discussion on implication and follow-up-work for deployment. Sub chapter: [application notes](doc/application_notes.md) 
 
 ### Workflow Improvements
 Some reflection on workflow chosen and setup. Sub chapter [workflow improvements](doc/workflow_improvement.md) 
