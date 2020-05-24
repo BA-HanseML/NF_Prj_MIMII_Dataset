@@ -113,13 +113,18 @@ These models can be reproduced running this notebook: [ensemble_exploration_mode
 
  Secondly since all the predicted scores of all the individual models are in different scales, the predictions of each individual model based on the predictions of the test-set are being normalized. Like that everything can be measured as standard deviations apart from what has been seen in the training phase.
 
- Thirdly the normalized predictions of the individual models are being summed up weightedly according to their individual model performance. These weights are completely arbitrary. As mentioned in the [improvements.md](../docs/improvements.md)
+ Thirdly the normalized predictions of the individual models are being summed up weightedly according to their individual model performance. These weights are completely arbitrary. As mentioned in the [improvements.md](../docs/improvements.md) these weights can be optimized for best scores in the future.
  
- The Autoencoder gets a 30% increase, the Isolation Forest of the MEL spectru
+ + Autoencoder MEL spectrum +30%
+ + Isolation Forest MEL spectrum +0%
+ + Isolation Forest welch -10%
+ + Support Vector Machine augmented welch -20%
+
+The resulting prediction is then used as likelihood of a sample being an anomaly. These scores are then being evaluated with the ROC AUC score. The results can be seen below:
 
 ## Results
 
-Comparing to the individual model score the combination in an ensemble over all increased scores. For further information take a look into the ensemble evaluation notebook. 
+Putting it all together the following results have been calculated. In a nutshell the results especially for the low noise domain are quite promising. The activation time detection on the sporadic machinery and also the noise cancelling deliver good results. Comparing to the individual model score the combination in an ensemble over all increased scores.
 
 |            |      | 6dB      | 6dB    | -6dB     | -6dB  |
 |------------|------|----------|--------|----------|-------|
@@ -137,6 +142,8 @@ Comparing to the individual model score the combination in an ensemble over all 
 |            | 06   | 71.0%    | 97.6%  | 52.0%    | 75.4% |
 |            | Avg. | 79.5%    | 98.7%  | 56.5%    | 82.7% |
 | **over all**   | **Avg.** | **84.6%**    | **97.2%**  | **63.8%**    | **82.4%** |
+
+For further information take a look into the [ensemble evaluation notebook](ensemble/ensemble_evaluating.ipynb) or the [main notebook](../MIMII_main.ipynb). These results were generated with the main notebook. And also the main notebook should be the easiest way to reproduce these results.
 
 # References
 

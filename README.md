@@ -65,10 +65,6 @@ Maybe you like to tune in, listen and have a look to some spectra of a small sel
 ![click_show_room](doc/media_main/show_room_click.png) <br/><br/>
 [link to the showroom](https://ba-hanseml.github.io/MIMII_show_room/showroom.html)
 
-## Results
-
-
-
 ## Structure of Study = How to read the Repo
 
 The repo has some folders that correspond to either setup or the main chapters of the study. Here you can find some overview information and links to the in depth chapters.
@@ -112,6 +108,29 @@ Notes for the application as a smart sensor. A small discussion on implication a
 
 ### Workflow Improvements
 Some reflection on workflow chosen and setup. Sub chapter [workflow improvements](doc/workflow_improvement.md) 
+
+
+## Results
+
+The results generated with the [main notebook](../MIMII_main.ipynb) are shown below. If you want to read more details about the modeling process and the construction of the ensembles, check this file: [modeling.md](modeling/modeling.md)
+
+|            |      | 6dB      | 6dB    | -6dB     | -6dB  |
+|------------|------|----------|--------|----------|-------|
+|            | **ID**   | **baseline** | **ours**   | **baseline** | **ours**  |
+| Valve      | 04   | 64.0%    | 99.9%  | 50.0%    | 91.7% |
+|            | 06   | 70.0%    | 82.3%  | 53.0%    | 66.0% |
+|            | Avg. | 67.0%    | 91.1%  | 51.5%    | 78.9% |
+| Pump       | 04   | 99.0%    | 100.0% | 93.0%    | 97.4% |
+|            | 06   | 94.0%    | 99.4%  | 61.0%    | 78.6% |
+|            | Avg. | 96.5%    | 99.7%  | 77.0%    | 88.0% |
+| Fan        | 04   | 92.0%    | 98.5%  | 57.0%    | 67.9% |
+|            | 06   | 99.0%    | 99.7%  | 83.0%    | 91.8% |
+|            | Avg. | 95.5%    | 99.1%  | 70.0%    | 79.9% |
+| Slide rail | 04   | 88.0%    | 99.8%  | 61.0%    | 90.1% |
+|            | 06   | 71.0%    | 97.6%  | 52.0%    | 75.4% |
+|            | Avg. | 79.5%    | 98.7%  | 56.5%    | 82.7% |
+| **over all**   | **Avg.** | **84.6%**    | **97.2%**  | **63.8%**    | **82.4%** |
+
 
 ## Credits and References
 
