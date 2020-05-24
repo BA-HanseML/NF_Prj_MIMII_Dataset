@@ -1,14 +1,13 @@
 print('load extractor_diagram_mother')
 
-#file name : <diagram_name>\<filenameprefix>_<outportname>
-#file name meta : <diagram_name>\<diagram_name>_metainfo.txt
-#file processd fileslists :  <diagram_name>\<diagram_name>_processedfiles.csv
+# Utility class that represents the baseline of a feature extraction diagram
 
 
 import copy
 class extractor_diagram():
     def __init__(self,base_folder,  threadnr=0 , main_channel=0,augment= -1, DeviceType=0, fHP = None ):
         
+        # All common variable of an feature extraction diagram
         self.base_folder = base_folder
         self.threadnr = threadnr
         
@@ -26,19 +25,20 @@ class extractor_diagram():
         self.ini_diagram()
 
         
-
+    # Initialization of a specific diagram must be specified in derived class
     def ini_diagram(self): # custom
 
         
         pass
-    
+    #Execution process of a diagram must be specified in the derived
     def execute_diagram(self,file_path,file_class, probe=False): # custom
 
         pass
         
 
-# in case of memory problems join per outport would be possible to implment
-# or excluding ports
+# Function to accumulate multiple output port 
+# lists of a feature extraction diagram into one 
+# list this is used to join the work from multiple threats back into one before saving it to file
 def outport_akkulist_join(exdia_list=[]):
     ej = extractor_diagram('')
     ej.name = exdia_list[0].name
@@ -52,6 +52,8 @@ def outport_akkulist_join(exdia_list=[]):
             ej.target_akkulist += e.target_akkulist
     return ej
 
+#Function to safe output port list of a feature extraction diagram to file 
+#including the descriptive pandas data frame. 
 import pandas as pd
 def outport_akkulist_tofile(base_folder,target_folder,exdia,machine,SNR,ID):
     base_folder = os.path.abspath(base_folder)

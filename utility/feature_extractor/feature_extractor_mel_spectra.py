@@ -1,7 +1,6 @@
 print('load feature_extractor_mel_spectra')
 
-# TODO add window
-# TODO expose all parameter
+# Feature extractor for handling MEL spectra
 
 class feature_extractor_mel(feature_extractor):
     def __init__(self, base_folder, name='mel_spectra'):

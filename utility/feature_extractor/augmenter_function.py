@@ -1,3 +1,6 @@
+# Utility to create synthetic anomalies on an existing file by chaining multiple band passes and pitching. 
+# Note: in this code there are many hard coded values as it is just meant as an experiment.
+
 def get_rand_fband():
     base = 800
     limit = 4500
@@ -40,6 +43,7 @@ def pitch_add(s,sr):
     return sout
     
 import copy
+# Main funciton 
 def create_augmenter(wmf):
     import random 
     s = copy.deepcopy(wmf.channel)

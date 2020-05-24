@@ -1,7 +1,6 @@
 print('load feature_extractor_psd')
 
-# TODO: concat all channels 
-# TODO: matrix over all channels
+#Feature extractor to handle Welch spectra
 
 class feature_extractor_welchPSD(feature_extractor):
     def __init__(self, base_folder, name='welch'):

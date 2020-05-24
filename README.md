@@ -1,18 +1,14 @@
 # Can a Machine Hear If a Machine Is Broken? 
-**Unsupervised Anomaly Detection by Airborne Sound of Industrial Machinery**
-
-A machine learning approach to machine anomaly detection on the MIMII dataset.
-
-![story](doc/media_main/story.png)
+**Unsupervised Anomaly Detection by Airborne Sound of Industrial Machinery** <br/>
+A machine learning approach to machine anomaly detection on the MIMII dataset.<br/>
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/BA-HanseML/NF_Prj_MIMII_Dataset)  [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/BA-HanseML/NF_Prj_MIMII_Dataset/blob/master/LICENSE) [![GitHub contributors](https://img.shields.io/github/contributors/BA-HanseML/NF_Prj_MIMII_Dataset)](https://GitHub.com/BA-HanseML/NF_Prj_MIMII_Dataset/graphs/contributors) ![GitHub issues](https://img.shields.io/github/issues/BA-HanseML/NF_Prj_MIMII_Dataset)
+![story](doc/media_main/story.png) 
+___
+![pack](https://img.shields.io/badge/anaconda-4.8.3-red) ![pack](https://img.shields.io/badge/Python-3.7.6-green) ![pack](https://img.shields.io/badge/scikitlearn-0.22.2-blue) ![pack](https://img.shields.io/badge/Tensorflow-2.0.0-yellow) ![pack](https://img.shields.io/badge/jupyter-1.0.0-orange) ![pack](https://img.shields.io/badge/librosa-0.6.3-yellow) 
 
 ## Introduction
 
 This study is the final "Capstone" project of [ArneSch](https://github.com/ArneSch) and [HssDix](https://github.com/HssDix) for the 3 month data science bootcamp at [neuefische](https://github.com/neuefische) in Hamburg. This project has been developed in 4 weeks of April and May 2020.
-
-[![GitHub contributors](https://img.shields.io/github/contributors/BA-HanseML/NF_Prj_MIMII_Dataset)](https://GitHub.com/BA-HanseML/NF_Prj_MIMII_Dataset/graphs/contributors)
-
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/BA-HanseML/NF_Prj_MIMII_Dataset/blob/master/LICENSE)
-We provide this work under the MIT License.
 
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/BA-HanseML)
 If you have any questions concerning this repository do not hesitate to contact us.
@@ -113,7 +109,7 @@ Miscellaneous material and interesting site experiments - partially unsorted.
 A list of general potential for improvement and not fully or not at all explored techniques mostly due to time restrictions. Sub Chapter [improvements](doc/improvements.md)
 
 ### Application Notes
-Notes for the application as a smart sensor. A small discussion on implication and follow-up-work for deployment. Sub chapter: [application notes](doc/feature_extraction.md) 
+Notes for the application as a smart sensor. A small discussion on implication and follow-up-work for deployment. Sub chapter: [application notes](doc/application_notes.md) 
 
 ### Workflow Improvements
 Some reflection on workflow chosen and setup. Sub chapter [workflow improvements](doc/workflow_improvement.md) 
@@ -144,3 +140,4 @@ Find all references: papers, source code and other web sources in the following 
 * [Papers and Books](ref/paper_list.md)   
 * [Sorce code / GitHubs](ref/github_list.md)
 * [Websites / Videos](ref/web_list.md)
+

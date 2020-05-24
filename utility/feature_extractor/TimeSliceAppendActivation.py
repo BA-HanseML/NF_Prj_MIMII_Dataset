@@ -1,5 +1,7 @@
 print('load TimeSliceAppendActivation')
 
+# Utility function that implements time slicing based on activity detection. 
+
 from sklearn.preprocessing import StandardScaler 
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
