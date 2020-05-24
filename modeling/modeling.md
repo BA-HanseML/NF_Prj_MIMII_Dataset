@@ -39,7 +39,7 @@ which assume that the normal operation data belongs to a multi-dimensional distr
 The second model type in the unsupervised approach is the Autoencoder. The Autoencoder is a type of artificial neural network specifically designed to learn a lower-dimensional representation of data. The network usually consists of a reduction side, called the Encoder, and a reconstruction side, called the Decoder. In a forward step the data is being "forced" into a lower dimensional form by the Encoder and transformed back into the original dimension by the Decoder. This results in a "condensed" representation of the original data and a reduction of noise. While training the metric is the reconstruction error between the input data and the decoded output data.
 
 ![](https://miro.medium.com/max/1400/0*uq2_ZipB9TqI9G_k)
-*Example of an Autoencoder, cited from: https://miro.medium.com/max/1400/0\*uq2_ZipB9TqI9G_k
+*Example of an Autoencoder, embedded from: https://miro.medium.com/max/1400/0\*uq2_ZipB9TqI9G_k
 
 ## Pseudo supervised
 

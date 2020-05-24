@@ -54,8 +54,36 @@ The main problem with the pursuit of supervised approach used in the study is th
 
 By incorporating the augmentation directly into the learning loop, thereby creating an adversary feedback loop. This means that the training result of the supervised classifier is taken into a tuning function for the augmentation and after tuning the augmentation the next training is conducted with the goal to reach a low training score with the assumption in mind that a particularly hard to distinguish syntactic abnormal would be harder to distinguish than the real abnormal.
 
-This might be achievable with convolution layouts. In case this would be successful a convolution a neural network could be used in U-net architecture to emphasize the abnormal parts in a Spectra. 
+This might be achievable with convolution layouts. In case this would be successful a convolution a neural network could be used in U-net architecture to emphasize the abnormal parts in a spectra. 
 
 On the problem of the used augmentation is that it is applied throughout the entire time of one file in this case 10 seconds. If the augmentation would also be randomized by time or simply asked a convolution on the STFT the approach can even be used when sequential modeling is as used.
 
 Thereby many opportunities have to be explored and the study is only showing of very simple version of the pseudo-supervised approach.
+
+### Unsupervised Modeling
+
+#### Boosting of stochastic models
+Speaking of the unsupervised approach the stochastic models delivered promising results but were outperformed by the Autoencoder. Still in the ensemble the combination of all models scores increased. In [1] they used Gaussian Mixture Models in a boosting ensemble to increase the performance if an anomaly detection algorithm. This approach could be transfered to this study
+
+#### Autoencoder including sequence-based models - LSTM-Autoencoder
+All of the models chosen in this study do not utilize the time information. We assume especially sporadic machinery would benefit from including sequence-based models like LSTM layers to an LSTM-Autoencoder.
+
+#### Investigate deployability
+As this study is a proof-of-concept not much emphasis was placed on deployability. This should definitely be investigated. Especially the stochastic models performance in an embedded device should be examined.
+
+#### DSP Embedding Layers for Autoencoder
+The approach to firstly extract all the features from the data favored performance in training the individual models. But in a proof-of-work one would need to introduce online-feature-extraction. TensorFlow delivers an extensive subpackage of digital signal processing functionality. Including these into the ensemble for online functionality is future work.
+
+### Ensemble
+
+#### Optimization of the Blender
+
+Hence the goal of this study is to find the most robust detection algorithm over all types of machinery, tuning hyperparameters could be applied on a subset of the data. Like we used the subset of IDs 00 and 02 to find the most promising individual models for the ensemble, one could also tune the blender-weights of all the individual models to get the best set for the ensemble. Evaluation could be done with the remaining subset of the data (e.g. ID 04 and 06).
+
+#### Including toggleable submodels
+
+In a possible application one could add toggleable submodels that perform very well on specific tasks. For example we found out that activation time detection improved results for sporadic machinery a lot but doesn't support the anomaly detection for continuous machinery. To add toggleable submodels to adjust the model for a specific task should deliver good results at the cost of robustness, since the solution is very individual.
+
+# References
+
+[[1]](https://www.semanticscholar.org/paper/Detection-of-Abnormal-Sound-Using-Multi-stage-GMM-Ito-Aiba/27628c9aeecb4df6010693533ad79f4d03c64f86) Ito, Akinori, Akihito Aiba, Masashi Ito and Shozo Makino. “Detection of Abnormal Sound Using Multi-stage GMM for Surveillance Microphone.” 2009 Fifth International Conference on Information Assurance and Security 1 (2009): 733-736.
