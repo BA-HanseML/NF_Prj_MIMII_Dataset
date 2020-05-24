@@ -148,10 +148,10 @@ class uni_svm(SVC):
     # predict inherited
 
     def predict_score(self, data):
-        return self.predict_proba(data)[:,1]
+        return -self.predict_proba(data)[:,1]
 
     def eval_roc_auc(self, data_test, y_true):
-        return roc_auc_score(y_true, self.predict_score(data_test))
+        return roc_auc_score(y_true, -self.predict_score(data_test))
         
 #-------------------------------------------------------------------------
 

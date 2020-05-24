@@ -99,8 +99,6 @@ class Pipe(object):
         
         # fit the model
         self.model.fit(data_train, y=self.y_train)
-        
-        if self.pseudo_sup: print(self.model.eval_roc_auc(data_train, self.y_train))
     
     def predict(self, data):
         return self.model.predict_score(data)
