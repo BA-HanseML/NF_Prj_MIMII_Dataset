@@ -1,11 +1,11 @@
 
-# Improvements / Future work on the detection algorithm
+# Improvements / Future Work On the Detection Algorithm
 
 This section reflects on open topics for the detection, with a focus on how to improve performance and robustness.
 
-## feature extraction
+## Feature Extraction
 
-### Time Slicing / activation Time Detection
+### Time Slicing / Activation Time Detection
 
 the current algorithm works by assuming that a clustering kNN will find two main cluster active and inactive in the raw data. This assumption maybe to naive in some noise situation and has shown to be not robust with slider rails. 
 
@@ -62,13 +62,13 @@ Thereby many opportunities have to be explored and the study is only showing of 
 
 ### Unsupervised Modeling
 
-#### Boosting of stochastic models
+#### Boosting of Stochastic Models
 Speaking of the unsupervised approach the stochastic models delivered promising results but were outperformed by the Autoencoder. Still in the ensemble the combination of all models scores increased. In [1] they used Gaussian Mixture Models in a boosting ensemble to increase the performance if an anomaly detection algorithm. This approach could be transfered to this study
 
-#### Autoencoder including sequence-based models - LSTM-Autoencoder
+#### Autoencoder Including Sequence-based Models - LSTM-Autoencoder
 All of the models chosen in this study do not utilize the time information. We assume especially sporadic machinery would benefit from including sequence-based models like LSTM layers to an LSTM-Autoencoder.
 
-#### Investigate deployability
+#### Investigate Deployability
 As this study is a proof-of-concept not much emphasis was placed on deployability. This should definitely be investigated. Especially the stochastic models performance in an embedded device should be examined.
 
 #### DSP Embedding Layers for Autoencoder
@@ -80,9 +80,9 @@ The approach to firstly extract all the features from the data favored performan
 
 Hence the goal of this study is to find the most robust detection algorithm over all types of machinery, tuning hyperparameters could be applied on a subset of the data. Like we used the subset of IDs 00 and 02 to find the most promising individual models for the ensemble, one could also tune the blender-weights of all the individual models to get the best set for the ensemble. Evaluation could be done with the remaining subset of the data (e.g. ID 04 and 06).
 
-#### Including toggleable submodels
+#### Including Toggleable Submodels
 
-In a possible application one could add toggleable submodels that perform very well on specific tasks. For example we found out that activation time detection improved results for sporadic machinery a lot but doesn't support the anomaly detection for continuous machinery. To add toggleable submodels to adjust the model for a specific task should deliver good results at the cost of robustness, since the solution is very individual.
+In a possible application one could add toggleable submodels that perform very well on specific tasks. For example we found out that activation time detection improved results for sporadic machinery a lot but doesn't support the anomaly detection for continuous machinery. To add toggleable submodels to adjust the model for a specific task should deliver good results at the cost of robustness, since the solution is specifically customized for a certain task.
 
 # References
 

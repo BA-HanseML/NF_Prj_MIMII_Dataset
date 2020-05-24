@@ -65,6 +65,10 @@ Maybe you like to tune in, listen and have a look to some spectra of a small sel
 ![click_show_room](doc/media_main/show_room_click.png) <br/><br/>
 [link to the showroom](https://ba-hanseml.github.io/MIMII_show_room/showroom.html)
 
+## Results
+
+
+
 ## Structure of Study = How to read the Repo
 
 The repo has some folders that correspond to either setup or the main chapters of the study. Here you can find some overview information and links to the in depth chapters.
@@ -75,12 +79,7 @@ The repo has some folders that correspond to either setup or the main chapters o
 The feature extraction diagram is a chain of filters and feature extractions like the MEL spectrum as an output. Thereby the folder hosts the tuning and test of the components, finally used ones and explored ones. As well as the batch creation scripts for pre-processing the dataset. More in the sub chapter [feature extraction diagrams](doc/feature_extraction.md)
 
 #### Folder/part: Modeling
-The modeling folder hosts all the explored machine learning variants sorted in sub folders like each with general description: 
-* [unsupervised](modeling/unsupervised/unsupervised_modeling.md)
-* [pseudo_supervised](modeling/pseudo_supervised/pseudo_supervised.md)
-
-The ensemble is being explored in the ensemble folder:
-* [ensemble](modeling/ensemble/ensemble.md)
+The modeling folder hosts all the explored machine learning variants sorted in sub folders like each with general description in the [modeling.md](modeling/modeling.md)
 
 ### Setup parts
 
