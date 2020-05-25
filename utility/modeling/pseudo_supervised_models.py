@@ -1,5 +1,6 @@
 print('Load pseudo_supervised_models')
 
+# Wrappings for the models used in pseudo-supervised training
 
 from sklearn.linear_model import LogisticRegression
 
@@ -31,14 +32,13 @@ class uni_LogisticRegression(LogisticRegression):
     # predict inherited
 
     def predict_score(self, data):
-        return self.predict_proba(data)[:,1]
+        return -self.predict_proba(data)[:,1]
 
     def eval_roc_auc(self, data_test, y_true):
-        return roc_auc_score(y_true, self.predict_score(data_test))
+        return roc_auc_score(y_true, -self.predict_score(data_test))
         
 #--------------------------------------------------------------
 
-#https://stackoverflow.com/questions/37089177/probability-prediction-method-of-kneighborsclassifier-returns-only-0-and-1
 from sklearn.neighbors import KNeighborsClassifier
       
 class uni_KNeighborsClassifier(KNeighborsClassifier):
@@ -64,10 +64,10 @@ class uni_KNeighborsClassifier(KNeighborsClassifier):
     # predict inherited
 
     def predict_score(self, data):
-        return self.predict_proba(data)[:,1]
+        return -self.predict_proba(data)[:,1]
 
     def eval_roc_auc(self, data_test, y_true):
-        return roc_auc_score(y_true, self.predict_score(data_test))
+        return roc_auc_score(y_true, -self.predict_score(data_test))
 
       
 #--------------------------------------------------------------        
@@ -110,10 +110,10 @@ class uni_RandomForestClassifier(RandomForestClassifier):
     # predict inherited
 
     def predict_score(self, data):
-        return self.predict_proba(data)[:,1]
+        return -self.predict_proba(data)[:,1]
 
     def eval_roc_auc(self, data_test, y_true):
-        return roc_auc_score(y_true, self.predict_score(data_test))
+        return roc_auc_score(y_true, -self.predict_score(data_test))
 
 #------------------------------------------------------------------------------
 from sklearn.svm import SVC
@@ -148,10 +148,10 @@ class uni_svm(SVC):
     # predict inherited
 
     def predict_score(self, data):
-        return self.predict_proba(data)[:,1]
+        return -self.predict_proba(data)[:,1]
 
     def eval_roc_auc(self, data_test, y_true):
-        return roc_auc_score(y_true, self.predict_score(data_test))
+        return roc_auc_score(y_true, -self.predict_score(data_test))
         
 #-------------------------------------------------------------------------
 

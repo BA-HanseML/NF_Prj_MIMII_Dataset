@@ -1,5 +1,8 @@
 print('load # extractor diagram V1 sporadic focus')
 
+# Short version for the most important feature extractions including the 
+# time slicing this has been created to accelerate recalculation for the valve.
+
 class extdia_v1_sporadic(extractor_diagram):
 
     def ini_diagram(self): # custom

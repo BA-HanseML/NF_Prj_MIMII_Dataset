@@ -2,9 +2,11 @@ print('Load detection_pipe')
 
 # main imports
 import numpy as np
+import pandas as pd
 import pickle
 import os
 from datetime import datetime
+from sklearn.preprocessing import StandardScaler
 
 ## PipeThreading objects
 from queue import Queue
@@ -22,6 +24,9 @@ class Pipe(object):
         self._mdl, self.model_args = modeling_step # model object
         # model instance
         self.model = self._mdl(**self.model_args)
+        
+        # attribute for the specific task of the pipe
+        self.task = None
         
         # toggle flag for pseudo supervised to have classes >0 -> 0 1 and not -1 and 1
         self.pseudo_sup = pseudo_sup
@@ -47,8 +52,7 @@ class Pipe(object):
                                     task['machine'],
                                     'ID'+task['ID'],
                                     self.model.name,
-                                    self.model.sufix,
-                                    datetime.now().strftime("%Y%m%d_%H%M%S")
+                                    self.model.sufix
                                     ]) + '.pkl'
         else:
             self.filepath = path
@@ -78,14 +82,13 @@ class Pipe(object):
         # return preprocessed data
         return data_train, data_test
     
-    def preprocess_post(self, data_train, data_test):
+    def preprocess_post(self, data):
         # run through all the preprocessing steps
         for step in self.preproc_steps:
-            data_train =  step.transform(data_train)
-            data_test = step.transform(data_test)
+            data = step.transform(data)
 
         # return preprocessed data
-        return data_train, data_test
+        return data
 
     def fit_model(self, data_train):
         # get ground truth for train_set
@@ -93,21 +96,47 @@ class Pipe(object):
             self.y_train = self.df_train.abnormal.replace(to_replace=-1, value=1)
         else:
             self.y_train=None
+        
         # fit the model
         self.model.fit(data_train, y=self.y_train)
-        
-        if self.pseudo_sup: print(self.model.eval_roc_auc(data_train, self.y_train))
-
+    
+    def predict(self, data):
+        return self.model.predict_score(data)
+    
+    def fit_aggr_score_scaler(self, data_train, files_train):
+        prediction = self.sum_by_file(
+           self.predict(data_train),
+           files_train
+        )
+        self.score_scaler = StandardScaler()
+        self.score_scaler.fit(np.expand_dims(prediction, axis=1))
+    
+    def sum_by_file(self, prediction, files):
+        prediction = pd.Series(prediction)
+        return prediction.groupby(by=files).sum()
+    
+    def median_by_file(self, prediction, files):
+        prediction = pd.Series(prediction)
+        return prediction.groupby(by=files).median()
+    
+    def predict_aggr_score(self, data, files):
+        prediction = self.sum_by_file(
+           self.predict(data),
+           files
+        )
+        return self.score_scaler.transform(
+            np.expand_dims(prediction, axis=1)
+            )
+    
     def evaluate(self, data_test):
         # calculate evaluation score
-
         self.df_test['pred_scores'] = self.model.predict_score(data_test)
         self.df_test['pred_labels'] = self.model.predict(data_test)
         self.roc_auc = self.model.eval_roc_auc(data_test, self.ground_truth)
 
     def run_pipe(self, task):
         self.task = task
-        #try:
+
         # split data into train and testset
         self.split_data()
         
@@ -122,7 +151,11 @@ class Pipe(object):
 
         # fitting the model
         self.fit_model(data_train)
-        print('model fitted successfully\n\n...evaluating model')
+        print('model fitted successfully\n\n...fitting the prediction scaler')
+        
+        # fitting the prediction scaler
+        self.fit_aggr_score_scaler(data_train, self.df_train.path)
+        print('prediction scaler fitted successfully\n\n...evaluating model')
 
         # evaluating over ground truth
         self.evaluate(data_test)
@@ -135,11 +168,6 @@ class Pipe(object):
         # saving to pickle
         self.to_pickle()
         print('pipe saved to pickle')
-        #except:
-        #    print('Something went wrong')
-        #    return False
-        #else:
-        #    return True
     
 class dummy_model(object):
     def __init__(self, name, sufix):

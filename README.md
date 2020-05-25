@@ -1,11 +1,19 @@
 # Can a Machine Hear If a Machine Is Broken? 
-**Unsupervised Anomaly Detection by Airborne Sound of Industrial Machinery**
+**Unsupervised Anomaly Detection by Airborne Sound of Industrial Machinery** <br/>
+A machine learning approach to machine anomaly detection on the MIMII dataset.<br/>
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/BA-HanseML/NF_Prj_MIMII_Dataset)  [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/BA-HanseML/NF_Prj_MIMII_Dataset/blob/master/LICENSE) [![GitHub contributors](https://img.shields.io/github/contributors/BA-HanseML/NF_Prj_MIMII_Dataset)](https://GitHub.com/BA-HanseML/NF_Prj_MIMII_Dataset/graphs/contributors) ![GitHub issues](https://img.shields.io/github/issues/BA-HanseML/NF_Prj_MIMII_Dataset)
+![story](doc/media_main/story.png) 
+___
+![pack](https://img.shields.io/badge/anaconda-4.8.3-red) ![pack](https://img.shields.io/badge/Python-3.7.6-green) ![pack](https://img.shields.io/badge/scikitlearn-0.22.2-blue) ![pack](https://img.shields.io/badge/Tensorflow-2.0.0-yellow) ![pack](https://img.shields.io/badge/jupyter-1.0.0-orange) ![pack](https://img.shields.io/badge/librosa-0.6.3-yellow) 
 
-A machine learning approach to machine anomaly detection on the MIMII dataset.
+## Introduction
 
-![story](doc/media_main/story.png)
+This study is the final "Capstone" project of [ArneSch](https://github.com/ArneSch) and [HssDix](https://github.com/HssDix) for the 3 month data science bootcamp at [neuefische](https://github.com/neuefische) in Hamburg. This project has been developed in 4 weeks of April and May 2020.
 
-## Discription of the Study - in this Repo
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/BA-HanseML)
+If you have any questions concerning this repository do not hesitate to contact us.
+
+## Description of the Study - in this Repo
 
 This repo is about a concept study on the MIMII dataset to detect anomalies of machines or machine parts like fans, slider, pump and valves by means of classic machine learning and deep learning methods. 
 
@@ -67,18 +75,16 @@ The repo has some folders that correspond to either setup or the main chapters o
 The feature extraction diagram is a chain of filters and feature extractions like the MEL spectrum as an output. Thereby the folder hosts the tuning and test of the components, finally used ones and explored ones. As well as the batch creation scripts for pre-processing the dataset. More in the sub chapter [feature extraction diagrams](doc/feature_extraction.md)
 
 #### Folder/part: Modeling
-The modeling folder hosts all the explored machine learning variants sorted in sub folders like each with general dicription: 
-* [unsupervised](modeling/unsupervised/unsupervised_modeling.md)
-* [pseudo_supervised](modeling/pseudo_supervised/pseudo_supervised.md)
+The modeling folder hosts all the explored machine learning variants sorted in sub folders like each with general description in the [modeling.md](modeling/modeling.md)
 
-### Setup
+### Setup parts
 
 #### Folder: dataset
 Hosts the unpacked dataset from the zenodo site. The structure expected is discribed in the subchapter: [dataset folder structure](dataset/dataset_struct.md).
 Additionaly it has folders for the extracted features after using the diagrams (see above).
 
-#### Folder: Utiliy
-Utility-function and classes stored in py-files rather than jupyter notebooks. In the folder utility/Workshop some application and basic tests of the utilities can be found.
+#### Folder: Utility
+Utility-function and classes stored in py-files rather than jupyter notebooks. In the folder utility/workshop some application and basic tests of the utilities can be found.
 
 #### Folder: doc
 All subchapter and media material for documention.
@@ -90,29 +96,51 @@ References like papers, etc. see below.
 Information about the Conda environment, Jupyter settings and GPU elements in tensorflow. Notice this work was done on windows 10 with anaconda and jupyter.
 
 #### Folder: misc
-miscellaneous material and interesting site experiments - partially unsorted.
+Miscellaneous material and interesting site experiments - partially unsorted.
 
-# Future Work
+## Future Work
 
-## Not Explored Options And Missing Ends
+### Not Explored Options And Missing Ends
 A list of general potential for improvement and not fully or not at all explored techniques mostly due to time restrictions. Sub Chapter [improvements](doc/improvements.md)
 
-## Application Notes
-Notes for the application as a smart sensor. A small discussion on implication and follow-up-work for deployment. Sub chapter: [application notes] (doc/feature_extraction. MD) 
+### Application Notes
+Notes for the application as a smart sensor. A small discussion on implication and follow-up-work for deployment. Sub chapter: [application notes](doc/application_notes.md) 
 
-## Workflow Improvements
-Some reflection on workflow chosen and setup. Sub chapter [workflow improvements](doc/workflow_improvment.md) 
+### Workflow Improvements
+Some reflection on workflow chosen and setup. Sub chapter [workflow improvements](doc/workflow_improvement.md) 
 
 
-# Credits and Refrences
+## Results
 
-## THANKS to...
+The results generated with the [main notebook](../MIMII_main.ipynb) are shown below. If you want to read more details about the modeling process and the construction of the ensembles, check this file: [modeling.md](modeling/modeling.md)
+
+|            |      | 6dB      | 6dB    | -6dB     | -6dB  |
+|------------|------|----------|--------|----------|-------|
+|            | **ID**   | **baseline** | **ours**   | **baseline** | **ours**  |
+| Valve      | 04   | 64.0%    | 99.9%  | 50.0%    | 91.7% |
+|            | 06   | 70.0%    | 82.3%  | 53.0%    | 66.0% |
+|            | Avg. | 67.0%    | 91.1%  | 51.5%    | 78.9% |
+| Pump       | 04   | 99.0%    | 100.0% | 93.0%    | 97.4% |
+|            | 06   | 94.0%    | 99.4%  | 61.0%    | 78.6% |
+|            | Avg. | 96.5%    | 99.7%  | 77.0%    | 88.0% |
+| Fan        | 04   | 92.0%    | 98.5%  | 57.0%    | 67.9% |
+|            | 06   | 99.0%    | 99.7%  | 83.0%    | 91.8% |
+|            | Avg. | 95.5%    | 99.1%  | 70.0%    | 79.9% |
+| Slide rail | 04   | 88.0%    | 99.8%  | 61.0%    | 90.1% |
+|            | 06   | 71.0%    | 97.6%  | 52.0%    | 75.4% |
+|            | Avg. | 79.5%    | 98.7%  | 56.5%    | 82.7% |
+| **over all**   | **Avg.** | **84.6%**    | **97.2%**  | **63.8%**    | **82.4%** |
+
+
+## Credits and References
+
+### THANKS to...
 
 To the creators of the MIMII dataset
 
 To the creators of the gigantic audio processing library [librosa](https://librosa.github.io/)
 
-To the creators of the library [pyrommacustics](https://pyroomacoustics.readthedocs.io/en/pypi-release/)
+To the creators of the library [pyroomacustics](https://pyroomacoustics.readthedocs.io/en/pypi-release/)
 
 To all the developers of python, scipy, numpy, scikit learn and tensorflow ... and all the great python stuff that we can build on.
 
@@ -122,11 +150,12 @@ To all the founders and minds of machine learning you created an awesome univers
 
 To the team at [neuefische GmbH](https://www.neuefische.de), that made this project possible by training us in the data science bootcamp.
 
-To so many more form the web like towardsdatascience.com and stackoverflow ...
+To so many more form the web like towardsdatascience.com, stackoverflow ...
 
-## References 
+### References 
 Find all references: papers, source code and other web sources in the following sub chapters: 
 
 * [Papers and Books](ref/paper_list.md)   
 * [Sorce code / GitHubs](ref/github_list.md)
 * [Websites / Videos](ref/web_list.md)
+

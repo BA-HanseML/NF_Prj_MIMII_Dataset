@@ -1,5 +1,7 @@
 print('load Simple_FIR_HP')
 
+# Utility class for tuning and using high pass in FIR fourth order implementation
+
 class simple_FIR_HP():
     def __init__(self, fcut, sr):
         self.fcut=fcut
