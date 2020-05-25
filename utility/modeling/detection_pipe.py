@@ -168,11 +168,6 @@ class Pipe(object):
         # saving to pickle
         self.to_pickle()
         print('pipe saved to pickle')
-        #except:
-        #    print('Something went wrong')
-        #    return False
-        #else:
-        #    return True
     
 class dummy_model(object):
     def __init__(self, name, sufix):

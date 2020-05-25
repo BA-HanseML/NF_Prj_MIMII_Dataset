@@ -9,6 +9,9 @@ import pickle
 def load_data(path_descr, feat={'function':'flat', 'frames':3}
               , feat_col=None, SNR='6dB', machine='pump', ID='00'
               , train_set=1, BASE_FOLDER=BASE_FOLDER):
+    '''
+    According to specific task this function loads the data. 
+    '''
     
     df_descr = pd.read_pickle(path_descr)
 

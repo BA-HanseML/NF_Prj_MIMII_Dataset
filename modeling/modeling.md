@@ -1,6 +1,6 @@
 # Modeling Overlook
 
-In general the prediction task is the detection of anomalous sound of industrial machine in an unsupervised manner. In the training phase only normal operation sounds are being considered, whereas we try to predict anomalous sound in the evaluation phase. 
+In general the prediction task is the detection of anomalous sound of industrial machine in an unsupervised manner. In the training phase only normal operation sounds are being considered, whereas it is being tried to predict anomalous sound in the evaluation phase. 
 
 The main challenge in the modeling process is to explore the vast space of model permutations and to pick the best models for certain features and combine them to an ensemble. This selection process is segmented:
 
@@ -14,7 +14,7 @@ The main challenge in the modeling process is to explore the vast space of model
 
 # Metric
 
-Since we will always have a tradeoff between missed events and false alarms we use a metric that is independet of this tradeoff. Which is the ROC AUC score. The ROC AUC is our main metric to compare different models, feature types, etc. Additionally this allows us to compete against the baseline model.
+Since there will always be a tradeoff between missed events and false alarms, a metric that is independent of this tradeoff is used. Which is the ROC AUC score. The ROC AUC is our main metric to compare different models, feature types, etc. Additionally this allows us to compete against the baseline model.
 
 # Preprocessing
 
@@ -22,7 +22,7 @@ Different types and complexities of data preprocessing have been investigated. T
 
 [Notebook](./../modeling/preprocessing/preprocessing_exploration.ipynb)
 
-From the exploration of the Dimensionality Reduction we derived the following recommendations:
+From the exploration of the Dimensionality Reduction the following recommendations are derived:
 
 1. PCA and ICA deliver almost the same results looking at the relative absolute error
 2. PCA is usually much faster
@@ -32,13 +32,13 @@ From the exploration of the Dimensionality Reduction we derived the following re
 
 # Model Types
 
-The Modeling part was approached from two perspectives. We followed a pure unsupervised approach with the stochastic and Autoencoder models and a pseudo-supervised approach by data augmentation following a classification.
+The Modeling part was approached from two perspectives. A pure unsupervised approach with the stochastic and Autoencoder models and a pseudo-supervised approach by data augmentation following a classification is followed.
 
 ## Unsupervised Approach
 
 ### Stochastic Models
 
-Within the unsupervised approach we used two model types for anomaly detection. The stochastic approach makes use of models like:
+Within the unsupervised approach two model types for anomaly detection are being used. The stochastic approach makes use of models like:
 
 + Isolation Forest
 + Elliptic Envelope
@@ -60,7 +60,7 @@ The unsupervised approach can be reproduced using these notebooks:
 1. [Model Building](unsupervised/unsup_model_building.ipynb)
 2. [Model Exploration](unsupervised/unsup_model_exploration.ipynb)
 
-We did not push all the models we created but a dataframe consisting most of the metaparameters and scores of the models. The model exploration process should be reproducable with the models_agg.dataframe. The dataframe will not be reproducable 100% since we created a lot of different models over the last weeks.
+The models that were created were not pushed to GitHub but a dataframe consisting of most of the metaparameters and scores of the models was. The model exploration process should be reproducable with the models_agg.dataframe. The dataframe will not be reproducable 100% since a lot of different models over the last weeks were created.
 
 ## Pseudo Supervised Classification
 
@@ -88,10 +88,6 @@ Conclusion in this step
 
 ![boxplot](../doc/media_modeling/pseudo_sup_v1_box.png)
 
-### Conclusion
-
-The approached is generally promising but the augmentation can be improved in first step it will need more 2d factors and then it needs to be integrated into the training loop like a regulated convolution layer of a CNN. But in general, this allows to use supervised algorithm for this unsupervised task and also the very basic approach is creating good results.
-
 # Ensemble
 
 There is a high degree of freedom of different features, preprocessing steps, models, and hyperparameters. Possible permutations consist of 2 signal to noise ratios (SNR), 4 machines each SNR, 2 IDs each machine, 9 different feature-types each ID, results in 144 different permutations to explore before any selection of feature-parameter, model type or model-parameter.
@@ -107,13 +103,13 @@ These models can be reproduced running this notebook: [ensemble_exploration_mode
 
  In order to evaluate the models as an ensemble, this notebook was set up: [ensemble_evaluating.ipynb](ensemble/ensemble_evaluating.ipynb). The evaluation in this notebook is based purely combination of the predictions of all the individual models.
 
- ### Blender
+ ## Blender
 
  In terms of blending the individual models together a time-based and weighted approach has been chosen. Predictions always are being aggregated over a 10 seconds period for spectral data that uses windowed spectra.
 
  Secondly since all the predicted scores of all the individual models are in different scales, the predictions of each individual model based on the predictions of the test-set are being normalized. Like that everything can be measured as standard deviations apart from what has been seen in the training phase.
 
- Thirdly the normalized predictions of the individual models are being summed up weightedly according to their individual model performance. These weights are completely arbitrary. As mentioned in the [improvements.md](../docs/improvements.md) these weights can be optimized for best scores in the future.
+ Thirdly the normalized predictions of the individual models are being summed up weightedly according to their individual model performance. These weights are completely arbitrary and were tuned "by hand". As mentioned in the [improvements.md](../docs/improvements.md) these weights can be optimized for best scores in the future.
  
  + Autoencoder MEL spectrum +30%
  + Isolation Forest MEL spectrum +0%
@@ -122,9 +118,31 @@ These models can be reproduced running this notebook: [ensemble_exploration_mode
 
 The resulting prediction is then used as likelihood of a sample being an anomaly. These scores are then being evaluated with the ROC AUC score. The results can be seen below:
 
-## Results
+## Conclusions
 
-Putting it all together the following results have been calculated. In a nutshell the results especially for the low noise domain are quite promising. The activation time detection on the sporadic machinery and also the noise cancelling deliver good results. Comparing to the individual model score the combination in an ensemble over all increased scores.
+### Preprocessing
+
+Preprocessing the data actually improved model scores. It is assumed, that the PCA granted additional denoising of the data. The PCA is found to be similar to the ICA in terms of results but faster in training. It is also assumed that increasing the dimensionality of preprocessed data with also higher dimension of the Autoencoder will benefit scores.
+
+### Pseudo-supervised
+
+The approached is generally promising but the augmentation can be improved in first step it will need more 2d factors and then it needs to be integrated into the training loop like a regulated convolution layer of a CNN. But in general, this allows to use supervised algorithm for this unsupervised task and also the very basic approach is creating good results.
+
+The addition of the pseudo-supervised model did increase the average score of the ensemble.
+
+### Unsupervised
+
+The stochastic models definitely have their right to exist within the ensemble. The simple models like the Elliptic Envelope did not perform very well but the Gaussian Mixture and Isolation Forest deliver promising results.
+
+The stochastic models benefit more from denoising the data than the Autoencoder. This might be because the Autoencoder in and of itself are being used as denoising algorithms.
+
+### Ensemble
+
+In a nutshell the results especially for the low noise domain are quite promising. The activation time detection on the sporadic machinery and also the noise cancelling deliver good results.Comparing to the individual model score the combination in an ensemble over all increased scores.
+
+### Score results
+
+Putting it all together the following results have been calculated.
 
 |            |      | 6dB      | 6dB    | -6dB     | -6dB  |
 |------------|------|----------|--------|----------|-------|
