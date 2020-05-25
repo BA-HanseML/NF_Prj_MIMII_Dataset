@@ -6,6 +6,7 @@ from sklearn.metrics import roc_auc_score
 import tensorflow as tf
 
 class uni_AutoEncoder(object):
+    # 
     def __init__(self,optimizer='adam',loss='mean_squared_error',metrics=None,epochs=50,batch_size=512,shuffle=True,
                  shuffle_buffer_size=2048,validation_split=0.2,verbose=1,
                  inter_layers=[(tf.keras.layers.Dense, {'units':64, 'activation':tf.nn.relu}),
@@ -30,8 +31,11 @@ class uni_AutoEncoder(object):
         self.sufix = 'x'.join([str(layer[1]['units']) for layer in inter_layers])
 
     def preprocess_data(self, data):
+        # cast into tensorflow compatible format
         data = data.astype('float32')
         data_tensor = tf.data.Dataset.from_tensor_slices((data, data))
+        
+        # shuffle for better training
         data_tensor = data_tensor.shuffle(self.shuffle_buffer_size).batch(self.batch_size)
         return data_tensor
     
@@ -40,8 +44,11 @@ class uni_AutoEncoder(object):
         define the keras model
         the model based on the simple dense auto encoder (64*64*8*64*64)
         """
+        
+        # set up input layer according to data dimension
         inputLayer = tf.keras.layers.Input(shape=(inputDim,))
         
+        # connect all the other layers
         for i, layer in enumerate(self.inter_layers):
             layer_type = layer[0]
             layer_kwargs = layer[1]
@@ -68,15 +75,19 @@ class uni_AutoEncoder(object):
                        verbose = self.verbose)
 
     def predict_raw(self, data):
+        # raw reconstruction prediction
         return self.model.predict(data.astype('float32'))
     
     def predict(self, data):
+        # prediction of labels including the threshold
         pred_label = np.array([-1 if i>self.def_threshold else 1 for i in self.predict_score(data)])
         return pred_label
     
     def predict_score(self, data):
+        # prediction of the reconstruction error
         pred_score = -np.mean(np.square(data - self.predict_raw(data)), axis=1)
         return pred_score
         
     def eval_roc_auc(self, data_test, y_true):
+        # evaluate the model
         return roc_auc_score(y_true, self.predict_score(data_test))
