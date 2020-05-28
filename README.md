@@ -13,6 +13,10 @@ This study is the final "Capstone" project of [ArneSch](https://github.com/ArneS
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/BA-HanseML)
 If you have any questions concerning this repository do not hesitate to contact us.
 
+Also have a look at our presentation: [link to the presentation](NF_Prj_MIMII_presentation_short.pdf)
+
+Explore the dataset in the showroom: [link to the showroom](https://ba-hanseml.github.io/MIMII_show_room/showroom.html)
+
 ## Description of the Study - in this Repo
 
 This repo is about a concept study on the MIMII dataset to detect anomalies of machines or machine parts like fans, slider, pump and valves by means of classic machine learning and deep learning methods. 
@@ -114,22 +118,24 @@ Some reflection on workflow chosen and setup. Sub chapter [workflow improvements
 
 The results generated with the [main notebook](../MIMII_main.ipynb) are shown below. If you want to read more details about the modeling process and the construction of the ensembles, check this file: [modeling.md](modeling/modeling.md)
 
-|            |      | 6dB      | 6dB    | -6dB     | -6dB  |
-|------------|------|----------|--------|----------|-------|
-|            | **ID**   | **baseline** | **ours**   | **baseline** | **ours**  |
-| Valve      | 04   | 64.0%    | 99.9%  | 50.0%    | 91.7% |
-|            | 06   | 70.0%    | 82.3%  | 53.0%    | 66.0% |
-|            | Avg. | 67.0%    | 91.1%  | 51.5%    | 78.9% |
-| Pump       | 04   | 99.0%    | 100.0% | 93.0%    | 97.4% |
-|            | 06   | 94.0%    | 99.4%  | 61.0%    | 78.6% |
-|            | Avg. | 96.5%    | 99.7%  | 77.0%    | 88.0% |
-| Fan        | 04   | 92.0%    | 98.5%  | 57.0%    | 67.9% |
-|            | 06   | 99.0%    | 99.7%  | 83.0%    | 91.8% |
-|            | Avg. | 95.5%    | 99.1%  | 70.0%    | 79.9% |
-| Slide rail | 04   | 88.0%    | 99.8%  | 61.0%    | 90.1% |
-|            | 06   | 71.0%    | 97.6%  | 52.0%    | 75.4% |
-|            | Avg. | 79.5%    | 98.7%  | 56.5%    | 82.7% |
-| **over all**   | **Avg.** | **84.6%**    | **97.2%**  | **63.8%**    | **82.4%** |
+The results have been calculated for test-sets with 50% normal and 50% abnormal recordings. The number of instances of the testset is shown.
+
+|            |      |       | 6dB    |   |      | -6dB  |
+|------------|------|----------|--------|------|----------|-------|
+|            | **ID**  | **N** | **baseline** | **ours** | **baseline** | **ours**  |
+| Valve      | 04   | 240  | 64.0%    | 99.9%  | 50.0%    | 91.7% |
+|            | 06   | 240  | 70.0%    | 82.3%  | 53.0%    | 66.0% |
+|            | Avg. |      | 67.0%    | 91.1%  | 51.5%    | 78.9% |
+| Pump       | 04   | 200  | 99.0%    | 100.0% | 93.0%    | 97.4% |
+|            | 06   | 208  | 94.0%    | 99.4%  | 61.0%    | 78.6% |
+|            | Avg. |      | 96.5%    | 99.7%  | 77.0%    | 88.0% |
+| Fan        | 04   | 694  | 92.0%    | 98.5%  | 57.0%    | 67.9% |
+|            | 06   | 722  | 99.0%    | 99.7%  | 83.0%    | 91.8% |
+|            | Avg. |      | 95.5%    | 99.1%  | 70.0%    | 79.9% |
+| Slide rail | 04   | 356  | 88.0%    | 99.8%  | 61.0%    | 90.1% |
+|            | 06   | 178  | 71.0%    | 97.6%  | 52.0%    | 75.4% |
+|            | Avg. |      | 79.5%    | 98.7%  | 56.5%    | 82.7% |
+| **over all**   | **Avg.** | | **84.6%**    | **97.2%** | **63.8%**    | **82.4%** |
 
 
 ## Credits and References

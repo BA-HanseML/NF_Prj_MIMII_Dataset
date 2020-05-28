@@ -16,6 +16,10 @@ The main challenge in the modeling process is to explore the vast space of model
 
 Since there will always be a tradeoff between missed events and false alarms, a metric that is independent of this tradeoff is used. Which is the ROC AUC score. The ROC AUC is our main metric to compare different models, feature types, etc. Additionally this allows us to compete against the baseline model.
 
+# Training and testing dataset
+
+The testset was created by taking all abnormal instances and adding the same amount of normal instances randomly sampled from the dataset. The testset then consists of 50% normal and 50% abnormal instances. The number of observations is shown in the results table below.
+
 # Preprocessing
 
 Different types and complexities of data preprocessing have been investigated. The results of the investigation are can be seen in this subnotebook:
@@ -144,22 +148,22 @@ In a nutshell the results especially for the low noise domain are quite promisin
 
 Putting it all together the following results have been calculated.
 
-|            |      | 6dB      | 6dB    | -6dB     | -6dB  |
-|------------|------|----------|--------|----------|-------|
-|            | **ID**   | **baseline** | **ours**   | **baseline** | **ours**  |
-| Valve      | 04   | 64.0%    | 99.9%  | 50.0%    | 91.7% |
-|            | 06   | 70.0%    | 82.3%  | 53.0%    | 66.0% |
-|            | Avg. | 67.0%    | 91.1%  | 51.5%    | 78.9% |
-| Pump       | 04   | 99.0%    | 100.0% | 93.0%    | 97.4% |
-|            | 06   | 94.0%    | 99.4%  | 61.0%    | 78.6% |
-|            | Avg. | 96.5%    | 99.7%  | 77.0%    | 88.0% |
-| Fan        | 04   | 92.0%    | 98.5%  | 57.0%    | 67.9% |
-|            | 06   | 99.0%    | 99.7%  | 83.0%    | 91.8% |
-|            | Avg. | 95.5%    | 99.1%  | 70.0%    | 79.9% |
-| Slide rail | 04   | 88.0%    | 99.8%  | 61.0%    | 90.1% |
-|            | 06   | 71.0%    | 97.6%  | 52.0%    | 75.4% |
-|            | Avg. | 79.5%    | 98.7%  | 56.5%    | 82.7% |
-| **over all**   | **Avg.** | **84.6%**    | **97.2%**  | **63.8%**    | **82.4%** |
+|            |      |       | 6dB    |   |      | -6dB  |
+|------------|------|----------|--------|------|----------|-------|
+|            | **ID**  | **N** | **baseline** | **ours** | **baseline** | **ours**  |
+| Valve      | 04   | 240  | 64.0%    | 99.9%  | 50.0%    | 91.7% |
+|            | 06   | 240  | 70.0%    | 82.3%  | 53.0%    | 66.0% |
+|            | Avg. |      | 67.0%    | 91.1%  | 51.5%    | 78.9% |
+| Pump       | 04   | 200  | 99.0%    | 100.0% | 93.0%    | 97.4% |
+|            | 06   | 208  | 94.0%    | 99.4%  | 61.0%    | 78.6% |
+|            | Avg. |      | 96.5%    | 99.7%  | 77.0%    | 88.0% |
+| Fan        | 04   | 694  | 92.0%    | 98.5%  | 57.0%    | 67.9% |
+|            | 06   | 722  | 99.0%    | 99.7%  | 83.0%    | 91.8% |
+|            | Avg. |      | 95.5%    | 99.1%  | 70.0%    | 79.9% |
+| Slide rail | 04   | 356  | 88.0%    | 99.8%  | 61.0%    | 90.1% |
+|            | 06   | 178  | 71.0%    | 97.6%  | 52.0%    | 75.4% |
+|            | Avg. |      | 79.5%    | 98.7%  | 56.5%    | 82.7% |
+| **over all**   | **Avg.** | | **84.6%**    | **97.2%** | **63.8%**    | **82.4%** |
 
 For further information take a look into the [ensemble evaluation notebook](ensemble/ensemble_evaluating.ipynb) or the [main notebook](../MIMII_main.ipynb). These results were generated with the main notebook. And also the main notebook should be the easiest way to reproduce these results.
 
